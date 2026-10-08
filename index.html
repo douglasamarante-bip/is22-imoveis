@@ -1,32 +1,209 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#082452"><title>IS22 Imóveis</title><meta name="description" content="Casas, apartamentos, terrenos e imóveis comerciais com a IS22 Imóveis."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head><body>
-<header class="topbar"><div class="container nav"><a class="brand" href="#topo"><img id="logoImg" class="brand-img hidden" alt="IS22"><span id="brandFallback" class="brand-fallback"><i>⌂</i><b>IS22</b><small>IMÓVEIS</small></span></a><nav><a href="#imoveis">Comprar</a><a href="#imoveis" data-purpose="Aluguel">Alugar</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav><a class="btn primary small" id="topWhatsapp" target="_blank">Falar com um corretor</a></div></header>
-<main id="topo">
-<section class="hero"><img id="heroImage" class="hero-bg" alt="Casa"><div class="hero-shade"></div><div class="container hero-copy"><span class="eyebrow light" id="heroKicker"></span><h1><span id="heroTitle"></span><br><strong id="heroStrong"></strong></h1><p id="heroText"></p><div class="hero-words"><span>CONQUISTA</span><i></i><span>REALIZAÇÃO</span><i></i><span>NOVOS COMEÇOS</span></div></div><div class="container search-box"><div class="search-tabs"><button class="active" data-purpose="">Todos</button><button data-purpose="Venda">Comprar</button><button data-purpose="Aluguel">Alugar</button></div><div class="search-grid"><label><span>Código</span><input id="codeFilter" placeholder="Ex.: 7620"></label><label><span>Tipo</span><select id="typeFilter"><option value="">Todos</option><option>Casa</option><option>Apartamento</option><option>Sítio</option><option>Chácara</option><option>Fazenda</option><option>Terreno</option><option>Comercial</option></select></label><label><span>Cidade ou bairro</span><input id="placeFilter" placeholder="Conselheiro Lafaiete"></label><label><span>Preço máximo</span><input id="priceFilter" type="number" placeholder="Sem limite"></label><button class="btn primary" id="searchBtn">Buscar imóvel</button></div></div></section>
-<section class="emotion-strip"><div class="container emotion-grid"><article><b>01</b><div><strong>CONQUISTA</strong><p>Um espaço que representa o caminho que você percorreu.</p></div></article><article><b>02</b><div><strong>REALIZAÇÃO</strong><p>O momento em que um plano ganha endereço.</p></div></article><article><b>03</b><div><strong>PERTENCIMENTO</strong><p>Mais do que morar: sentir que chegou ao seu lugar.</p></div></article></div></section>
-<section class="section" id="imoveis"><div class="container"><div class="section-head"><div><span class="eyebrow">PORTFÓLIO IS22</span><h2>Imóveis em evidência</h2><p>Encontre pelo código, localização ou características.</p></div><span class="count-pill" id="resultCount"></span></div><div class="property-grid" id="propertyGrid"></div><div class="empty hidden" id="emptyState"><h3>Nenhum imóvel encontrado.</h3><p>Tente outro código ou ajuste os filtros.</p></div></div></section>
-<section class="story"><div class="container story-inner"><span class="eyebrow light">O PRÓXIMO CAPÍTULO</span><h2><span id="storyTitle"></span><br><strong id="storyStrong"></strong></h2><p>Escolher um imóvel é escolher onde os próximos anos vão acontecer. A IS22 cuida dessa decisão com proximidade, clareza e atendimento humano.</p><a class="btn light" href="#imoveis">Encontrar meu lugar →</a></div></section>
-<section class="section about" id="sobre"><div class="container about-grid"><div><span class="eyebrow">IS22 IMÓVEIS</span><h2>Imóvel certo, atendimento do jeito certo.</h2></div><div class="about-cards"><article><b>Curadoria</b><p>Imóveis organizados com fotos, valores e informações claras.</p></article><article><b>Atendimento</b><p>Contato direto com a equipe e agilidade para marcar visitas.</p></article><article><b>Segurança</b><p>Gestão profissional do anúncio até a negociação.</p></article></div></div></section>
-<section class="contact" id="contato"><div class="container contact-inner"><div><span class="eyebrow light">VAMOS CONVERSAR?</span><h2>Seu próximo endereço pode estar aqui.</h2><p>Fale com a equipe IS22 para comprar, alugar ou anunciar.</p></div><a class="btn whatsapp" id="contactWhatsapp" target="_blank">WhatsApp</a></div></section></main>
-<footer><div class="container footer"><div><strong id="footerBrand">IS22 Imóveis</strong><span id="footerCreci"></span></div><div><a href="login.html">Área administrativa</a><span id="footerText"></span></div></div></footer>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#082452" />
+  <title>IS22 Imóveis</title>
+  <meta name="description" content="Encontre casas, apartamentos, terrenos e imóveis comerciais com a IS22 Imóveis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
-<aside class="dream" id="dream"><button class="dream-close" id="dreamClose">×</button><div class="dream-photo" id="dreamPhoto"></div><div class="dream-content"><small>UM ENDEREÇO PODE REPRESENTAR MUITO MAIS</small><div class="dream-phrase" id="dreamPhrase">CONQUISTA.</div><div class="dream-compact"><span class="wa-icon">◉</span><div><b>Falar com um corretor</b><small>Atendimento pelo WhatsApp</small></div><span>→</span></div></div></aside>
+  <aside class="dream-widget" id="dreamWidget" aria-label="Experiência IS22 Imóveis">
+    <button class="dream-close" id="dreamClose" type="button" aria-label="Fechar experiência">×</button>
+    <div class="dream-scene" id="dreamScene">
+      <div class="dream-house-half dream-house-left"></div>
+      <div class="dream-house-half dream-house-right"></div>
+      <div class="dream-reveal">
+        <img src="assets/is22-symbol-white.png" alt="" class="dream-symbol" id="dreamSymbol" />
+        <p class="dream-kicker" id="dreamKicker">Um endereço pode representar muito mais.</p>
+        <div class="dream-phrases" aria-live="polite">
+          <span class="dream-phrase d1" id="dreamPhrase1">CONQUISTA.</span>
+          <span class="dream-phrase d2" id="dreamPhrase2">REALIZAÇÃO.</span>
+          <span class="dream-phrase d3" id="dreamPhrase3">NOVOS COMEÇOS.</span>
+          <span class="dream-phrase d4" id="dreamPhrase4">SEU LUGAR NO MUNDO.</span>
+        </div>
+        <small id="dreamFooter">IS22 IMÓVEIS · SONHOS EM ENDEREÇOS REAIS.</small>
+        <div class="dream-compact-cta" aria-hidden="true">
+          <span class="dream-wa-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M19.11 17.37c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.95 1.18-.18.2-.35.23-.65.08-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.68-1.63-.93-2.23-.24-.59-.49-.51-.68-.52h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.12-.28-.2-.58-.35z"/><path d="M16.03 3C8.85 3 3.02 8.79 3.02 15.94c0 2.28.6 4.51 1.73 6.47L2.9 29l6.78-1.78a13.1 13.1 0 0 0 6.34 1.61h.01c7.17 0 13-5.8 13-12.94C29.03 8.79 23.2 3 16.03 3zm0 23.64h-.01a10.9 10.9 0 0 1-5.56-1.52l-.4-.24-4.02 1.06 1.07-3.9-.26-.4a10.72 10.72 0 0 1-1.65-5.7c0-5.95 4.86-10.79 10.83-10.79 5.97 0 10.83 4.84 10.83 10.79 0 5.95-4.86 10.8-10.83 10.8z"/></svg>
+          </span>
+          <span class="dream-wa-copy"><b>Falar com um corretor</b><small>Atendimento pelo WhatsApp</small></span>
+          <span class="dream-wa-arrow" aria-hidden="true">→</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
-<div class="modal hidden" id="propertyModal"><div class="modal-box detail-modal"><button class="modal-close" id="modalClose">×</button><div id="detailContent"></div></div></div>
-<div class="toast hidden" id="toast"></div>
-<script>
-const $=id=>document.getElementById(id);let settings={},properties=[],purpose='';
-const money=(v,p)=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(Number(v||0))+(p==='Aluguel'?' / mês':'');
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const waLink=(text)=>`https://wa.me/${String(settings.whatsapp||'').replace(/\D/g,'')}?text=${encodeURIComponent(text)}`;
-function toast(t){$('toast').textContent=t;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2600)}
-async function api(url,opt){const r=await fetch(url,opt),d=await r.json();if(!r.ok||d.ok===false)throw Error(d.error||'Erro');return d}
-function applySettings(){document.documentElement.style.setProperty('--navy',settings.primary||'#082452');$('heroImage').src=settings.heroImage;$('heroKicker').textContent=settings.heroKicker;$('heroTitle').textContent=settings.heroTitle;$('heroStrong').textContent=settings.heroStrong;$('heroText').textContent=settings.heroText;$('storyTitle').textContent=settings.storyTitle;$('storyStrong').textContent=settings.storyStrong;$('footerBrand').textContent=settings.brandName;$('footerCreci').textContent='Imobiliária · CRECI '+settings.creci;$('footerText').textContent=settings.footer;$('dreamPhoto').style.backgroundImage=`linear-gradient(rgba(5,24,51,.1),rgba(5,24,51,.35)),url("${settings.heroImage}")`;if(settings.logo){$('logoImg').src=settings.logo;$('logoImg').classList.remove('hidden');$('brandFallback').classList.add('hidden')}const w=waLink('Olá '+settings.brandName+', gostaria de falar com um corretor.');$('topWhatsapp').href=w;$('contactWhatsapp').href=w}
-function card(p){const img=(p.images&&p.images[0])||p.image||settings.heroImage;return `<article class="property-card"><div class="property-media"><img src="${esc(img)}" alt="${esc(p.title)}" loading="lazy"><span class="badge">${esc(p.purpose||'Venda')}</span>${p.premium?'<span class="premium-badge">PREMIUM</span>':''}</div><div class="property-body"><small>CÓD. ${esc(p.id)}</small><h3>${esc(p.title)}</h3><div class="location">${esc(p.neighborhood||'')} · ${esc(p.city||'')}</div><div class="specs"><span>${Number(p.bedrooms||0)} quartos</span><span>${Number(p.bathrooms||0)} banh.</span><span>${Number(p.parking||0)} vagas</span><span>${Number(p.area||0)} m²</span></div><strong class="price">${money(p.price,p.purpose)}</strong><button class="btn outline full" onclick="openProperty('${encodeURIComponent(p.id)}')">Ver imóvel</button></div></article>`}
-function filtered(){const code=$('codeFilter').value.trim().toLowerCase(),type=$('typeFilter').value,place=$('placeFilter').value.trim().toLowerCase(),max=Number($('priceFilter').value||0);return properties.filter(p=>!['Inativo','Vendido','Alugado'].includes(p.status)).filter(p=>(!purpose||p.purpose===purpose)&&(!code||String(p.id).toLowerCase().includes(code))&&(!type||p.type===type)&&(!place||(`${p.city} ${p.neighborhood} ${p.address}`).toLowerCase().includes(place))&&(!max||Number(p.price)<=max))}
-function render(){const arr=filtered();$('resultCount').textContent=`${arr.length} imóvel${arr.length===1?'':'is'}`;$('propertyGrid').innerHTML=arr.map(card).join('');$('emptyState').classList.toggle('hidden',arr.length>0)}
-window.openProperty=function(encoded){const id=decodeURIComponent(encoded),p=properties.find(x=>String(x.id)===id);if(!p)return;const imgs=(p.images?.length?p.images:[p.image]).filter(Boolean);const wa=waLink(`Olá ${settings.brandName}, tenho interesse no imóvel cód. ${p.id}: ${p.title}.`);$('detailContent').innerHTML=`<div class="detail-gallery"><img id="mainDetailImage" src="${esc(imgs[0]||settings.heroImage)}"><div class="thumbs">${imgs.map((x,i)=>`<button onclick="document.getElementById('mainDetailImage').src='${esc(x)}'"><img src="${esc(x)}"></button>`).join('')}</div></div><div class="detail-copy"><span class="eyebrow">CÓD. ${esc(p.id)} · ${esc(p.type||'Imóvel')}</span><h2>${esc(p.title)}</h2><p class="location">${esc(p.address||`${p.neighborhood}, ${p.city}`)}</p><strong class="detail-price">${money(p.price,p.purpose)}</strong><div class="detail-specs"><div><b>${p.bedrooms||0}</b><span>Quartos</span></div><div><b>${p.suites||0}</b><span>Suítes</span></div><div><b>${p.bathrooms||0}</b><span>Banheiros</span></div><div><b>${p.parking||0}</b><span>Vagas</span></div><div><b>${p.area||0}</b><span>m²</span></div></div><p>${esc(p.description||'Entre em contato para saber mais sobre este imóvel.')}</p><div class="detail-actions"><a class="btn whatsapp" target="_blank" href="${wa}">Chamar no WhatsApp</a><button class="btn outline" onclick="document.getElementById('leadBox').classList.toggle('hidden')">Tenho interesse</button></div><form class="lead-box hidden" id="leadBox" onsubmit="sendLead(event,'${encodeURIComponent(p.id)}')"><h3>Receber atendimento</h3><input id="leadName" required placeholder="Seu nome"><input id="leadPhone" required placeholder="WhatsApp"><input id="leadEmail" type="email" placeholder="E-mail (opcional)"><textarea id="leadMessage" placeholder="Mensagem">Tenho interesse neste imóvel.</textarea><button class="btn primary">Enviar interesse</button></form></div>`;$('propertyModal').classList.remove('hidden')}
-window.sendLead=async(e,encoded)=>{e.preventDefault();try{await api('/api/leads',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:$('leadName').value,phone:$('leadPhone').value,email:$('leadEmail').value,message:$('leadMessage').value,propertyId:decodeURIComponent(encoded)})});toast('Interesse enviado. A equipe entrará em contato.');$('leadBox').classList.add('hidden')}catch(err){alert(err.message)}};
-function setupDream(){const phrases=settings.phrases?.length?settings.phrases:['CONQUISTA.','REALIZAÇÃO.','NOVOS COMEÇOS.','SEU LUGAR NO MUNDO.'];let i=0;$('dreamPhrase').textContent=phrases[0];const t=setInterval(()=>{i++;if(i<phrases.length)$('dreamPhrase').textContent=phrases[i];else{clearInterval(t);$('dream').classList.add('compact')}},900);$('dream').onclick=e=>{if($('dream').classList.contains('compact')&&!e.target.closest('.dream-close'))window.open(waLink('Olá '+settings.brandName+', gostaria de falar com um corretor.'),'_blank')};$('dreamClose').onclick=e=>{e.stopPropagation();$('dream').classList.add('closed')}}
-async function init(){const [s,p]=await Promise.all([api('/api/settings'),api('/api/properties')]);settings=s.settings;properties=p.properties;applySettings();render();setupDream();const q=new URLSearchParams(location.search).get('codigo');if(q){$('codeFilter').value=q;render();const exact=properties.find(x=>String(x.id).toLowerCase()===q.toLowerCase());if(exact)setTimeout(()=>openProperty(encodeURIComponent(exact.id)),300)}}
-document.querySelectorAll('.search-tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.search-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');purpose=b.dataset.purpose;render()});document.querySelectorAll('[data-purpose]').forEach(a=>{if(a.tagName==='A')a.onclick=()=>{purpose=a.dataset.purpose;setTimeout(render,50)}});$('searchBtn').onclick=render;['codeFilter','placeFilter','priceFilter'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')render()}));$('typeFilter').onchange=render;$('modalClose').onclick=()=>$('propertyModal').classList.add('hidden');$('propertyModal').onclick=e=>{if(e.target.id==='propertyModal')$('propertyModal').classList.add('hidden')};init().catch(e=>{console.error(e);$('propertyGrid').innerHTML='<div class="empty">Não foi possível carregar os imóveis.</div>'});
-</script></body></html>
+  <header class="topbar" id="topo">
+    <div class="container nav-wrap">
+      <a class="brand brand-full" href="#topo" aria-label="IS22 Imóveis">
+        <img src="assets/is22-logo-navy.png" alt="IS22 Imóveis" id="headerLogo" />
+      </a>
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu">☰</button>
+      <nav id="navMenu">
+        <a href="#comprar" id="navBuy">Comprar</a>
+        <a href="#comprar" data-filter-shortcut="Aluguel" id="navRent">Alugar</a>
+        <a href="#lancamentos" id="navLaunch">Lançamentos</a>
+        <a href="#premium" id="navPremium">Imóveis Premium</a>
+        <a href="#sobre" id="navAbout">Sobre nós</a>
+        <a href="#contato" id="navContact">Contato</a><a href="#anunciar" class="nav-anunciar">Anuncie seu imóvel</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="heart-btn" id="showFavorites" aria-label="Favoritos">♡ <span id="favCount">0</span></button>
+        <a class="btn btn-primary btn-sm" target="_blank" href="https://wa.me/5583999267089?text=Olá%20IS22,%20gostaria%20de%20falar%20com%20um%20corretor." id="headerCta">Falar com um corretor</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero-bg" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=88" alt="Casa moderna" id="heroImage" />
+      <div class="hero-overlay" id="heroOverlay"></div>
+      <div class="container hero-content reveal-up">
+        <span class="kicker light" id="heroKicker">SONHOS EM ENDEREÇOS REAIS</span>
+        <h1><span id="heroTitle">Não é só uma casa.</span><br><strong id="heroStrong">É a sua próxima conquista.</strong></h1>
+        <p id="heroDescription">O endereço certo marca uma nova fase. A IS22 aproxima você do imóvel que combina com o que já conquistou — e com tudo o que ainda quer viver.</p>
+        <div class="hero-emotions"><span id="heroEmotion1">Conquista</span><i></i><span id="heroEmotion2">Realização</span><i></i><span id="heroEmotion3">Novos começos</span></div>
+      </div>
+      <div class="container search-shell" id="comprar">
+        <div class="search-tabs" role="tablist">
+          <button class="active" data-purpose="Venda">Comprar</button>
+          <button data-purpose="Aluguel">Alugar</button>
+          <button data-purpose="Lançamento">Lançamentos</button>
+          <button data-purpose="Comercial">Comercial</button>
+        </div>
+        <div class="search-grid">
+          <label><span>Tipo de imóvel</span><select id="tipoFiltro"><option value="">Todos</option><option>Casa</option><option>Apartamento</option><option>Sítio</option><option>Chácara</option><option>Fazenda</option><option>Terreno</option><option>Comercial</option></select></label>
+          <label><span>Código</span><input id="codigoFiltro" inputmode="numeric" placeholder="Ex.: 7620" /></label>
+          <label><span>Cidade / Bairro</span><input id="localFiltro" placeholder="Ex.: João Pessoa, Manaíra" /></label>
+          <label><span>Faixa de preço</span><select id="precoFiltro"><option value="">Qualquer valor</option><option value="500000">Até R$ 500 mil</option><option value="1000000">Até R$ 1 milhão</option><option value="2000000">Até R$ 2 milhões</option><option value="5000000">Até R$ 5 milhões</option></select></label>
+          <label><span>Quartos</span><select id="quartosFiltro"><option value="">Qualquer</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></label>
+          <button class="btn btn-primary search-btn" id="searchBtn">Buscar imóveis</button>
+        </div>
+        <div class="advanced-search" id="advancedSearch">
+          <label><span>Vagas</span><select id="vagasFiltro"><option value="">Qualquer</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select></label>
+          <label><span>Área mínima</span><select id="areaFiltro"><option value="">Qualquer</option><option value="60">60 m²+</option><option value="100">100 m²+</option><option value="150">150 m²+</option><option value="250">250 m²+</option></select></label>
+          <label><span>Diferencial</span><select id="amenityFiltro"><option value="">Todos</option><option>Piscina</option><option>Área gourmet</option><option>Vista mar</option><option>Mobiliado</option><option>Academia</option></select></label>
+          <label class="toggle-search"><input id="financingFiltro" type="checkbox"><span>Aceita financiamento</span></label>
+          <button class="more-filter-toggle" id="toggleAdvancedFilters" type="button">Ocultar filtros</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="emotion-strip" aria-label="Valores IS22" id="emotionSection">
+      <div class="container emotion-grid">
+        <article class="emotion-item reveal-up"><span>01</span><div><b id="emotionTitle1">CONQUISTA</b><p id="emotionText1">Um espaço que representa o caminho que você percorreu.</p></div></article>
+        <article class="emotion-item reveal-up"><span>02</span><div><b id="emotionTitle2">REALIZAÇÃO</b><p id="emotionText2">O momento em que um plano deixa de ser ideia e ganha endereço.</p></div></article>
+        <article class="emotion-item reveal-up"><span>03</span><div><b id="emotionTitle3">PERTENCIMENTO</b><p id="emotionText3">Mais do que morar: sentir que finalmente chegou ao seu lugar.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section properties-section" id="highlightsSection">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="kicker" id="highlightsKicker">DESTAQUES</span><h2 id="highlightsTitle">Imóveis em evidência</h2><p id="highlightsText">Uma seleção pensada para diferentes momentos e estilos de vida.</p></div>
+          <div class="heading-actions"><span id="resultCount"></span><button class="text-link" id="clearFilters">Ver todos →</button></div>
+        </div>
+        <div class="property-grid" id="propertyGrid"></div>
+        <div class="empty hidden" id="emptyState"><h3>Nenhum imóvel encontrado.</h3><p>Tente ajustar os filtros ou veja todos os imóveis.</p><button class="btn btn-outline" id="emptyReset">Limpar filtros</button></div>
+      </div>
+    </section>
+
+    <section class="story-panel reveal-up" id="storySection">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=84" alt="Residência IS22" id="storyImage" />
+      <div class="story-shade"></div>
+      <div class="container story-copy">
+        <span class="kicker light" id="storyKicker">O PRÓXIMO CAPÍTULO</span>
+        <h2><span id="storyTitle">A chave não abre apenas uma porta.</span><br><strong id="storyStrong">Ela abre uma nova fase.</strong></h2>
+        <p id="storyText">Escolher um imóvel é escolher onde os próximos anos vão acontecer. A IS22 cuida dessa decisão com curadoria, proximidade e atendimento humano.</p>
+        <a class="btn btn-light" href="#comprar" id="storyButton">Encontrar meu lugar →</a>
+      </div>
+    </section>
+
+    <section class="exclusive" id="lancamentos" data-config-section="launch">
+      <div class="container exclusive-card">
+        <div class="exclusive-copy">
+          <span class="kicker light" id="launchKicker">CONDOMÍNIOS EXCLUSIVOS</span>
+          <h2 id="launchTitle">Viva o extraordinário.</h2>
+          <p id="launchText">Imóveis selecionados em condomínios com infraestrutura completa e localização estratégica.</p>
+          <button class="btn btn-light" data-filter-shortcut="Lançamento" id="launchButton">Ver lançamentos →</button>
+        </div>
+        <div class="exclusive-art" id="launchImage"></div>
+      </div>
+    </section>
+
+    <section class="section premium" id="premium" data-config-section="premium">
+      <div class="container premium-grid">
+        <div class="premium-photo"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=84" alt="Imóvel premium" id="premiumImage" /></div>
+        <div class="premium-copy">
+          <span class="kicker" id="premiumKicker">IS22 PREMIUM</span>
+          <h2 id="premiumTitle">Para quem chegou até aqui e quer ir além.</h2>
+          <p id="premiumText">Imóveis que traduzem uma nova etapa: arquitetura marcante, localização especial e detalhes à altura das suas conquistas.</p>
+          <div class="mini-stats"><div><b>Atendimento</b><span>Personalizado</span></div><div><b>Curadoria</b><span>Selecionada</span></div><div><b>Negociação</b><span>Segura</span></div></div>
+          <button class="btn btn-primary" id="premiumBtn">Ver imóveis Premium</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="sobre" data-config-section="about">
+      <div class="container about-grid">
+        <div><span class="kicker" id="aboutKicker">IS22 IMÓVEIS</span><h2 id="aboutTitle">Imóvel certo, atendimento do jeito certo.</h2></div>
+        <div class="about-points">
+          <article><span>01</span><h3 id="aboutTitle1">Seleção de imóveis</h3><p id="aboutText1">Casas, apartamentos, terrenos e oportunidades comerciais em um catálogo claro e organizado.</p></article>
+          <article><span>02</span><h3 id="aboutTitle2">Contato direto</h3><p id="aboutText2">O cliente encontra o imóvel e fala com a equipe sem etapas desnecessárias.</p></article>
+          <article><span>03</span><h3 id="aboutTitle3">Gestão profissional</h3><p id="aboutText3">A corretora controla anúncios, leads, destaques e disponibilidade em um painel dedicado.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section owner-capture" id="anunciar">
+      <div class="container owner-grid">
+        <div class="owner-copy">
+          <span class="kicker">QUER VENDER OU ALUGAR?</span>
+          <h2>Seu imóvel também pode encontrar a pessoa certa.</h2>
+          <p>Envie os dados básicos e a equipe IS22 entra em contato para avaliar, fotografar e preparar o anúncio.</p>
+          <div class="owner-benefits"><span>✓ Avaliação inicial</span><span>✓ Divulgação profissional</span><span>✓ Atendimento personalizado</span></div>
+        </div>
+        <form class="owner-form" id="ownerForm">
+          <div class="owner-form-head"><b>Quero anunciar meu imóvel</b><small>Leva menos de 1 minuto.</small></div>
+          <div class="owner-form-grid"><label>Nome<input id="ownerName" required placeholder="Seu nome"></label><label>WhatsApp<input id="ownerPhone" required placeholder="(83) 99999-9999"></label><label>Tipo<select id="ownerType"><option>Casa</option><option>Apartamento</option><option>Terreno</option><option>Comercial</option></select></label><label>Bairro / Cidade<input id="ownerLocation" required placeholder="Ex.: Manaíra, João Pessoa"></label></div>
+          <label>O que deseja fazer?<select id="ownerPurpose"><option>Vender</option><option>Alugar</option><option>Avaliar</option></select></label>
+          <button class="btn btn-primary" type="submit">Solicitar contato →</button>
+          <small class="owner-privacy">Ao enviar, você autoriza o contato da equipe IS22 sobre este imóvel.</small>
+        </form>
+      </div>
+    </section>
+
+    <section class="cta" id="contato" data-config-section="contact">
+      <div class="container cta-inner">
+        <div><span class="kicker light" id="contactKicker">VAMOS CONVERSAR?</span><h2 id="contactTitle">Seu próximo endereço pode estar aqui.</h2><p id="contactText">Fale com a equipe IS22 para comprar, alugar ou anunciar seu imóvel.</p></div>
+        <div class="cta-actions"><a class="btn btn-light" target="_blank" href="https://wa.me/5583999267089?text=Olá%20IS22,%20gostaria%20de%20atendimento." id="contactWhatsapp">WhatsApp</a><a class="btn btn-ghost-light" href="mailto:contato@is22.com.br" id="contactEmail">contato@is22.com.br</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand"><div class="brand brand-white brand-full"><img src="assets/is22-logo-white.png" alt="IS22 Imóveis" id="footerLogo"></div><p id="footerCreci">Imobiliária · CRECI 1764-J</p></div>
+      <div><strong>Navegação</strong><a href="#comprar" id="footerBuy">Comprar</a><a href="#comprar" id="footerRent">Alugar</a><a href="#premium" id="footerPremium">Premium</a></div>
+      <div><strong>Contato</strong><a href="tel:+5583999267089" id="footerPhone">(83) 99926-7089</a><a href="mailto:contato@is22.com.br" id="footerEmail">contato@is22.com.br</a><a href="https://instagram.com/is22imoveis" target="_blank" id="footerInstagram">@is22imoveis</a></div>
+      <div><strong>Corretora</strong><a href="login.html">Acessar painel</a><a href="#sobre" id="footerAbout">Sobre nós</a></div>
+    </div>
+    <div class="container footer-bottom" id="footerCopyright">© 2026 IS22 Imóveis. Todos os direitos reservados.</div>
+  </footer>
+
+  <div class="compare-bar hidden" id="compareBar"><div><b>Comparar imóveis</b><span id="compareCount">0 selecionados</span></div><div class="compare-chips" id="compareChips"></div><button class="btn btn-light btn-sm" id="openCompare">Comparar agora</button><button class="compare-clear" id="clearCompare">Limpar</button></div>
+  <div class="modal hidden" id="propertyModal"><div class="modal-box property-modal-box"><button class="modal-close" id="closeModal">×</button><div id="modalContent"></div></div></div>
+  <div class="modal hidden" id="scheduleModal"><div class="modal-box schedule-modal-box"><button class="modal-close" id="closeSchedule">×</button><div id="scheduleContent"></div></div></div>
+  <div class="modal hidden" id="compareModal"><div class="modal-box compare-modal-box"><button class="modal-close" id="closeCompare">×</button><div id="compareContent"></div></div></div>
+  <div class="toast hidden" id="toast"></div>
+  <script src="js/settings.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>
