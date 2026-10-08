@@ -103,12 +103,70 @@ function extractImageUrls(html, code) {
   return urls.slice(0, 40);
 }
 
+function sanitizeDescription(value = '') {
+  let out = decodeEntities(String(value))
+    .replace(/\r/g, '\n')
+    .replace(/[\t ]+/g, ' ')
+    .replace(/\n{2,}/g, '\n')
+    .trim();
+
+  // O site de origem mistura CTAs e componentes da página logo após a descrição.
+  // A partir dessas frases, o restante não pertence ao texto do imóvel.
+  const stopPatterns = [
+    /\bAgende\s+(?:agora\s+)?sua\s+visita\b/i,
+    /\bAgendar\s+visita\b/i,
+    /\bFale\s+com\s+(?:um|nossos?)\s+consultor/i,
+    /\bEntre\s+em\s+contato\b/i,
+    /\bMapa\s+do\s+im[oó]vel\b/i,
+    /\bIm[oó]veis\s+semelhantes\b/i,
+    /\bCompartilhar\b/i,
+    /\bFavorito(?:s)?\b/i,
+    /\bFinanciamento\b/i,
+    /\bWhatsApp\b/i,
+    /\bloading\.{0,3}\b/i
+  ];
+
+  let cut = out.length;
+  for (const re of stopPatterns) {
+    const m = out.match(re);
+    if (m && typeof m.index === 'number' && m.index >= 12) cut = Math.min(cut, m.index);
+  }
+  out = out.slice(0, cut);
+
+  // Remove rótulos de interface que eventualmente aparecem antes do corte.
+  out = out
+    .replace(/(?:^|\s)(?:Descrição|Detalhes\s+do\s+im[oó]vel)\s*[:\-]?\s*/gi, ' ')
+    .replace(/\b(?:loading\.{0,3}|WhatsApp|Agendar visita|Mapa do imóvel)\b/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/^[\s:;,.\-–—]+|[\s:;,.\-–—]+$/g, '')
+    .trim();
+
+  return out;
+}
+
 function extractDescription(text) {
   const flat = String(text).replace(/\r/g, '');
-  const m = flat.match(/(?:^|\n)Descrição\s*\n?([\s\S]+?)(?=\n(?:Valor\s+(?:de\s+)?venda|Entre em contato|Imóveis semelhantes|Financiamento|Compartilhar|Favorito)\b|$)/i);
-  if (m) return m[1].replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
-  const alt = flat.match(/(OPORTUNIDADE[\s\S]{40,1600}?)(?=Entre em contato|Imóveis semelhantes|$)/i);
-  return alt ? alt[1].replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim() : '';
+
+  // Primeiro tenta isolar especificamente o bloco que vem depois de "Descrição".
+  const m = flat.match(
+    /(?:^|\n)\s*Descrição\s*[:\-]?\s*\n?([\s\S]+?)(?=\n\s*(?:Valor\s+(?:de\s+)?(?:venda|loca[cç][aã]o)|Agende\s+(?:agora\s+)?sua\s+visita|Agendar\s+visita|Entre\s+em\s+contato|Mapa\s+do\s+im[oó]vel|Im[oó]veis\s+semelhantes|Financiamento|Compartilhar|Favorito|WhatsApp)\b|$)/i
+  );
+  if (m) {
+    const clean = sanitizeDescription(m[1]);
+    if (clean.length >= 8) return clean;
+  }
+
+  // Alguns anúncios não possuem o título "Descrição", então usamos o texto
+  // promocional principal, mas sempre limpando a interface da página.
+  const alt = flat.match(
+    /(OPORTUNIDADE[\s\S]{20,1800}?)(?=\n\s*(?:Agende\s+(?:agora\s+)?sua\s+visita|Agendar\s+visita|Entre\s+em\s+contato|Mapa\s+do\s+im[oó]vel|Im[oó]veis\s+semelhantes|WhatsApp)\b|$)/i
+  );
+  if (alt) {
+    const clean = sanitizeDescription(alt[1]);
+    if (clean.length >= 8) return clean;
+  }
+
+  return '';
 }
 
 function extractLocation(text, title = '') {
@@ -206,7 +264,7 @@ async function scrapeByCode(rawCode) {
   const ogTitle = meta(html, 'og:title') || meta(html, 'twitter:title');
   const title = sanitizeTitle(ogTitle || firstTagText(html) || `Imóvel cód. ${code}`);
   const ogDesc = meta(html, 'og:description') || meta(html, 'description');
-  const description = extractDescription(text) || ogDesc || '';
+  const description = extractDescription(text) || sanitizeDescription(ogDesc) || '';
   const typePurpose = inferTypePurpose(`${title}\n${sourceText.slice(0, 8000)}`);
   const location = extractLocation(text, title);
   const loc = splitLocation(location);
