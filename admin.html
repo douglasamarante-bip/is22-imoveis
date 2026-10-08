@@ -56,17 +56,17 @@
     <section class="admin-panel hidden" id="panel-imoveis"><div class="admin-title"><div><h1>Meus imóveis</h1><p>Catálogo completo da IS22.</p></div><button class="btn btn-primary" id="newPropertyBtn2">+ Novo imóvel</button></div><div class="admin-card"><div id="adminPropertyCards" class="admin-property-cards"></div></div></section>
 
     <section class="admin-panel hidden" id="panel-importador">
-      <div class="admin-title"><div><span class="kicker">IMPORTADOR POR CÓDIGO</span><h1>Trazer imóvel de outra base</h1><p>Digite o código do anúncio. O sistema busca os dados, mostra uma prévia e baixa as fotos para a IS22 após sua confirmação.</p></div></div>
+      <div class="admin-title"><div><span class="kicker">IMPORTADOR INTELIGENTE</span><h1>Trazer imóvel de outra base</h1><p>Cole o link completo do imóvel ou digite o código. O sistema lê a página e a descrição para pré-preencher os dados e as fotos.</p></div></div>
       <div class="importer-layout">
         <div class="admin-card importer-search-card">
-          <div class="importer-source"><span class="source-badge">FONTE</span><div><b>Bonanza Imóveis</b><small>Busca pública por código</small></div></div>
-          <label class="importer-code-label">Código do imóvel<input id="importCode" inputmode="numeric" placeholder="Ex.: 7620" autocomplete="off"></label>
+          <div class="importer-source"><span class="source-badge">FONTE</span><div><b>Bonanza Imóveis</b><small>Leitura automática pelo link ou código</small></div></div>
+          <label class="importer-code-label">Link ou código do imóvel<input id="importCode" type="text" placeholder="Cole o link do imóvel ou digite 7620" autocomplete="off"></label>
           <button class="btn btn-primary" id="importLookupBtn" type="button">Buscar anúncio</button>
           <div class="importer-server-note" id="importServerNote"><b>Importante</b><span>O importador funciona quando o site é aberto pelo servidor (`INICIAR_IS22.bat`, `npm start` ou Railway). Abrir o HTML diretamente pelo Explorador do Windows não permite buscar a origem.</span></div>
         </div>
         <div class="admin-card importer-rules-card">
           <h2>Como funciona</h2>
-          <ol><li>Digite o código e clique em <b>Buscar anúncio</b>.</li><li>Confira e, se precisar, edite título, preço, localização e descrição.</li><li>Confirme que você tem autorização para reutilizar o material.</li><li>O servidor baixa as fotos e publica o imóvel no catálogo da IS22.</li></ol>
+          <ol><li>Cole o <b>link do imóvel</b> ou digite o código e clique em <b>Buscar anúncio</b>.</li><li>O plugin lê título, preço, localização, descrição e usa a própria descrição para preencher área, quartos, suítes, banheiros e vagas quando essas informações estiverem no texto.</li><li>Confira a prévia e ajuste somente o que precisar.</li><li>Confirme a autorização; o servidor baixa as fotos e publica no catálogo da IS22.</li></ol>
           <p>O plugin não remove marca-d’água, não acessa área restrita e não tenta contornar bloqueios do site de origem.</p>
         </div>
       </div>
@@ -75,7 +75,7 @@
         <div class="import-photo-strip" id="importPhotoStrip"></div>
         <div class="form-grid importer-fields">
           <label>Código<input id="importRef" readonly></label>
-          <label>Tipo<select id="importType"><option>Casa</option><option>Apartamento</option><option>Sítio</option><option>Chácara</option><option>Fazenda</option><option>Terreno</option><option>Comercial</option><option>Imóvel</option></select></label>
+          <label>Tipo<select id="importType"><option>Casa</option><option>Apartamento</option><option>Sítio</option><option>Chácara</option><option>Fazenda</option><option>Terreno</option><option>Comercial</option><option>Lote</option><option>Galpão</option><option>Imóvel</option></select></label>
           <label class="span-2">Título<input id="importTitle"></label>
           <label>Finalidade<select id="importPurpose"><option>Venda</option><option>Aluguel</option></select></label>
           <label>Preço (R$)<input id="importPrice" type="number" min="0"></label>
