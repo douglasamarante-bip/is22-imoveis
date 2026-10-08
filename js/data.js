@@ -31,7 +31,7 @@
     if(!localStorage.getItem(KEYS.clients)) localStorage.setItem(KEYS.clients,JSON.stringify([]));
   }
   const properties=()=>parse(KEYS.properties,seedProperties).map(normalizeProperty);
-  const saveProperties=v=>localStorage.setItem(KEYS.properties,JSON.stringify(v.map(normalizeProperty)));
+  const saveProperties=v=>{const clean=v.map(normalizeProperty);localStorage.setItem(KEYS.properties,JSON.stringify(clean));if(localStorage.getItem('is22AdminSessionV1'))fetch('/api/properties',{method:'PUT',headers:{'content-type':'application/json'},credentials:'same-origin',body:JSON.stringify({properties:clean})}).catch(()=>{});};
   const leads=()=>parse(KEYS.leads,[]); const saveLeads=v=>localStorage.setItem(KEYS.leads,JSON.stringify(v));
   const appointments=()=>parse(KEYS.appointments,[]); const saveAppointments=v=>localStorage.setItem(KEYS.appointments,JSON.stringify(v));
   const owners=()=>parse(KEYS.owners,[]); const saveOwners=v=>localStorage.setItem(KEYS.owners,JSON.stringify(v));
@@ -45,4 +45,5 @@
   function addOwner(data){const arr=owners();const item={id:'C-'+String(Date.now()).slice(-7),status:'Novo',createdAt:new Date().toISOString(),...data};arr.unshift(item);saveOwners(arr);return item}
   init();
   window.IS22Data={KEYS,properties,saveProperties,leads,saveLeads,appointments,saveAppointments,owners,saveOwners,upsertLead,addAppointment,addOwner,normalizeProperty};
+  fetch('/api/properties',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{if(Array.isArray(d.properties)){localStorage.setItem(KEYS.properties,JSON.stringify(d.properties.map(normalizeProperty)));window.dispatchEvent(new Event('is22-data-sync'));}}).catch(()=>{});
 })();
