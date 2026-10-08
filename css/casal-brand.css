@@ -13,6 +13,8 @@
   --shadow:0 18px 52px rgba(11,45,79,.11);
 }
 body{font-family:Montserrat,Inter,Arial,sans-serif;background:#fff;color:var(--ink)}
+.brand-full img{width:190px!important;height:44px!important;object-fit:contain}
+.footer-brand .brand-full img{width:210px!important;height:52px!important}
 .hero h1,.story-copy h2,.premium-copy h2,.about h2,.cta h2,.exclusive h2,
 .section-heading h2,.detail-emotional h2,.login-brand h1,.login-form-wrap h2{
   font-family:Lora,Georgia,serif;
@@ -47,6 +49,6 @@ footer{background:#081F36}
 .login-shade{background:linear-gradient(90deg,rgba(6,25,44,.88),rgba(11,45,79,.42))!important}
 .login-logo{width:min(320px,100%)!important}
 @media(max-width:760px){
-  .brand-full img{width:150px!important;height:36px!important}
+  .brand-full img{width:158px!important;height:38px!important}
   .hero h1{letter-spacing:-.7px!important}
 }
