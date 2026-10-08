@@ -16,6 +16,25 @@ function cleanCode(value) {
   return code;
 }
 
+function normalizeSourceInput(value) {
+  const raw = String(value || '').trim();
+  if (!raw) throw new Error('Cole o link do imóvel ou informe o código.');
+
+  if (/^https?:\/\//i.test(raw)) {
+    let u;
+    try { u = new URL(raw); } catch { throw new Error('O link informado não é válido.'); }
+    const host = u.hostname.toLowerCase().replace(/^www\./, '');
+    if (host !== SOURCE_HOST) throw new Error('Por enquanto o importador aceita links da Bonanza Imóveis.');
+    if (!/^\/imovel\//i.test(u.pathname)) throw new Error('Cole o link da página do imóvel, não o link de busca.');
+    const allCodes = u.pathname.match(/\d{3,12}/g) || [];
+    const code = cleanCode(allCodes[allCodes.length - 1] || '');
+    u.hash = '';
+    return { code, detailUrl: u.href, raw };
+  }
+
+  return { code: cleanCode(raw), detailUrl: '', raw };
+}
+
 function decodeEntities(str = '') {
   const named = {amp:'&',quot:'"',apos:"'",lt:'<',gt:'>',nbsp:' '};
   return String(str)
@@ -210,6 +229,37 @@ function extractFeature(text, labels) {
   return 0;
 }
 
+function extractNaturalFeature(text, nouns) {
+  const src = String(text || '');
+  for (const noun of nouns) {
+    const n = noun.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const patterns = [
+      new RegExp('(\\d+(?:[.,]\\d+)?)\\s+' + n + 's?\\b', 'i'),
+      new RegExp(n + 's?\\s*[:\\-]?\\s*(\\d+(?:[.,]\\d+)?)', 'i'),
+      new RegExp('(?:com|possui|conta com|sendo)\\s+(\\d+(?:[.,]\\d+)?)\\s+' + n + 's?\\b', 'i')
+    ];
+    for (const re of patterns) {
+      const m = src.match(re);
+      if (m) return parseNumber(m[1]);
+    }
+  }
+  return 0;
+}
+
+function extractNaturalArea(text) {
+  const src = String(text || '');
+  const patterns = [
+    /(?:área\s+(?:total|útil|construída)?\s*(?:de|:)?\s*)([\d.,]+)\s*m[²2]/i,
+    /(?:terreno|lote|imóvel|chácara|sítio)\s+(?:com|de)\s+([\d.,]+)\s*m[²2]/i,
+    /([\d.,]+)\s*m[²2]\s+(?:de\s+)?(?:área|terreno|lote)/i
+  ];
+  for (const re of patterns) {
+    const m = src.match(re);
+    if (m) return parseNumber(m[1]);
+  }
+  return 0;
+}
+
 function sanitizeTitle(title) {
   return String(title || '')
     .replace(/\s*[|\-–—]\s*Bonanza Imóveis.*$/i, '')
@@ -248,24 +298,30 @@ async function fetchWithTimeout(url, { timeout = 18000, binary = false } = {}) {
   } finally { clearTimeout(timer); }
 }
 
-async function scrapeByCode(rawCode) {
-  const code = cleanCode(rawCode);
+async function scrapeByInput(rawInput) {
+  const input = normalizeSourceInput(rawInput);
+  const code = input.code;
   const searchUrl = `${SOURCE_BASE}/busca?codigo=${encodeURIComponent(code)}`;
-  const searchRes = await fetchWithTimeout(searchUrl);
-  const searchHtml = await searchRes.text();
-  const detailUrl = findDetailUrl(searchHtml, code);
-  if (!detailUrl) throw new Error(`Não encontrei o código ${code} na busca da ${SOURCE_NAME}.`);
+  let searchHtml = '';
+  let detailUrl = input.detailUrl;
+
+  if (!detailUrl) {
+    const searchRes = await fetchWithTimeout(searchUrl);
+    searchHtml = await searchRes.text();
+    detailUrl = findDetailUrl(searchHtml, code);
+    if (!detailUrl) throw new Error(`Não encontrei o código ${code} na busca da ${SOURCE_NAME}.`);
+  }
 
   const detailRes = await fetchWithTimeout(detailUrl);
   const html = await detailRes.text();
   const text = htmlToText(html);
-  const sourceText = `${htmlToText(searchHtml)}\n${text}`;
+  const sourceText = `${searchHtml ? htmlToText(searchHtml) : ''}\n${text}`;
 
   const ogTitle = meta(html, 'og:title') || meta(html, 'twitter:title');
   const title = sanitizeTitle(ogTitle || firstTagText(html) || `Imóvel cód. ${code}`);
   const ogDesc = meta(html, 'og:description') || meta(html, 'description');
   const description = extractDescription(text) || sanitizeDescription(ogDesc) || '';
-  const typePurpose = inferTypePurpose(`${title}\n${sourceText.slice(0, 8000)}`);
+  const typePurpose = inferTypePurpose(`${title}\n${description}\n${sourceText.slice(0, 8000)}`);
   const location = extractLocation(text, title);
   const loc = splitLocation(location);
   const priceMatch = sourceText.match(/R\$\s*([\d.]+,\d{2})/i) || sourceText.match(/R\$\s*([\d.]+)/i);
@@ -273,7 +329,7 @@ async function scrapeByCode(rawCode) {
   const images = extractImageUrls(html, code);
 
   return {
-    source: { name: SOURCE_NAME, code, url: detailUrl, searchUrl, importedAt: null },
+    source: { name: SOURCE_NAME, code, url: detailUrl, searchUrl, importedAt: null, input: input.raw },
     id: code,
     title,
     type: typePurpose.type,
@@ -283,17 +339,17 @@ async function scrapeByCode(rawCode) {
     city: loc.city,
     neighborhood: loc.neighborhood,
     address: location,
-    bedrooms: extractFeature(sourceText, ['Quartos?', 'Dormitórios?', 'Dormitorios?']),
-    suites: extractFeature(sourceText, ['Suítes?', 'Suites?']),
-    bathrooms: extractFeature(sourceText, ['Banheiros?']),
-    parking: extractFeature(sourceText, ['Vagas?', 'Garagens?']),
-    area: areaMatch ? parseNumber(areaMatch[1]) : 0,
+    bedrooms: extractFeature(sourceText, ['Quartos?', 'Dormitórios?', 'Dormitorios?']) || extractNaturalFeature(description, ['quarto', 'dormitório', 'dormitorio']),
+    suites: extractFeature(sourceText, ['Suítes?', 'Suites?']) || extractNaturalFeature(description, ['suíte', 'suite']),
+    bathrooms: extractFeature(sourceText, ['Banheiros?']) || extractNaturalFeature(description, ['banheiro']),
+    parking: extractFeature(sourceText, ['Vagas?', 'Garagens?']) || extractNaturalFeature(description, ['vaga', 'garagem']),
+    area: areaMatch ? parseNumber(areaMatch[1]) : extractNaturalArea(description),
     condo: 0,
     iptu: 0,
     featured: false,
     premium: false,
-    furnished: false,
-    financing: true,
+    furnished: /mobiliad[oa]/i.test(description),
+    financing: !/não\s+aceita\s+financiamento/i.test(description),
     pets: true,
     amenities: inferAmenities(description),
     image: images[0] || '',
@@ -303,6 +359,8 @@ async function scrapeByCode(rawCode) {
     remoteImages: images
   };
 }
+
+async function scrapeByCode(rawCode) { return scrapeByInput(rawCode); }
 
 function extFrom(contentType, url) {
   const ct = String(contentType || '').toLowerCase();
@@ -353,7 +411,18 @@ function mergeOverrides(property, overrides = {}) {
   return out;
 }
 
-async function importByCode(rawCode, uploadDir, overrides = {}) {
+async function importByInput(rawInput, uploadDir, overrides = {}) {
+  const property = mergeOverrides(await scrapeByInput(rawInput), overrides);
+  const downloaded = await downloadImages(property.remoteImages || property.images || [], property.source.code, uploadDir);
+  if (!downloaded.length) throw new Error('Encontrei o anúncio, mas não consegui baixar nenhuma foto da origem.');
+  property.images = downloaded;
+  property.image = downloaded[0];
+  property.source = { ...property.source, importedAt: new Date().toISOString() };
+  delete property.remoteImages;
+  return property;
+}
+
+async function importByCode(rawCode, uploadDir, overrides = {}) { return importByInput(rawCode, uploadDir, overrides); }) {
   const property = mergeOverrides(await scrapeByCode(rawCode), overrides);
   const downloaded = await downloadImages(property.remoteImages || property.images || [], property.source.code, uploadDir);
   if (!downloaded.length) throw new Error('Encontrei o anúncio, mas não consegui baixar nenhuma foto da origem.');
@@ -364,4 +433,4 @@ async function importByCode(rawCode, uploadDir, overrides = {}) {
   return property;
 }
 
-module.exports = { SOURCE_NAME, SOURCE_HOST, scrapeByCode, importByCode, cleanCode };
+module.exports = { SOURCE_NAME, SOURCE_HOST, scrapeByInput, scrapeByCode, importByInput, importByCode, cleanCode, normalizeSourceInput };
