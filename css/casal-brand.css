@@ -52,3 +52,71 @@ footer{background:#081F36}
   .brand-full img{width:158px!important;height:38px!important}
   .hero h1{letter-spacing:-.7px!important}
 }
+
+
+/* Ajustes solicitados na revisão visual */
+#navPremium,
+#navAbout,
+#showFavorites,
+.hero-emotions{
+  display:none!important;
+}
+
+/* Logo principal maior e com leitura correta */
+.topbar{height:80px}
+.nav-wrap{gap:22px}
+.brand-full img{
+  width:240px!important;
+  height:52px!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+}
+.footer-brand .brand-full img{
+  width:235px!important;
+  height:58px!important;
+}
+
+/* WhatsApp mais limpo e com ícone maior */
+.dream-widget.compact .dream-scene{
+  min-height:74px!important;
+}
+.dream-wa-icon{
+  width:44px!important;
+  height:44px!important;
+  flex:0 0 44px!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.18)!important;
+  border:1px solid rgba(255,255,255,.32)!important;
+  display:grid!important;
+  place-items:center!important;
+}
+.dream-wa-icon svg{
+  width:26px!important;
+  height:26px!important;
+}
+.dream-widget.compact .dream-wa-copy b{
+  font-size:12px!important;
+  line-height:1.15!important;
+}
+.dream-widget.compact .dream-wa-copy small{
+  font-size:8px!important;
+  opacity:.9!important;
+}
+
+@media(max-width:1100px){
+  .brand-full img{
+    width:205px!important;
+    height:46px!important;
+  }
+}
+
+@media(max-width:760px){
+  .topbar{height:68px}
+  .brand-full img{
+    width:175px!important;
+    height:40px!important;
+  }
+  .dream-widget.compact .dream-scene{
+    width:min(270px,calc(100vw - 24px))!important;
+  }
+}
