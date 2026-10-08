@@ -3,7 +3,7 @@
   const svgLogo=(color)=>'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="250" height="76" viewBox="0 0 250 76"><g fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40L36 13l28 27V66H8Z"/><path d="M36 13v53"/></g><text x="76" y="44" font-family="Arial,sans-serif" font-size="38" font-weight="800" fill="${color}">IS22</text><text x="78" y="63" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="4" fill="${color}">IMÓVEIS</text></svg>`);
   const svgSymbol=(color)=>'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><g fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 42L40 12l30 30v28H10Z"/><path d="M40 12v58"/></g><text x="18" y="56" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="${color}">IS</text></svg>`);
   const defaults={
-    brand:{name:'IS22 Imóveis',creci:'1764-J',tagline:'Sonhos em endereços reais',logoNavy:svgLogo('#082452'),logoWhite:svgLogo('#ffffff'),symbolWhite:svgSymbol('#ffffff')},
+    brand:{name:'IS22 Imóveis',creci:'1764-J',tagline:'Sonhos em endereços reais',logoNavy:'assets/is22-logo-navy.png',logoWhite:'assets/is22-logo-white.png',symbolWhite:'assets/is22-symbol-white.png'},
     colors:{primary:'#082452',secondary:'#0d356c',accent:'#2b87c8',text:'#102038',soft:'#f5f8fb'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
