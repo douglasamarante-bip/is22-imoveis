@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 96" role="img" aria-labelledby="t d">
+<title id="t">Casal Corretores</title><desc id="d">Monograma CC com casa, em branco e dourado.</desc>
+<g transform="translate(4 6)">
+  <path d="M65 10A34 34 0 1 0 65 78" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M70 20A26 26 0 1 1 70 68" fill="none" stroke="#D4AF7C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M24 54 52 29 80 54" fill="none" stroke="#D4AF7C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M34 52v22h36V52" fill="none" stroke="#D4AF7C" stroke-width="6" stroke-linejoin="round"/>
+  <g fill="#D4AF7C"><rect x="47" y="55" width="7" height="7" rx="1"/><rect x="58" y="55" width="7" height="7" rx="1"/><rect x="47" y="66" width="7" height="7" rx="1"/><rect x="58" y="66" width="7" height="7" rx="1"/></g>
+</g>
+<text x="104" y="45" font-family="Montserrat,Arial,sans-serif" font-size="31" font-weight="700" letter-spacing=".6" fill="#FFFFFF">CASAL</text>
+<text x="205" y="45" font-family="Montserrat,Arial,sans-serif" font-size="31" font-weight="500" letter-spacing=".4" fill="#D4AF7C">CORRETORES</text>
+<text x="106" y="69" font-family="Montserrat,Arial,sans-serif" font-size="10" font-weight="600" letter-spacing="4.1" fill="#E8EDF2">IMÓVEIS COM PROPÓSITO</text>
+</svg>
