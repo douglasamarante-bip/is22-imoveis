@@ -1,0 +1,12 @@
+{
+  "name": "is22-imoveis-importador",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Site IS22 Imóveis com importador autorizado de anúncios por código.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
