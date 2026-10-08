@@ -411,7 +411,16 @@ function mergeOverrides(property, overrides = {}) {
   return out;
 }
 
-async function importByInput(rawInput, uploadDir, overrides = {}
+async function importByInput(rawInput, uploadDir, overrides = {}) {
+  const property = mergeOverrides(await scrapeByInput(rawInput), overrides);
+  const downloaded = await downloadImages(property.remoteImages || property.images || [], property.source.code, uploadDir);
+  if (!downloaded.length) throw new Error('Encontrei o anúncio, mas não consegui baixar nenhuma foto da origem.');
+  property.images = downloaded;
+  property.image = downloaded[0];
+  property.source = { ...property.source, importedAt: new Date().toISOString() };
+  delete property.remoteImages;
+  return property;
+}
 
 async function importByCode(rawCode, uploadDir, overrides = {}) {
   return importByInput(rawCode, uploadDir, overrides);
