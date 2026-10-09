@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 170" role="img" aria-label="Lilian e Douglas"><g aria-label="Casa e chave">
+<path d="M9 89 L99 15 157 63 157 27 180 27 180 81" fill="none" stroke="#F26A08" stroke-width="17" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M35 81 L99 33 164 86" fill="none" stroke="#FF962D" stroke-width="5.5" stroke-linejoin="round" opacity=".93"/>
+<rect x="82" y="64" width="15" height="15" rx="1.5" fill="#16642F"/><rect x="102" y="64" width="15" height="15" rx="1.5" fill="#16642F"/>
+<rect x="82" y="84" width="15" height="15" rx="1.5" fill="#16642F"/><rect x="102" y="84" width="15" height="15" rx="1.5" fill="#16642F"/>
+<path d="M7 144 Q60 91 122 124 T191 119" fill="none" stroke="#F26A08" stroke-width="9" stroke-linecap="round"/>
+<path d="M9 157 Q72 118 133 143 T193 136" fill="none" stroke="#16642F" stroke-width="7" stroke-linecap="round"/>
+<circle cx="186" cy="90" r="25" fill="#14552B" stroke="#F26A08" stroke-width="8"/>
+<path d="M201 110 L226 144 L218 152 L209 146 L208 157 L198 164 L185 119" fill="#F26A08" transform="translate(-14 -2) scale(.96)"/>
+<path d="M173 92 L184 81 L195 92" fill="none" stroke="#F26A08" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="178" y="92" width="12" height="11" rx="1" fill="#16642F"/><path d="M184 92V103 M178 98H190" stroke="#F7FCEB" stroke-width="1.4"/>
+</g></svg>
