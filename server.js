@@ -5,6 +5,7 @@ const path=require('path');
 const crypto=require('crypto');
 const {URL}=require('url');
 const importer=require('./plugins/bonanza-importer');
+const visitas=require('./visitas-server');
 
 const ROOT=__dirname;
 const PORT=Number(process.env.PORT||3000);
@@ -51,7 +52,7 @@ function b64url(s){return Buffer.from(s).toString('base64url')}
 function sign(payload){if(!SESSION_SECRET)return'';return crypto.createHmac('sha256',SESSION_SECRET).update(payload).digest('base64url')}
 function makeToken(email){const p=b64url(JSON.stringify({email,exp:Date.now()+12*60*60*1000}));return p+'.'+sign(p)}
 function verifyToken(token){if(!token||!SESSION_SECRET)return null;const [p,s]=String(token).split('.');if(!p||!s)return null;const expected=sign(p);if(s.length!==expected.length||!crypto.timingSafeEqual(Buffer.from(s),Buffer.from(expected)))return null;try{const d=JSON.parse(Buffer.from(p,'base64url').toString('utf8'));return d.exp>Date.now()?d:null}catch{return null}}
-function auth(req){const h=String(req.headers.authorization||'');let token=h.startsWith('Bearer ')?h.slice(7):'';if(!token){const cookie=String(req.headers.cookie||'');const m=cookie.match(/(?:^|;\\s*)is22_session=([^;]+)/);if(m)token=decodeURIComponent(m[1])}return verifyToken(token)}
+function auth(req){const h=String(req.headers.authorization||'');let token=h.startsWith('Bearer ')?h.slice(7):'';if(!token){const cookie=String(req.headers.cookie||'');const m=cookie.match(/(?:^|;\s*)is22_session=([^;]+)/);if(m)token=decodeURIComponent(m[1])}return verifyToken(token)}
 function requireAuth(req,res){const u=auth(req);if(!u){sendJSON(res,401,{ok:false,error:'Não autorizado.'});return null}return u}
 function cleanProperty(p){const o={...p};o.id=String(o.id||'').trim()||('IS22-'+Date.now());o.title=String(o.title||'Imóvel sem título').trim();o.price=Number(o.price||0);o.area=Number(o.area||0);o.bedrooms=Number(o.bedrooms||0);o.suites=Number(o.suites||0);o.bathrooms=Number(o.bathrooms||0);o.parking=Number(o.parking||0);o.images=Array.isArray(o.images)?o.images.filter(Boolean):[];o.image=o.images[0]||o.image||'';o.status=o.status||'Disponível';return o}
 function upsertProperty(p){const arr=readJSON('properties',seedProperties);const item=cleanProperty(p);const i=arr.findIndex(x=>String(x.id)===String(item.id));if(i>=0)arr[i]={...arr[i],...item};else arr.unshift(item);writeJSON('properties',arr);return item}
@@ -75,5 +76,5 @@ async function api(req,res,url){
   return false;
 }
 
-async function handler(req,res){const url=new URL(req.url,`http://${req.headers.host||'localhost'}`);try{if(url.pathname.startsWith('/api/')){const done=await api(req,res,url);if(done!==false)return;return sendJSON(res,404,{ok:false,error:'Rota não encontrada.'})}if(url.pathname.startsWith('/uploads/')){const file=safeFile(UPLOAD_DIR,url.pathname.replace(/^\/uploads\//,''));if(file&&serveFile(res,file))return;res.writeHead(404);return res.end('Not found')}let pathname=url.pathname==='/'?'/index.html':url.pathname;const file=safeFile(ROOT,pathname);if(file&&serveFile(res,file))return;res.writeHead(404,{'content-type':'text/plain; charset=utf-8'});res.end('Arquivo não encontrado.')}catch(e){console.error('[IS22]',e);if(url.pathname.startsWith('/api/'))return sendJSON(res,500,{ok:false,error:e.message||'Erro interno.'});res.writeHead(500);res.end('Erro interno.')}}
+async function handler(req,res){const url=new URL(req.url,`http://${req.headers.host||'localhost'}`);try{if(url.pathname.startsWith('/api/visitas')){const result=await visitas.route(req,res,url,{isAdmin:!!auth(req)});if(result===false)return sendJSON(res,404,{ok:false,error:'Rota de visita não encontrada.'});return}if(url.pathname.startsWith('/api/')){const done=await api(req,res,url);if(done!==false)return;return sendJSON(res,404,{ok:false,error:'Rota não encontrada.'})}if(url.pathname.startsWith('/uploads/')){const file=safeFile(UPLOAD_DIR,url.pathname.replace(/^\/uploads\//,''));if(file&&serveFile(res,file))return;res.writeHead(404);return res.end('Not found')}let pathname=url.pathname==='/'?'/index.html':url.pathname;const file=safeFile(ROOT,pathname);if(file&&serveFile(res,file))return;res.writeHead(404,{'content-type':'text/plain; charset=utf-8'});res.end('Arquivo não encontrado.')}catch(e){console.error('[IS22]',e);if(url.pathname.startsWith('/api/'))return sendJSON(res,500,{ok:false,error:e.message||'Erro interno.'});res.writeHead(500);res.end('Erro interno.')}}
 http.createServer(handler).listen(PORT,'0.0.0.0',()=>console.log(`IS22 online na porta ${PORT}`));
