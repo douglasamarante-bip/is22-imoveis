@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0E2A47">
+<title>Ficha de cliente | Casal Corretores</title><link rel="icon" type="image/svg+xml" href="assets/casal-favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e2a47;--gold:#c69f6a;--ink:#203346;--text:#5a7082;--line:#dde4ea;--bg:#f5f6f7;--radius:14px}
+*{box-sizing:border-box}body{margin:0;font:13px/1.55 Montserrat,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.topbar{background:var(--navy);color:white;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:11px max(18px,calc((100vw - 1080px)/2));box-shadow:0 3px 16px #0e2a4718}
+.topbar img{width:210px;max-height:58px;object-fit:contain}
+.topbar nav{display:flex;flex-wrap:wrap;gap:14px}.topbar a{text-decoration:none;color:white;font-size:12px;font-weight:700}
+main{width:min(1060px,calc(100% - 22px));margin:22px auto 42px}
+.heading,.section{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 24px #0e2a4708;margin-bottom:16px;padding:24px 30px}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+h1{font:600 31px/1.2 'Playfair Display',Georgia,serif;color:var(--navy);margin:4px 0}
+h2{font:600 22px/1.3 'Playfair Display',Georgia,serif;color:var(--navy);margin:0 0 16px}
+.kicker{font-size:10px;color:#ac7c41;text-transform:uppercase;letter-spacing:2px;font-weight:700}
+p{color:#667688;margin:8px 0 0}
+.form-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
+label.field{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:700;color:#40576b;min-width:0}
+input,select,textarea{width:100%;border:1px solid #cdd7e0;background:white;border-radius:9px;padding:11px 12px;font:500 12px/1.5 Montserrat,Arial,sans-serif;color:var(--ink);min-height:43px}
+textarea{resize:vertical;min-height:85px}input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}
+.helper{font-size:10px;color:#77889a;font-weight:400}
+.checkbox{display:flex;align-items:center;gap:8px;padding-top:19px;font-size:12px;font-weight:600}
+.checkbox input{width:17px;min-height:17px;height:17px;accent-color:var(--navy)}
+.notice{border-left:3px solid var(--gold);background:#faf7f2;padding:11px 13px;font-size:11px;color:#4b5d70;border-radius:0 7px 7px 0;margin-top:14px}
+.actions{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+button,.btn{font:700 12px Montserrat,Arial,sans-serif;padding:13px 16px;border-radius:9px;cursor:pointer;border:0;background:var(--navy);color:white;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px}
+button.secondary,.btn.secondary{background:#fff;color:var(--navy);border:1px solid #b4c4d0}
+button.gold{background:var(--gold);color:#172b3d}
+button:disabled{opacity:.65;cursor:not-allowed}
+#feedback{margin-bottom:16px;padding:18px 21px;background:#fff;border:1px solid #d6e0e7;border-radius:12px;box-shadow:0 7px 22px #0e2a4708}
+#feedback[hidden]{display:none}
+#feedback.error{border-color:#e6b9b9;background:#fff8f8;color:#9b3131}
+#feedback h2{margin:0 0 7px;font-size:21px}
+#feedback .result{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:13px}
+#feedback .result img{width:155px;height:155px;padding:6px;border:1px solid var(--line)}
+.pin{font:800 26px Montserrat,sans-serif;letter-spacing:4px;background:#fff1d9;padding:6px 12px;border-radius:8px;color:var(--navy);display:inline-block}
+.alert{color:#99392a!important;font-weight:700}
+#feedback .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+mark{background:#fff1d9;padding:1px 5px;border-radius:3px}
+@media(max-width:760px){.topbar{align-items:flex-start;flex-direction:column}.topbar img{width:180px}.heading,.section{padding:20px 15px}.form-grid{gap:12px}.c3,.c4,.c6,.c8{grid-column:span 12}.heading h1{font-size:27px}.checkbox{padding-top:0}.actions{justify-content:stretch}.actions>*{flex:1}}
+@page{size:A4;margin:14mm}
+@media print{body{background:white;font:10px Arial,sans-serif}.topbar,.actions,#feedback,.no-print{display:none!important}main{margin:0;width:100%}.heading,.section{break-inside:avoid;box-shadow:none;border-radius:0;padding:11px 0;margin:0;border:0;border-bottom:1px solid #cbd5dd}.section h2{font-size:16px;margin-bottom:7px}.form-grid{gap:7px}.field input,.field select,.field textarea{min-height:26px;font-size:10px;border-radius:1px;padding:4px}.field span,.field{font-size:9px!important}.heading h1{font-size:20px}textarea{min-height:48px}h2{font-size:17px}}
+</style>
+</head><body>
+<header class="topbar"><a href="index.html"><img src="assets/casal-logo-footer-v2.svg" alt="Casal Corretores"></a><nav><a href="admin.html">Painel</a><a href="clientes.html">Fichas cadastradas</a><a href="registros.html">Visitas e propostas</a></nav></header>
+<main>
+<div class="heading"><div><span class="kicker">Atendimento imobiliário</span><h1>Ficha de cliente</h1><p>Cadastro, necessidades, preferências e acompanhamento da negociação.</p></div><div class="actions"><a class="btn secondary" href="clientes.html">Ver clientes</a><button class="secondary" id="printBtn" type="button">Imprimir ficha</button></div></div>
+<div id="feedback" hidden aria-live="polite"></div>
+<form id="clientForm">
+<section class="section"><h2>01. Identificação e contato</h2>
+<div class="form-grid">
+<label class="field c8"><span>Nome completo *</span><input name="nome" autocomplete="name" required maxlength="200"></label>
+<label class="field c4"><span>CPF (opcional)</span><input name="cpf" inputmode="numeric" placeholder="000.000.000-00"></label>
+<label class="field c4"><span>Data de nascimento (opcional)</span><input name="nascimento" type="date"></label>
+<label class="field c4"><span>Telefone / WhatsApp *</span><input name="telefone" type="tel" autocomplete="tel"></label>
+<label class="field c4"><span>Outro telefone</span><input name="outro_telefone" type="tel"></label>
+<label class="field c6"><span>E-mail</span><input name="email" type="email" autocomplete="email"></label>
+<label class="field c6"><span>Origem do contato</span><select name="origem"><option value="">Selecione...</option><option>Instagram</option><option>WhatsApp</option><option>Site</option><option>Indicação</option><option>Visita presencial</option><option>Outro</option></select></label>
+<label class="field c12"><span>Endereço (opcional, uso interno)</span><input name="endereco" autocomplete="street-address"></label>
+<label class="field c8"><span>Cidade de residência</span><input name="cidade" autocomplete="address-level2"></label>
+<label class="field c4"><span>Estado (UF)</span><input name="uf" maxlength="2" placeholder="MG"></label>
+</div>
+</section>
+<section class="section"><h2>02. Perfil e imóvel procurado</h2>
+<div class="form-grid">
+<label class="field c4"><span>Perfil do cliente</span><select name="tipo_cliente"><option value="">Selecione...</option><option>Comprador</option><option>Locatário</option><option>Proprietário / vendedor</option><option>Investidor</option><option>Outro</option></select></label>
+<label class="field c4"><span>Objetivo</span><select name="objetivo"><option value="">Selecione...</option><option>Comprar</option><option>Alugar</option><option>Vender</option><option>Anunciar imóvel</option><option>Investir</option></select></label>
+<label class="field c4"><span>Tipo de imóvel</span><select name="tipo_imovel"><option value="">Selecione...</option><option>Casa</option><option>Apartamento</option><option>Terreno</option><option>Sítio / Chácara</option><option>Imóvel comercial</option><option>Indiferente</option></select></label>
+<label class="field c6"><span>Cidade / região de interesse</span><input name="localizacao_interesse" placeholder="Ex.: Conselheiro Lafaiete - MG"></label>
+<label class="field c6"><span>Bairros preferidos</span><input name="bairros"></label>
+<label class="field c4"><span>Código do imóvel de interesse</span><input name="codigo_imovel" placeholder="Ex.: CC-7620"></label>
+<label class="field c4"><span>Valor mínimo (R$)</span><input name="valor_min" type="number" min="0" step="0.01"></label>
+<label class="field c4"><span>Valor máximo (R$)</span><input name="valor_max" type="number" min="0" step="0.01"></label>
+<label class="field c3"><span>Quartos</span><input name="quartos" type="number" min="0" max="50"></label>
+<label class="field c3"><span>Vagas</span><input name="vagas" type="number" min="0" max="100"></label>
+<label class="field c3"><span>Área mínima (m²)</span><input name="area_min" type="number" min="0"></label>
+<label class="field c3"><span>Prazo para negócio</span><select name="prazo"><option value="">Selecione...</option><option>Imediato</option><option>Até 30 dias</option><option>Até 3 meses</option><option>Até 6 meses</option><option>Sem prazo definido</option></select></label>
+<label class="field c8"><span>Forma de pagamento preferida</span><select name="forma_pagamento"><option value="">Selecione...</option><option>À vista</option><option>Financiamento</option><option>Consórcio</option><option>Permuta</option><option>A definir</option></select></label>
+<label class="checkbox c4"><input type="checkbox" name="financiamento"> Tem interesse em financiamento</label>
+</div></section>
+<section class="section"><h2>03. Atendimento e acompanhamento</h2>
+<div class="form-grid">
+<label class="field c4"><span>Etapa do atendimento</span><select name="etapa"><option>Novo contato</option><option>Qualificação</option><option>Imóveis selecionados</option><option>Visita agendada</option><option>Visita realizada</option><option>Proposta</option><option>Negociação</option><option>Concluído</option><option>Sem interesse</option></select></label>
+<label class="field c4"><span>Corretor(a) responsável</span><input name="corretor"></label>
+<label class="field c4"><span>Último contato</span><input name="data_ultimo_contato" type="date"></label>
+<label class="field c4"><span>Próximo contato</span><input name="proximo_contato" type="date"></label>
+<label class="field c12"><span>Observações que podem ser compartilhadas com o cliente</span><textarea name="observacoes_compartilhaveis" rows="3" placeholder="Ex.: Procura casa térrea com área externa e garagem..."></textarea></label>
+<label class="field c12"><span>Notas internas da imobiliária (nunca visíveis no QR do cliente)</span><textarea name="notas_internas" rows="4" placeholder="Notas sobre atendimento, próximos passos e lembretes..."></textarea></label>
+</div>
+<div class="notice"><strong>Privacidade:</strong> os dados são usados no atendimento imobiliário e ficam acessíveis à equipe administrativa. O QR Code exige código separado; CPF, data de nascimento, endereço e notas internas não aparecem na consulta compartilhada. Colete somente informações necessárias.</div>
+<label class="checkbox"><input type="checkbox" name="aceite_privacidade"> Cliente informado sobre o uso de seus dados para atendimento e acompanhamento.</label>
+</section>
+<div class="section actions"><button class="secondary" type="reset" id="resetBtn">Limpar campos</button><button class="gold" type="submit" id="saveBtn">Salvar ficha de cliente</button></div>
+</form>
+</main>
+<script>
+(function(){
+'use strict';
+const form=document.getElementById('clientForm');
+const feedback=document.getElementById('feedback');
+const saveBtn=document.getElementById('saveBtn');
+let id=new URLSearchParams(location.search).get('id')||'';
+if(!/^[A-Za-z0-9_-]+$/.test(id))id='';
+function h(tag,text,klass){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(klass)el.className=klass;return el}
+function message(t,error){
+ feedback.hidden=false;feedback.className=error?'error':'';
+ feedback.replaceChildren(h('h2',t));
+ feedback.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function api(url,opts={}){
+ const r=await fetch(url,{credentials:'same-origin',cache:'no-store',...opts});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(d.error||'Não foi possível salvar a ficha.');
+ return d
+}
+function values(){
+ const o={};new FormData(form).forEach((v,k)=>o[k]=String(v));
+ for(const c of form.querySelectorAll('input[type=checkbox]'))o[c.name]=c.checked;
+ return o
+}
+function populate(c){
+ for(const el of form.elements){if(!el.name||!Object.hasOwn(c,el.name))continue;
+ if(el.type==='checkbox')el.checked=!!c[el.name];else el.value=c[el.name]??'';}
+}
+function showSaved(data){
+ id=data.client.id;
+ history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(id));
+ message('Ficha salva no banco de dados',false);
+ feedback.append(h('p','Cliente: '+data.client.nome+' · Código '+id));
+ const row=h('div',undefined,'result');
+ const img=document.createElement('img');img.src=data.client.qrUrl;img.alt='QR Code individual da ficha';row.append(img);
+ const content=h('div');
+ const links=h('div',undefined,'links');
+ for(const [label,url] of [['Consultar QR',data.client.shareUrl],['PDF completo','/api/clientes/'+encodeURIComponent(id)+'/pdf'],['Gerenciar documentos','clientes.html?id='+encodeURIComponent(id)]]){
+ const a=h('a',label,'btn secondary');a.href=url;a.target=label==='Consultar QR'||label==='PDF completo'?'_blank':'_self';links.append(a)}
+ content.append(links);
+ if(data.accessPin){
+ content.append(h('p','Código de acesso de oito dígitos (exibido somente na criação):'));
+ content.append(h('span',data.accessPin,'pin'));
+ content.append(h('p','Envie este código separadamente do QR. Se perdê-lo, gere um novo pelo painel.','alert'));
+ }
+ row.append(content);feedback.append(row);
+}
+form.addEventListener('submit',async e=>{
+ e.preventDefault();saveBtn.disabled=true;saveBtn.textContent='Salvando...';
+ try{
+ const v=values();if(!v.nome||!v.nome.trim())throw Error('Informe o nome completo.');
+ if(!v.telefone?.trim()&&!v.email?.trim())throw Error('Informe telefone ou e-mail.');
+ const response=await api(id?'/api/clientes/'+encodeURIComponent(id):'/api/clientes',{
+ method:id?'PUT':'POST',headers:{'content-type':'application/json'},body:JSON.stringify(v)});
+ showSaved(response);
+ }catch(error){
+ message(error.message,true);
+ if(/login|administrativo|autentica/i.test(error.message)){
+ const a=h('a','Entrar no painel','btn');a.href='login.html';feedback.append(a)}
+ }finally{saveBtn.disabled=false;saveBtn.textContent='Salvar ficha de cliente'}
+});
+document.getElementById('resetBtn').addEventListener('click',e=>{if(!confirm('Limpar os campos?'))e.preventDefault()});
+document.getElementById('printBtn').onclick=()=>{if(id)window.open('/api/clientes/'+encodeURIComponent(id)+'/pdf','_blank','noopener,noreferrer');else window.print()};
+if(id)api('/api/clientes/'+encodeURIComponent(id)).then(d=>{populate(d.client);document.querySelector('h1').textContent='Ficha de cliente · '+id}).catch(e=>message(e.message,true));
+})();
+</script>
+</body></html>
