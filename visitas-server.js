@@ -15,7 +15,7 @@ db.exec('PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA foreign_keys=
 db.exec('CREATE TABLE IF NOT EXISTS visitas (id TEXT PRIMARY KEY, token TEXT NOT NULL UNIQUE, pin_salt TEXT NOT NULL, pin_hash TEXT NOT NULL, data TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, revoked INTEGER NOT NULL DEFAULT 0)');
 db.exec('CREATE TABLE IF NOT EXISTS visita_docs (id TEXT PRIMARY KEY, visita_id TEXT NOT NULL REFERENCES visitas(id) ON DELETE CASCADE, name TEXT NOT NULL, mime TEXT NOT NULL, size INTEGER NOT NULL, path TEXT NOT NULL, created_at TEXT NOT NULL)');
 db.exec('CREATE TABLE IF NOT EXISTS visita_revisoes (id INTEGER PRIMARY KEY AUTOINCREMENT, visita_id TEXT NOT NULL REFERENCES visitas(id) ON DELETE CASCADE, data TEXT NOT NULL, created_at TEXT NOT NULL)');
-const FIELDS=['cliente','cpf','endereco','celular','telefone','data_visita','corretor','creci','imovel_procurado','local','data_registro','proposta_codigo','proposta_valor','proposta_pagamento','proposta_validade','proposta_detalhes','contra_valor','contra_validade','contra_detalhes','observacoes_finais','aceite','recusada','pendente','nova'];
+const FIELDS=['cliente','cpf','endereco','celular','telefone','data_visita','corretor','creci','imovel_procurado','visitas_imoveis','local','data_registro','proposta_codigo','proposta_valor','proposta_pagamento','proposta_validade','proposta_detalhes','contra_valor','contra_validade','contra_detalhes','observacoes_finais','aceite','recusada','pendente','nova'];
 const ATTEMPTS=new Map();
 const now=()=>new Date().toISOString();
 const rand=()=>crypto.randomBytes(24).toString('base64url');
@@ -41,7 +41,7 @@ const findId=id=>db.prepare('SELECT * FROM visitas WHERE id=? AND revoked=0').ge
 const findToken=t=>db.prepare('SELECT * FROM visitas WHERE token=? AND revoked=0').get(t);
 const docs=id=>db.prepare('SELECT id,name,mime,size,created_at FROM visita_docs WHERE visita_id=? ORDER BY created_at DESC').all(id);
 function clean(body){
- const v={};for(const k of FIELDS){v[k]=['aceite','recusada','pendente','nova'].includes(k)?!!body?.[k]:String(body?.[k]??'').trim().slice(0,k.endsWith('_detalhes')?12000: k==='observacoes_finais'?7000:500)}
+ const v={};for(const k of FIELDS){v[k]=['aceite','recusada','pendente','nova'].includes(k)?!!body?.[k]:String(body?.[k]??'').trim().slice(0,k.endsWith('_detalhes')?12000: k==='observacoes_finais'?7000: k==='visitas_imoveis'?6000:500)}
  return v
 }
 function decorate(record,share=false){
@@ -71,6 +71,9 @@ async function pdfResponse(res,row){
  header('REGISTRO DE VISITA A IMÓVEL');
  field('Registro',row.id);field('Data da visita',info.data_visita);field('Cliente',info.cliente);field('CPF',info.cpf);field('Endereço',info.endereco);
  field('Celular',info.celular);field('Telefone',info.telefone);field('Corretor',info.corretor);field('CRECI',info.creci);field('Imóvel procurado',info.imovel_procurado);
+ if(info.visitas_imoveis){
+  try{const rows=JSON.parse(info.visitas_imoveis);if(Array.isArray(rows)&&rows.length){title('IMÓVEIS VISITADOS');rows.forEach(r=>{pdf.font('Helvetica').fontSize(8.5).fillColor('#253746').text(r.filter(Boolean).join('  |  '),{lineGap:2});pdf.moveDown(.3)})}}catch{}
+ }
  field('Local e data',String(info.local||'')+' - '+String(info.data_registro||''));
  title('CIÊNCIA DA INTERMEDIAÇÃO');
  pdf.font('Helvetica').fontSize(9.2).fillColor('#273748').text('O interessado declara ter recebido atendimento e informações sobre o(s) imóvel(is) indicado(s). Este registro não substitui proposta aceita, promessa de compra e venda nem instrumento específico de corretagem. As condições e obrigações devem ser formalizadas pelas partes.',{lineGap:4});

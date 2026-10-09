@@ -135,3 +135,8 @@ footer { background:#0A2035; }
   .topbar .brand-full img{width:178px!important;height:49px!important;}
   .nav-wrap{gap:9px!important;}
 }
+
+/* Acesso aos registros de visita no painel */
+.sidebar-nav .visitas-nav{display:flex;align-items:center;gap:12px;text-decoration:none;color:#d7e6ef;border-radius:9px;padding:12px 13px;text-align:left;cursor:pointer;font-size:12px}
+.sidebar-nav .visitas-nav:hover{background:#234D6C;color:#fff}
+@media(max-width:760px){.sidebar-nav .visitas-nav{min-width:45px;padding:9px;font-size:16px}.sidebar-nav .visitas-nav span{display:none}}

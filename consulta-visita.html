@@ -60,6 +60,7 @@ const pairs={
  contraGrid:[['Valor da contraproposta (R$)','contra_valor'],['Validade','contra_validade'],['Contraproposta detalhada','contra_detalhes'],['Observações finais','observacoes_finais'],['Aceite','aceite']]
 };
 function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+function formatVisited(value){try{const rows=JSON.parse(value||'[]');return rows.map((r,i)=>(i+1)+'. '+r.filter(Boolean).join(' | ')).join('\n')||'Não informado'}catch{return String(value||'Não informado')}}
 function show(record){
  document.getElementById('pinCard').classList.add('hidden');document.getElementById('record').classList.remove('hidden');
  document.getElementById('meta').textContent='Registro '+record.id+' · Salvo em '+new Date(record.createdAt).toLocaleString('pt-BR')+' · Atualizado em '+new Date(record.updatedAt).toLocaleString('pt-BR');
@@ -68,7 +69,7 @@ function show(record){
   const grid=document.getElementById(target);grid.replaceChildren();
   fields.forEach(([label,key])=>{
    const div=element('div','info'+(key.endsWith('_detalhes')||key==='observacoes_finais'||key==='visitas_imoveis'?' span2':''));
-   div.append(element('small','',label),element('span','',key==='aceite'?(record[key]?'Aceita':'Não registrado'):String(record[key]??'—')));
+   div.append(element('small','',label),element('span','',key==='aceite'?(record[key]?'Aceita':'Não registrado'):(key==='visitas_imoveis'?formatVisited(record[key]):String(record[key]??'—'))));
    grid.append(div);
   });
  }
