@@ -148,7 +148,7 @@ footer { background:#0A2035; }
   --navy2:#105127;
   --blue:#F26A08;
   --cyan:#218542;
-  --gold:#F26A08;
+  --gold:var(--blue);
   --ink:#1E3D2A;
   --muted:#66796A;
   --line:#E9E5DC;
@@ -157,21 +157,21 @@ footer { background:#0A2035; }
 }
 body{color:var(--ink)}
 .topbar{border-bottom-color:rgba(22,100,47,.10)}
-.kicker,.topbar nav a:hover,.text-link,.nav-anunciar{color:#DF5B00!important}
+.kicker,.topbar nav a:hover,.text-link,.nav-anunciar{color:var(--blue)!important}
 .kicker.light{color:#FFD9A6!important}
 .hero h1 strong{color:#FFD0A1!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important}
 .hero-overlay{background:linear-gradient(90deg,rgba(7,39,20,.87),rgba(12,67,32,.59) 48%,rgba(15,82,40,.11))}
-.btn-primary{background:#F26A08!important;color:#fff!important;border-color:#F26A08!important;box-shadow:0 8px 23px rgba(242,106,8,.20)!important}
-.btn-primary:hover{background:#D95B04!important;border-color:#D95B04!important}
+.btn-primary{background:var(--blue)!important;color:#fff!important;border-color:var(--blue)!important;box-shadow:0 8px 23px rgba(242,106,8,.20)!important}
+.btn-primary:hover{background:var(--blue)!important;border-color:var(--blue)!important;filter:brightness(.92)}
 .btn-outline,.property-view{border-color:#C8D7C7;color:#16642F}
 .btn-outline:hover,.property-view:hover{background:#EDF7EA;color:#14552B}
 .search-shell{box-shadow:0 22px 64px rgba(19,76,38,.16);border-color:rgba(242,106,8,.24)}
 .search-tabs button.active{color:#165F31!important}
-.search-tabs button.active::after{background:#F26A08!important}
+.search-tabs button.active::after{background:var(--blue)!important}
 .search-grid label:focus-within,.advanced-search label:focus-within{border-color:#F26A08}
 input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline-color:#F26A08}
 .property-card{border-color:#E9E6DD}
-.property-card:hover{border-color:#F26A08}
+.property-card:hover{border-color:var(--blue)}
 .property-price,.property-info h3{color:#16642F}
 .badge-premium{background:#F26A08}
 .exclusive-card{background:linear-gradient(110deg,#105127,#237943)}
@@ -181,7 +181,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{ou
 .emotion-item p{color:#D5E8D6}
 footer{background:#103B23!important}
 .sidebar{background:#12552D!important}
-.sidebar-nav button.active,.sidebar-nav button:hover,.sidebar-nav .visitas-nav:hover{background:#EA670C!important;color:#fff!important}
+.sidebar-nav button.active,.sidebar-nav button:hover,.sidebar-nav .visitas-nav:hover{background:var(--blue)!important;color:#fff!important}
 .metric-icon.gold{background:#FFF0E3;color:#DF5B00}
 .metric-icon.blue{background:#E9F5E7;color:#16642F}
 .editor-nav button.active{background:#16642F!important;border-color:#F26A08!important}
