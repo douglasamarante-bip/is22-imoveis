@@ -186,8 +186,15 @@ function collect(){
  o.visitas_imoveis=JSON.stringify(rows.filter(row=>row.some(Boolean)));
  return o;
 }
+function replaceFooterQR(record){
+ const image=document.querySelector('#qr img');if(image&&record.qrPath){image.src=record.qrPath;image.alt='QR Code exclusivo do registro '+record.id;}
+ const text=document.querySelector('.footer-qr code');if(text&&record.shareUrl)text.textContent=record.shareUrl;
+ const heading=document.querySelector('.footer-qr strong');if(heading)heading.textContent='QR Code individual do registro '+record.id;
+ const paragraph=document.querySelector('.footer-qr p');if(paragraph)paragraph.textContent='Consulte este registro e seus documentos usando o código de acesso recebido da corretora.';
+}
 function showSaved(data){
  currentId=data.record.id;
+ replaceFooterQR(data.record);
  history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(currentId));
  message.hidden=false;message.replaceChildren();
  const heading=document.createElement('h2');heading.textContent='Registro '+currentId+' salvo com segurança';message.append(heading);
@@ -221,7 +228,7 @@ saveBtn.addEventListener('click',async()=>{
  finally{saveBtn.disabled=false;saveBtn.textContent='Salvar no banco'}
 });
 if(currentId){
- request('/api/visitas/'+encodeURIComponent(currentId)).then(({record})=>populate(record)).catch(err=>alertMessage(err.message));
+ request('/api/visitas/'+encodeURIComponent(currentId)).then(({record})=>{populate(record);replaceFooterQR(record)}).catch(err=>alertMessage(err.message));
 }
 })();
 </script>
