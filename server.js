@@ -36,7 +36,7 @@ const seedProperties=[
   {id:'IS22-003',title:'Casa compacta para locação',type:'Casa',purpose:'Aluguel',status:'Disponível',price:2200,city:'Conselheiro Lafaiete',neighborhood:'Santa Matilde',address:'Santa Matilde, Conselheiro Lafaiete - MG',bedrooms:2,suites:0,bathrooms:1,parking:1,area:95,featured:false,premium:false,images:[P3],description:'Imóvel pronto para morar, com quintal e ótimo acesso.'}
 ];
 
-const FILES={settings:'settings.json',properties:'properties.json',leads:'leads.json'};
+const FILES={settings:'settings.json',properties:'properties.json',leads:'leads.json',hero:'site-hero.json'};
 function fileOf(key){return path.join(DATA_DIR,FILES[key])}
 function readJSON(key,fallback){try{return JSON.parse(fs.readFileSync(fileOf(key),'utf8'))}catch{return JSON.parse(JSON.stringify(fallback))}}
 function writeJSON(key,value){fs.mkdirSync(DATA_DIR,{recursive:true});const f=fileOf(key),tmp=f+'.tmp';fs.writeFileSync(tmp,JSON.stringify(value,null,2));fs.renameSync(tmp,f)}
@@ -59,6 +59,44 @@ function cleanProperty(p){const o={...p};o.id=String(o.id||'').trim()||('IS22-'+
 function upsertProperty(p){const arr=readJSON('properties',seedProperties);const item=cleanProperty(p);const i=arr.findIndex(x=>String(x.id)===String(item.id));if(i>=0)arr[i]={...arr[i],...item};else arr.unshift(item);writeJSON('properties',arr);return item}
 
 async function api(req,res,url){
+  // A foto principal é compartilhada entre todos os navegadores e guardada no volume persistente.
+  if(url.pathname==='/api/site/hero'){
+    if(req.method==='GET'){
+      const current=readJSON('hero',{image:null});
+      return sendJSON(res,200,{ok:true,image:current.image||null});
+    }
+    if(!requireAuth(req,res))return;
+    if(req.method==='POST'){
+      const type=String(req.headers['content-type']||'').split(';')[0].trim().toLowerCase();
+      const ext={'image/jpeg':'.jpg','image/png':'.png','image/webp':'.webp'}[type];
+      if(!ext)return sendJSON(res,415,{ok:false,error:'Envie uma foto JPG, PNG ou WebP.'});
+      const max=10*1024*1024;
+      let raw;
+      try{raw=await readRaw(req,max+1)}catch{return sendJSON(res,413,{ok:false,error:'Foto acima de 10 MB. Escolha uma imagem menor.'})}
+      if(raw.length>max)return sendJSON(res,413,{ok:false,error:'Foto acima de 10 MB. Escolha uma imagem menor.'});
+      if(raw.length<32)return sendJSON(res,400,{ok:false,error:'Arquivo de imagem inválido.'});
+      const first=raw.subarray(0,16).toString('hex');
+      const valid=type==='image/jpeg'?first.startsWith('ffd8ff'):
+        type==='image/png'?first.startsWith('89504e470d0a1a0a'):
+        (raw.toString('ascii',0,4)==='RIFF'&&raw.toString('ascii',8,12)==='WEBP');
+      if(!valid)return sendJSON(res,400,{ok:false,error:'A imagem não corresponde ao formato selecionado.'});
+      const filename='casal-hero-'+Date.now()+'-'+crypto.randomBytes(5).toString('hex')+ext;
+      fs.writeFileSync(path.join(UPLOAD_DIR,filename),raw,{flag:'wx',mode:0o644});
+      const image='/uploads/'+filename;
+      writeJSON('hero',{image,updatedAt:new Date().toISOString()});
+      return sendJSON(res,201,{ok:true,image});
+    }
+    if(req.method==='PUT'){
+      const body=await readBody(req,4096);
+      const image=String(body.image||'').trim();
+      if(image.length>1800||!(/^(https:\/\/[^\s<>"']+)$/i.test(image)||/^\/uploads\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(image))){
+        return sendJSON(res,400,{ok:false,error:'Informe um link HTTPS válido de imagem ou envie uma foto pelo botão.'});
+      }
+      writeJSON('hero',{image,updatedAt:new Date().toISOString()});
+      return sendJSON(res,200,{ok:true,image});
+    }
+    return sendJSON(res,405,{ok:false,error:'Método não permitido.'});
+  }
   if(req.method==='GET'&&url.pathname==='/api/health')return sendJSON(res,200,{ok:true,dataDir:DATA_DIR,importer:'bonanza',authReady:!!(ADMIN_EMAIL&&ADMIN_PASSWORD&&SESSION_SECRET)});
   if(req.method==='POST'&&url.pathname==='/api/auth/login'){const b=await readBody(req);if(!ADMIN_EMAIL||!ADMIN_PASSWORD||!SESSION_SECRET)return sendJSON(res,503,{ok:false,error:'Acesso administrativo ainda não configurado no servidor.'});if(String(b.email||'').trim().toLowerCase()!==ADMIN_EMAIL||String(b.password||'')!==ADMIN_PASSWORD)return sendJSON(res,401,{ok:false,error:'E-mail ou senha incorretos.'});const token=makeToken(ADMIN_EMAIL);const body=JSON.stringify({ok:true,token,user:{email:ADMIN_EMAIL,name:'Equipe IS22',role:'Administrador'}});res.writeHead(200,{'content-type':'application/json; charset=utf-8','content-length':Buffer.byteLength(body),'cache-control':'no-store','set-cookie':`is22_session=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=43200`});return res.end(body)}
   if(req.method==='POST'&&url.pathname==='/api/auth/logout'){res.writeHead(200,{'content-type':'application/json; charset=utf-8','set-cookie':'is22_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'});return res.end('{"ok":true}')}
