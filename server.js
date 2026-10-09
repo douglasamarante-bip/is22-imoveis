@@ -36,7 +36,7 @@ const seedProperties=[
   {id:'IS22-003',title:'Casa compacta para locação',type:'Casa',purpose:'Aluguel',status:'Disponível',price:2200,city:'Conselheiro Lafaiete',neighborhood:'Santa Matilde',address:'Santa Matilde, Conselheiro Lafaiete - MG',bedrooms:2,suites:0,bathrooms:1,parking:1,area:95,featured:false,premium:false,images:[P3],description:'Imóvel pronto para morar, com quintal e ótimo acesso.'}
 ];
 
-const FILES={settings:'settings.json',properties:'properties.json',leads:'leads.json',hero:'site-hero.json'};
+const FILES={settings:'settings.json',siteSettingsV2:'site-settings-v2.json',properties:'properties.json',leads:'leads.json',hero:'site-hero.json'};
 function fileOf(key){return path.join(DATA_DIR,FILES[key])}
 function readJSON(key,fallback){try{return JSON.parse(fs.readFileSync(fileOf(key),'utf8'))}catch{return JSON.parse(JSON.stringify(fallback))}}
 function writeJSON(key,value){fs.mkdirSync(DATA_DIR,{recursive:true});const f=fileOf(key),tmp=f+'.tmp';fs.writeFileSync(tmp,JSON.stringify(value,null,2));fs.renameSync(tmp,f)}
@@ -101,8 +101,20 @@ async function api(req,res,url){
   if(req.method==='POST'&&url.pathname==='/api/auth/login'){const b=await readBody(req);if(!ADMIN_EMAIL||!ADMIN_PASSWORD||!SESSION_SECRET)return sendJSON(res,503,{ok:false,error:'Acesso administrativo ainda não configurado no servidor.'});if(String(b.email||'').trim().toLowerCase()!==ADMIN_EMAIL||String(b.password||'')!==ADMIN_PASSWORD)return sendJSON(res,401,{ok:false,error:'E-mail ou senha incorretos.'});const token=makeToken(ADMIN_EMAIL);const body=JSON.stringify({ok:true,token,user:{email:ADMIN_EMAIL,name:'Equipe IS22',role:'Administrador'}});res.writeHead(200,{'content-type':'application/json; charset=utf-8','content-length':Buffer.byteLength(body),'cache-control':'no-store','set-cookie':`is22_session=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=43200`});return res.end(body)}
   if(req.method==='POST'&&url.pathname==='/api/auth/logout'){res.writeHead(200,{'content-type':'application/json; charset=utf-8','set-cookie':'is22_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'});return res.end('{"ok":true}')}
   if(req.method==='GET'&&url.pathname==='/api/auth/me'){const u=requireAuth(req,res);if(!u)return;return sendJSON(res,200,{ok:true,user:{email:u.email,role:'Administrador'}})}
-  if(req.method==='GET'&&url.pathname==='/api/settings')return sendJSON(res,200,{ok:true,settings:readJSON('settings',defaultSettings)});
-  if(req.method==='PUT'&&url.pathname==='/api/settings'){if(!requireAuth(req,res))return;const b=await readBody(req);const next={...defaultSettings,...b};writeJSON('settings',next);return sendJSON(res,200,{ok:true,settings:next})}
+  if(req.method==='GET'&&url.pathname==='/api/settings'){
+    const shared=readJSON('siteSettingsV2',null);
+    return sendJSON(res,200,{ok:true,settings:shared&&typeof shared==='object'?shared:null});
+  }
+  if(req.method==='PUT'&&url.pathname==='/api/settings'){
+    if(!requireAuth(req,res))return;
+    const b=await readBody(req,8*1024*1024);
+    if(!b||typeof b!=='object'||Array.isArray(b)||!b.brand||!b.contact||!b.colors){
+      return sendJSON(res,400,{ok:false,error:'Configurações do site inválidas.'});
+    }
+    const next={...b,_sharedVersion:2,_updatedAt:new Date().toISOString()};
+    writeJSON('siteSettingsV2',next);
+    return sendJSON(res,200,{ok:true,settings:next});
+  }
   if(req.method==='GET'&&url.pathname==='/api/properties')return sendJSON(res,200,{ok:true,properties:readJSON('properties',seedProperties)});
   if(req.method==='POST'&&url.pathname==='/api/properties'){if(!requireAuth(req,res))return;const p=upsertProperty(await readBody(req));return sendJSON(res,200,{ok:true,property:p})}
   if(req.method==='PUT'&&url.pathname==='/api/properties'){if(!requireAuth(req,res))return;const b=await readBody(req);const arr=Array.isArray(b)?b:(Array.isArray(b.properties)?b.properties:null);if(!arr)return sendJSON(res,400,{ok:false,error:'Lista de imóveis inválida.'});const clean=arr.map(cleanProperty);writeJSON('properties',clean);return sendJSON(res,200,{ok:true,properties:clean})}
