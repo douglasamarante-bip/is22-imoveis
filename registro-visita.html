@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0E2A47">
+<meta name="description" content="Modelo digital de registro de visita a imóvel com proposta e contraproposta - Casal Corretores.">
+<title>Registro de Visita e Propostas | Casal Corretores</title>
+<link rel="icon" href="assets/casal-favicon.svg" type="image/svg+xml">
+<style>
+:root{--navy:#0E2A47;--gold:#BE955C;--line:#CED6DD;--muted:#64748b;--bg:#f2f4f6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:14px/1.45 Arial,Helvetica,sans-serif;color:#1e293b}
+.tool-bar{position:sticky;top:0;z-index:30;background:var(--navy);padding:11px max(16px,calc((100vw - 850px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;color:white;box-shadow:0 3px 15px #0e2a4722}
+.tool-bar strong{font-size:14px}.tool-bar small{display:block;font-size:11px;color:#d6e0e8}
+button{cursor:pointer;border:0}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions button{border-radius:8px;padding:10px 12px;font-weight:700;color:var(--navy);background:#fff}
+.actions button.primary{background:#e5c08b}
+main{max-width:850px;margin:20px auto 45px;padding:0 10px}
+.paper{min-height:1060px;background:#fff;box-shadow:0 6px 22px #0e2a471a;margin-bottom:18px;padding:36px 42px;page-break-after:always}
+.paper:last-child{page-break-after:auto}
+.brand-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:18px;border-bottom:2px solid var(--gold)}
+.brand-row img{width:225px;max-height:66px;object-fit:contain;object-position:left}
+.brand-row aside{text-align:right;color:var(--muted);font-size:11px}
+h1{font:700 22px Georgia,serif;color:var(--navy);margin:18px 0 4px}
+h2{font:700 18px Georgia,serif;color:var(--navy);margin:2px 0}
+.lead{color:var(--muted);font-size:12px;margin:0 0 18px}
+.heading{color:var(--navy);font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin:18px 0 12px;border-left:4px solid var(--gold);padding-left:8px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.field{min-width:0;display:flex;flex-direction:column;gap:5px}.field span{font-size:11px;font-weight:700;color:#526274}
+.field input,.field textarea,.field select{border:1px solid #ccd5df;border-radius:5px;background:#fff;color:#1e293b;font:13px/1.4 Arial,sans-serif;padding:9px;width:100%;min-height:35px}
+.field textarea{resize:vertical;min-height:106px;white-space:pre-wrap}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid #b9915b;outline-offset:1px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th{background:var(--navy);color:white;text-align:left;font-size:10px;padding:9px 6px}
+td{border:1px solid #d5dce3;padding:0}td input{width:100%;height:33px;border:0;padding:6px;background:transparent;font:12px Arial,sans-serif}
+.clause{border:1px solid #e1e6eb;background:#fafbfc;border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.55}
+.clause p{margin:0 0 9px}.clause p:last-child{margin:0}
+.large textarea{min-height:150px}
+.terms textarea{min-height:90px}
+.check-row{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin-top:7px}
+.check-row label{display:flex;align-items:center;gap:6px}
+.check-row input{accent-color:var(--navy)}
+.sign-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+.signature{border-top:1px solid #64748b;text-align:center;padding-top:6px;font-size:11px;color:#526274}
+.page-end{margin-top:24px;border-top:1px solid #dde3e8;padding-top:9px;font-size:10px;color:#667789;display:flex;justify-content:space-between;gap:15px}
+.footer-qr{margin-top:16px;border:1px solid #d5dce3;border-radius:9px;padding:14px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px}
+.footer-qr strong{font-size:13px;color:var(--navy)}.footer-qr p{margin:5px 0;font-size:11px;color:#566477}.footer-qr code{word-break:break-all;color:#667789;font-size:10px}
+#qr img{width:108px;height:108px;display:block}
+.notice{font-size:11px;color:#65758a;margin:0 0 16px}
+@media(max-width:720px){.tool-bar{position:static;align-items:flex-start;flex-direction:column}.tool-bar strong{font-size:12px}main{padding:0;margin:0}.paper{box-shadow:none;padding:23px 16px;min-height:0}.brand-row img{width:155px}.brand-row aside{font-size:9px}.c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.sign-grid{gap:20px}.footer-qr{grid-template-columns:1fr auto}.footer-qr #qr img{width:80px;height:80px}h1{font-size:20px}}
+@page{size:A4;margin:12mm}
+@media print{
+body{background:white;font-size:10px}
+.tool-bar,.screen-only{display:none!important}
+main{margin:0;padding:0;max-width:none}
+.paper{padding:0;margin:0;box-shadow:none;min-height:0;break-after:page;page-break-after:always}
+.paper:last-child{break-after:auto;page-break-after:auto}
+.brand-row img{width:175px;max-height:51px}
+.brand-row{padding-bottom:10px}.brand-row aside{font-size:9px}
+h1{font-size:18px;margin:11px 0 2px}h2{font-size:15px}.lead{margin-bottom:9px}
+.heading{margin:12px 0 8px}
+.grid{gap:7px}
+.field span{font-size:9px}
+.field input,.field textarea,.field select{min-height:27px;padding:5px;font-size:10px;print-color-adjust:exact}
+.field textarea{resize:none;overflow:visible}
+.large textarea{min-height:110px}
+.terms textarea{min-height:70px}
+.clause{padding:7px;font-size:10px}
+td input{height:25px;font-size:9px}
+th{padding:6px;font-size:9px}
+.sign-grid{margin-top:23px}
+.footer-qr{margin-top:10px;padding:7px}
+.footer-qr #qr img{width:92px;height:92px}
+.page-end{margin-top:9px}
+}
+</style>
+</head><body>
+<header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" onclick="printForm()">Imprimir / Salvar PDF</button><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
+<main id="form-container">
+<section class="paper" aria-label="Página 1, registro da visita">
+<div class="brand-row"><img src="assets/casal-logo-header-v2.svg" alt="Casal Corretores"><aside>REGISTRO DE VISITA A IMÓVEL<br>COMPROMISSO DE INTERMEDIAÇÃO<br>MODELO PARA PREENCHIMENTO</aside></div>
+<h1>Registro de visita a imóvel</h1><p class="lead">Identificação do interessado, imóvel visitado e declaração da visita.</p>
+<div class="heading">1. Dados do cliente e atendimento</div>
+<div class="grid">
+<label class="field c7"><span>Nome completo do(a) interessado(a)</span><input name="cliente" autocomplete="name"></label>
+<label class="field c5"><span>CPF</span><input name="cpf" inputmode="numeric"></label>
+<label class="field c12"><span>Endereço</span><input name="endereco" autocomplete="street-address"></label>
+<label class="field c4"><span>Celular / WhatsApp</span><input name="celular" type="tel"></label>
+<label class="field c4"><span>Outro telefone</span><input name="telefone" type="tel"></label>
+<label class="field c4"><span>Data da visita</span><input name="data_visita" placeholder="__/__/____"></label>
+<label class="field c8"><span>Corretor(a) responsável</span><input name="corretor"></label>
+<label class="field c4"><span>CRECI do(a) corretor(a)</span><input name="creci"></label>
+<label class="field c12"><span>Imóvel procurado / preferência do cliente</span><input name="imovel_procurado"></label>
+</div>
+<div class="heading">2. Imóveis visitados</div>
+<table aria-label="Imóveis visitados"><thead><tr><th style="width:13%">Código</th><th style="width:35%">Endereço / Imóvel</th><th style="width:18%">Preço (R$)</th><th style="width:18%">Telefone</th><th style="width:16%">Observações</th></tr></thead><tbody>
+<tr><td><input aria-label="Código 1"></td><td><input aria-label="Endereço 1"></td><td><input aria-label="Preço 1"></td><td><input aria-label="Telefone 1"></td><td><input aria-label="Observações 1"></td></tr>
+<tr><td><input aria-label="Código 2"></td><td><input aria-label="Endereço 2"></td><td><input aria-label="Preço 2"></td><td><input aria-label="Telefone 2"></td><td><input aria-label="Observações 2"></td></tr>
+<tr><td><input aria-label="Código 3"></td><td><input aria-label="Endereço 3"></td><td><input aria-label="Preço 3"></td><td><input aria-label="Telefone 3"></td><td><input aria-label="Observações 3"></td></tr>
+<tr><td><input aria-label="Código 4"></td><td><input aria-label="Endereço 4"></td><td><input aria-label="Preço 4"></td><td><input aria-label="Telefone 4"></td><td><input aria-label="Observações 4"></td></tr>
+</tbody></table>
+<div class="heading">3. Declaração e ciência da intermediação</div>
+<div class="clause">
+<p>Declaro que, na data acima, visitei o(s) imóvel(is) indicado(s), mediante acompanhamento do(a) corretor(a) responsável pela <strong>Casal Corretores</strong>, e recebi as informações disponíveis necessárias à avaliação dos imóveis.</p>
+<p>Reconheço a intermediação realizada e comprometo-me a informar ao(à) corretor(a) eventual interesse em negociação relativa aos imóveis visitados. A remuneração pela intermediação, quando cabível, observará os instrumentos contratuais específicos e a legislação aplicável. Este registro não substitui compromisso de compra e venda, contrato de corretagem ou proposta aceita.</p>
+</div>
+<div class="grid" style="margin-top:12px"><label class="field c8"><span>Local</span><input name="local" placeholder="Conselheiro Lafaiete - MG"></label><label class="field c4"><span>Data do registro</span><input name="data_registro" placeholder="__/__/____"></label></div>
+<div class="sign-grid"><div class="signature">Assinatura do(a) cliente</div><div class="signature">Assinatura do(a) corretor(a)</div></div>
+<div class="page-end"><span>Casal Corretores · Modelo para validação jurídica e preenchimento</span><span>Página 1 de 2</span></div>
+</section>
+<section class="paper" aria-label="Página 2, proposta e contraproposta">
+<div class="brand-row"><img src="assets/casal-logo-header-v2.svg" alt="Casal Corretores"><aside>REGISTRO DE NEGOCIAÇÃO<br>PROPOSTA E CONTRAPROPOSTA</aside></div>
+<h1>Proposta e contraproposta</h1><p class="lead">Registre por escrito as condições de cada etapa. O aceite deve ser inequívoco.</p>
+<div class="heading">4. Proposta apresentada pelo cliente</div>
+<div class="grid">
+<label class="field c6"><span>Código / identificação do imóvel</span><input name="proposta_codigo"></label>
+<label class="field c6"><span>Valor ofertado (R$)</span><input name="proposta_valor" inputmode="decimal"></label>
+<label class="field c6"><span>Forma de pagamento</span><input name="proposta_pagamento" placeholder="À vista / financiamento / permuta"></label>
+<label class="field c6"><span>Validade da proposta até</span><input name="proposta_validade" placeholder="__/__/____ às __:__"></label>
+<label class="field c12 large"><span>Detalhamento da proposta do cliente - entrada, parcelas, prazos, condições, inclusões e observações</span><textarea name="proposta_detalhes" rows="6" placeholder="Descreva as condições e observações da proposta..."></textarea></label>
+</div>
+<div class="heading">5. Contraproposta do proprietário / vendedor</div>
+<div class="grid">
+<label class="field c6"><span>Valor da contraproposta (R$)</span><input name="contra_valor" inputmode="decimal"></label>
+<label class="field c6"><span>Validade da contraproposta até</span><input name="contra_validade" placeholder="__/__/____ às __:__"></label>
+<label class="field c12 large"><span>Contraproposta detalhada - ajustes de valor, pagamento, entrega, prazos e demais condições</span><textarea name="contra_detalhes" rows="6" placeholder="Registre aqui a contraproposta do proprietário..."></textarea></label>
+</div>
+<div class="heading">6. Resultado da negociação</div>
+<div class="check-row"><label><input type="checkbox" name="aceite"> Proposta aceita</label><label><input type="checkbox" name="recusada"> Recusada</label><label><input type="checkbox" name="pendente"> Aguardando resposta</label><label><input type="checkbox" name="nova"> Nova negociação</label></div>
+<div class="grid" style="margin-top:10px"><label class="field c12 terms"><span>Observações finais e condições adicionais</span><textarea name="observacoes_finais" rows="3"></textarea></label></div>
+<div class="sign-grid"><div class="signature">Assinatura do(a) proponente / cliente</div><div class="signature">Assinatura do(a) proprietário(a) / representante</div></div>
+<p class="notice" style="margin-top:12px">A apresentação de proposta ou contraproposta não implica aceitação automática. Formalize o aceite, poderes de representação e condições definitivas em instrumento adequado.</p>
+<div class="footer-qr">
+<div><strong>Acesse o formulário digital pelo QR Code</strong><p>Abra a câmera do celular e escaneie. Você poderá preencher uma nova via e salvar como PDF.</p><code>is22-app-production.up.railway.app/registro-visita.html</code></div>
+<div id="qr" aria-label="Área reservada ao QR Code">◻</div>
+</div>
+<div class="page-end"><span>Documento em branco acessível por QR Code. O preenchimento não é enviado ao servidor.</span><span>Página 2 de 2</span></div>
+</section>
+</main>
+<script>
+function printForm(){
+ const fields=[...document.querySelectorAll('textarea')];fields.forEach(el=>{el.dataset.oldheight=el.style.height;el.style.height=Math.max(el.scrollHeight,el.offsetHeight)+'px'});
+ window.print();
+ window.setTimeout(()=>fields.forEach(el=>{el.style.height=el.dataset.oldheight||''}),600);
+}
+function clearForm(){if(!confirm('Limpar os dados preenchidos nesta página?'))return;document.querySelectorAll('input,textarea').forEach(el=>{if(el.type==='checkbox')el.checked=false;else el.value=''});}
+</script>
+</body></html>
