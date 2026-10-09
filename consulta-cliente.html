@@ -1,0 +1,102 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0E2A47"><title>Ficha de cliente — consulta privada | Casal Corretores</title>
+<link rel="icon" href="assets/casal-favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e2a47;--gold:#c69b63;--text:#283b4c;--muted:#657687;--line:#dde3e9}*{box-sizing:border-box}
+body{margin:0;background:#f4f6f7;color:var(--text);font:13px/1.55 Montserrat,Arial,sans-serif}
+header{background:var(--navy);padding:17px max(18px,calc((100vw - 790px)/2));}header img{width:235px;max-height:58px;object-fit:contain}
+main{width:min(800px,calc(100% - 26px));margin:24px auto 48px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:24px;margin:0 0 16px;box-shadow:0 6px 26px #0e2a470b}
+h1,h2{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-weight:600}h1{font-size:29px;margin:0 0 8px}h2{font-size:22px;margin:0 0 15px}
+p{color:var(--muted)}label{font-weight:700;color:var(--navy);display:block;margin:19px 0 7px}
+input{border:1px solid #b4c5d2;padding:12px;border-radius:8px;width:min(270px,100%);font:19px Arial,sans-serif;letter-spacing:3px}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button,.btn{border:0;background:var(--navy);color:white;border-radius:8px;padding:13px 16px;cursor:pointer;font-weight:700;font-family:Montserrat,Arial,sans-serif;text-decoration:none;font-size:12px;display:inline-flex;min-height:43px;align-items:center}
+.btn.outline{border:1px solid #c5b08f;background:#fff;color:var(--navy)}
+#notice{font-weight:700;color:#ab3935;min-height:19px}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.item{border:1px solid var(--line);background:#fafbfc;padding:13px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+.item small{display:block;color:#67798a;font-size:10px;font-weight:700;margin-bottom:4px}
+.item strong{font-size:12px;color:var(--navy);font-weight:600}
+.wide{grid-column:span 2}
+.docs{display:grid;gap:10px}
+.doc{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:12px;border:1px solid var(--line);border-radius:8px}
+.doc .name{font-weight:700}
+.caption{font-size:11px;color:#68788a}
+@media(max-width:640px){header img{width:200px}.card{padding:17px}h1{font-size:25px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+@media print{header,#lock,#actionBtns,.doc a{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}}
+</style></head><body>
+<header><a href="/"><img src="assets/casal-logo-footer-v2.svg" alt="Casal Corretores"></a></header>
+<main>
+<section id="lock" class="card">
+<h1>Consulta de ficha de cliente</h1>
+<p>Este acesso pertence a uma ficha individual da Casal Corretores. Para proteger suas informações, o QR Code sozinho não permite consulta.</p>
+<form id="unlock">
+<label for="pin">Código de acesso recebido do corretor</label>
+<input id="pin" type="password" inputmode="numeric" autocomplete="off" minlength="8" maxlength="8" pattern="[0-9]{8}" placeholder="••••••••" required>
+<button type="submit">Acessar ficha</button>
+</form><p id="notice" role="status"></p>
+<p class="caption">Solicite o código de oito dígitos à imobiliária. Não compartilhe este acesso em locais públicos.</p>
+</section>
+<div id="content" class="hidden">
+<section class="card">
+<h1 id="title">Ficha do cliente</h1><p id="metadata"></p>
+<div id="actionBtns"><a id="pdf" class="btn" target="_blank" rel="noopener noreferrer">Salvar PDF</a> <button class="btn outline" id="print" type="button">Imprimir resumo</button></div>
+</section>
+<section class="card"><h2>Identificação e contato</h2><div id="identity" class="grid"></div></section>
+<section class="card"><h2>Preferências de imóvel</h2><div id="interest" class="grid"></div></section>
+<section class="card"><h2>Acompanhamento</h2><div id="follow" class="grid"></div></section>
+<section class="card"><h2>Documentos compartilhados</h2><div id="docs" class="docs"></div>
+<p class="caption">Somente os documentos autorizados pela imobiliária aparecem nesta consulta.</p></section>
+<section class="card"><p class="caption">Documento informativo. Não é assinatura eletrônica, autorização de tratamento de dados ou compromisso de compra e venda.</p></section>
+</div></main>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const token=new URLSearchParams(location.search).get('t')||'';
+if(!/^[A-Za-z0-9_-]{20,120}$/.test(token)){$('notice').textContent='Link inválido. Solicite novo QR Code à imobiliária.';$('unlock').querySelector('button').disabled=true;return}
+const api='/api/clientes/consulta/'+encodeURIComponent(token);
+const info={
+ identity:[['Nome completo','nome'],['Telefone / WhatsApp','telefone'],['Outro telefone','outro_telefone'],['E-mail','email'],['Cidade','cidade'],['UF','uf']],
+ interest:[['Perfil','tipo_cliente'],['Objetivo','objetivo'],['Tipo de imóvel','tipo_imovel'],['Região','localizacao_interesse'],['Bairros','bairros'],['Código do imóvel','codigo_imovel'],['Orçamento mínimo (R$)','valor_min'],['Orçamento máximo (R$)','valor_max'],['Quartos','quartos'],['Vagas','vagas'],['Área mínima (m²)','area_min'],['Pagamento','forma_pagamento'],['Financiamento','financiamento'],['Prazo','prazo']],
+ follow:[['Etapa do atendimento','etapa'],['Corretor(a)','corretor'],['Último contato','data_ultimo_contato'],['Próximo contato','proximo_contato'],['Observações','observacoes_compartilhaveis']]
+};
+function el(tag,text,klass){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(klass)e.className=klass;return e}
+function show(c){
+ $('lock').classList.add('hidden');$('content').classList.remove('hidden');
+ $('title').textContent='Ficha de '+c.nome;$('metadata').textContent='Código '+c.id+' · Atualizado em '+new Date(c.updatedAt).toLocaleString('pt-BR');
+ $('pdf').href=api+'/pdf';
+ for(const [target,items] of Object.entries(info)){
+ const grid=$(target);grid.replaceChildren();
+ for(const [label,key] of items){
+ const val=c[key];if(val===undefined||val===null||val==='')continue;
+ const div=el('div',undefined,key==='observacoes_compartilhaveis'?'item wide':'item');
+ div.append(el('small',label),el('strong',val===true?'Sim':val===false?'Não':String(val)));grid.append(div);
+ }
+ if(!grid.children.length)grid.append(el('p','Nenhuma informação registrada.'));
+ }
+ $('docs').replaceChildren();
+ if(!c.documents.length)$('docs').append(el('p','Nenhum documento compartilhado nesta ficha.'));
+ for(const d of c.documents){
+ const row=el('div',undefined,'doc');
+ row.append(el('span',d.name+' · '+Math.round(d.size/1024)+' KB','name'));
+ const link=el('a','Abrir documento','btn outline');link.href=api+'/documentos/'+encodeURIComponent(d.id);link.target='_blank';link.rel='noopener noreferrer';
+ row.append(link);$('docs').append(row);
+ }
+}
+$('unlock').onsubmit=async event=>{
+ event.preventDefault();$('notice').textContent='Verificando...';
+ try{const r=await fetch(api,{method:'POST',cache:'no-store',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({pin:$('pin').value})});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Não foi possível consultar.');
+ $('pin').value='';show(d.client);
+ }catch(err){$('notice').textContent=err.message}
+};
+$('print').onclick=()=>window.print();
+fetch(api,{credentials:'same-origin',cache:'no-store'}).then(async r=>{if(r.ok){const d=await r.json();show(d.client)}}).catch(()=>{});
+})();
+</script></body></html>
