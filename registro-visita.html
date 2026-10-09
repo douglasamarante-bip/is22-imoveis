@@ -73,10 +73,17 @@ th{padding:6px;font-size:9px}
 .footer-qr #qr img{width:92px;height:92px}
 .page-end{margin-top:9px}
 }
-</style>
+ .toolbar-link{background:transparent;border:1px solid #c9d5df;color:white;border-radius:8px;padding:10px;text-decoration:none;font-size:12px;font-weight:700}
+#feedback{background:#fff;border:1px solid #d2ad72;padding:19px;border-radius:12px;margin:12px 0}
+#feedback h2{margin:0 0 8px}#feedback .result{display:flex;gap:17px;align-items:center;flex-wrap:wrap}#feedback img{max-width:165px;background:white;border:1px solid #ddd;padding:6px}
+#feedback .code{font-size:30px;letter-spacing:3px;font-weight:800;color:#0e2a47;background:#f2e5d2;padding:6px 12px;border-radius:6px;display:inline-block}
+#feedback a{display:inline-block;padding:9px 12px;background:#0e2a47;color:white;text-decoration:none;border-radius:7px;font-weight:700;margin:5px}
+#feedback p{margin:8px 0}#feedback .danger{color:#a33333}
+@media print{#feedback{display:none!important}} </style>
 </head><body>
-<header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" onclick="printForm()">Imprimir / Salvar PDF</button><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
+<header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
 <main id="form-container">
+<section id="feedback" class="screen-only" hidden aria-live="polite"></section>
 <section class="paper" aria-label="Página 1, registro da visita">
 <div class="brand-row"><img src="assets/casal-logo-header-v2.svg" alt="Casal Corretores"><aside>REGISTRO DE VISITA A IMÓVEL<br>COMPROMISSO DE INTERMEDIAÇÃO<br>MODELO PARA PREENCHIMENTO</aside></div>
 <h1>Registro de visita a imóvel</h1><p class="lead">Identificação do interessado, imóvel visitado e declaração da visita.</p>
@@ -144,5 +151,78 @@ function printForm(){
  window.setTimeout(()=>fields.forEach(el=>{el.style.height=el.dataset.oldheight||''}),600);
 }
 function clearForm(){if(!confirm('Limpar os dados preenchidos nesta página?'))return;document.querySelectorAll('input,textarea').forEach(el=>{if(el.type==='checkbox')el.checked=false;else el.value=''});}
+</script>
+
+<script>
+(function(){
+'use strict';
+const saveBtn=document.getElementById('saveRecordBtn');
+const message=document.getElementById('feedback');
+let currentId=new URLSearchParams(location.search).get('id')||'';
+if(!/^[A-Za-z0-9_-]+$/.test(currentId))currentId='';
+const fields=[...document.querySelectorAll('#form-container input[name],#form-container textarea[name]')];
+function alertMessage(text){
+ message.hidden=false;message.replaceChildren();
+ const title=document.createElement('h2');title.textContent=text;message.append(title);
+ message.scrollIntoView({behavior:'smooth',block:'center'});
+}
+async function request(url,opts){
+ const response=await fetch(url,{...opts,credentials:'same-origin',cache:'no-store'});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(data.error||'Falha ao salvar registro');
+ return data
+}
+function populate(d){
+ fields.forEach(el=>{const v=d[el.name];if(v===undefined)return;if(el.type==='checkbox')el.checked=!!v;else el.value=String(v)});
+ if(d.visitas_imoveis){
+  try{const rowData=JSON.parse(d.visitas_imoveis);const rows=document.querySelectorAll('table[aria-label="Imóveis visitados"] tbody tr');
+   rows.forEach((tr,i)=>[...tr.querySelectorAll('input')].forEach((input,j)=>input.value=String(rowData?.[i]?.[j]||'')))}
+  catch{}
+ }
+}
+function collect(){
+ const o={};fields.forEach(el=>o[el.name]=el.type==='checkbox'?el.checked:el.value);
+ const rows=[...document.querySelectorAll('table[aria-label="Imóveis visitados"] tbody tr')].map(tr=>[...tr.querySelectorAll('input')].map(el=>el.value.trim()));
+ o.visitas_imoveis=JSON.stringify(rows.filter(row=>row.some(Boolean)));
+ return o;
+}
+function showSaved(data){
+ currentId=data.record.id;
+ history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(currentId));
+ message.hidden=false;message.replaceChildren();
+ const heading=document.createElement('h2');heading.textContent='Registro '+currentId+' salvo com segurança';message.append(heading);
+ const text=document.createElement('p');text.textContent='O registro agora está armazenado no banco de dados do site. O QR Code individual abre os dados e documentos somente com o código de acesso.';message.append(text);
+ const section=document.createElement('div');section.className='result';
+ const qr=document.createElement('img');qr.src=data.record.qrPath;qr.alt='QR Code individual da visita';
+ section.append(qr);
+ const copy=document.createElement('div');
+ const link=document.createElement('a');link.href=data.record.shareUrl;link.target='_blank';link.rel='noreferrer noopener';link.textContent='Abrir acesso do QR';
+ copy.append(link);
+ const pdf=document.createElement('a');pdf.href='/api/visitas/'+encodeURIComponent(currentId)+'/pdf';pdf.target='_blank';pdf.textContent='PDF com QR individual';copy.append(pdf);
+ const admin=document.createElement('a');admin.href='registros.html?id='+encodeURIComponent(currentId);admin.textContent='Anexar documentos';copy.append(admin);
+ if(data.accessPin){
+   const label=document.createElement('p');label.textContent='CÓDIGO DE ACESSO (exibido somente agora):';copy.append(label);
+   const pin=document.createElement('span');pin.className='code';pin.textContent=data.accessPin;copy.append(pin);
+   const note=document.createElement('p');note.className='danger';note.textContent='Anote e envie este código separadamente ao destinatário. O QR Code sozinho não abre dados pessoais.';copy.append(note);
+ }
+ section.append(copy);message.append(section);message.scrollIntoView({behavior:'smooth',block:'center'});
+}
+saveBtn.addEventListener('click',async()=>{
+ saveBtn.disabled=true;saveBtn.textContent='Salvando...';
+ try{
+  const payload=collect();
+  if(!payload.cliente.trim()||!(payload.imovel_procurado.trim()||payload.proposta_codigo.trim()))throw Error('Informe nome do cliente e imóvel.');
+  const data=await request(currentId?'/api/visitas/'+encodeURIComponent(currentId):'/api/visitas',{
+   method:currentId?'PUT':'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
+  showSaved(data);
+ }catch(err){alertMessage(err.message);if(/login|administrador/i.test(err.message)){
+  const a=document.createElement('a');a.href='login.html';a.textContent='Entrar no painel';message.append(a);
+ }}
+ finally{saveBtn.disabled=false;saveBtn.textContent='Salvar no banco'}
+});
+if(currentId){
+ request('/api/visitas/'+encodeURIComponent(currentId)).then(({record})=>populate(record)).catch(err=>alertMessage(err.message));
+}
+})();
 </script>
 </body></html>
