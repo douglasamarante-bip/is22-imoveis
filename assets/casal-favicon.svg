@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 185" role="img" aria-label="Casal Corretores — casa e parceria">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="42" fill="#0E2A47"/><g transform="translate(14 15) scale(.78)">
  <path d="M18 91 103 17 143 51 157 37 204 82" fill="none" stroke="#D4AF7F" stroke-width="15" stroke-linejoin="miter" stroke-linecap="square"/>
  <path d="M44 85 V112" fill="none" stroke="#D4AF7F" stroke-width="12"/>
  <g fill="#FFFFFF"><rect x="111" y="57" width="10" height="10"/><rect x="125" y="57" width="10" height="10"/><rect x="111" y="71" width="10" height="10"/><rect x="125" y="71" width="10" height="10"/></g>
  <path d="M95 116 C77 91 57 91 47 106 C29 135 56 162 82 151 C103 142 111 123 131 110 C151 96 169 100 175 114 C190 149 150 164 123 136" fill="none" stroke="#FFFFFF" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
  <path d="M61 150 C83 151 98 142 114 127 C129 113 142 102 163 99" fill="none" stroke="#D4AF7F" stroke-width="11" stroke-linecap="round"/>
- <circle cx="176" cy="90" r="12" fill="#FFFFFF"/></svg>
+ <circle cx="176" cy="90" r="12" fill="#FFFFFF"/></g></svg>

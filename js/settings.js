@@ -2,8 +2,8 @@
   const STORAGE='casalCorretoresSiteSettingsV1';
   const OLD_STORAGE='is22SiteSettingsV1';
     const defaults={
-    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Imóveis com propósito',logoNavy:'assets/casal-logo-navy.svg',logoWhite:'assets/casal-logo-white.svg',symbolWhite:'assets/casal-symbol-white.svg'},
-    colors:{primary:'#0B2D4F',secondary:'#123C63',accent:'#D4AF7C',text:'#18283A',soft:'#F8F7F4'},
+    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Sonhos em endereços reais',logoNavy:'assets/casal-logo-navy.svg',logoWhite:'assets/casal-logo-white.svg',symbolWhite:'assets/casal-symbol-white.svg'},
+    colors:{primary:'#0E2A47',secondary:'#173B59',accent:'#D4AF7F',text:'#172A3E',soft:'#F8F7F4'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
     hero:{image:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=88',kicker:'IMÓVEIS COM PROPÓSITO',title:'Mais que imóveis.',strong:'Realizamos histórias.',description:'Comprar ou vender um imóvel é uma decisão importante. A Casal Corretores une parceria, confiança e atendimento próximo para transformar essa escolha em uma conquista segura.',emotion1:'Parceria',emotion2:'Confiança',emotion3:'Realizações',overlay:'70'},
@@ -23,10 +23,17 @@
   const merge=(base,extra)=>{const out=clone(base);const walk=(t,s)=>Object.keys(s||{}).forEach(k=>{if(s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])){if(!t[k]||typeof t[k]!=='object')t[k]={};walk(t[k],s[k])}else t[k]=s[k]});walk(out,extra||{});return out};
   const getPath=(obj,path)=>path.split('.').reduce((o,k)=>o?.[k],obj);
   const setPath=(obj,path,value)=>{const a=path.split('.');let o=obj;for(let i=0;i<a.length-1;i++){o[a[i]]??={};o=o[a[i]]}o[a.at(-1)]=value};
+  /* Upgrade only previous default values; retain the visitor's custom editor choices. */
+  function updatedBrand(s){
+    const oldColors={primary:['#0B2D4F','#0E2A47'],secondary:['#123C63','#173B59'],accent:['#D4AF7C','#D4AF7F'],text:['#18283A','#172A3E']};
+    Object.entries(oldColors).forEach(([key,[previous,next]])=>{if(s.colors?.[key]===previous)s.colors[key]=next});
+    if(s.brand?.tagline==='Imóveis com propósito')s.brand.tagline='Sonhos em endereços reais';
+    return s;
+  }
   function get(){
     try{
       const current=JSON.parse(localStorage.getItem(STORAGE)||'null');
-      if(current)return merge(defaults,current);
+      if(current)return updatedBrand(merge(defaults,current));
       const old=JSON.parse(localStorage.getItem(OLD_STORAGE)||'null');
       if(old){
         const migrated=clone(defaults);
@@ -40,7 +47,7 @@
         if(old.launch?.image)migrated.launch.image=old.launch.image;
         if(old.premium?.image)migrated.premium.image=old.premium.image;
         localStorage.setItem(STORAGE,JSON.stringify(migrated));
-        return migrated;
+        return updatedBrand(migrated);
       }
       return clone(defaults);
     }catch{return clone(defaults)}
