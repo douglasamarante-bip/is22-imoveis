@@ -140,3 +140,59 @@ footer { background:#0A2035; }
 .sidebar-nav .visitas-nav{display:flex;align-items:center;gap:12px;text-decoration:none;color:#d7e6ef;border-radius:9px;padding:12px 13px;text-align:left;cursor:pointer;font-size:12px}
 .sidebar-nav .visitas-nav:hover{background:#234D6C;color:#fff}
 @media(max-width:760px){.sidebar-nav .visitas-nav{min-width:45px;padding:9px;font-size:16px}.sidebar-nav .visitas-nav span{display:none}}
+
+/* Rebrand de cores: Lilian e Douglas (laranja + verde).
+   Apenas elementos cromáticos são afetados; o layout permanece intacto. */
+:root {
+  --navy:#16642F;
+  --navy2:#105127;
+  --blue:#F26A08;
+  --cyan:#218542;
+  --gold:#F26A08;
+  --ink:#1E3D2A;
+  --muted:#66796A;
+  --line:#E9E5DC;
+  --soft:#FFF8F1;
+  --shadow:0 18px 52px rgba(18,85,40,.11);
+}
+body{color:var(--ink)}
+.topbar{border-bottom-color:rgba(22,100,47,.10)}
+.kicker,.topbar nav a:hover,.text-link,.nav-anunciar{color:#DF5B00!important}
+.kicker.light{color:#FFD9A6!important}
+.hero h1 strong{color:#FFD0A1!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important}
+.hero-overlay{background:linear-gradient(90deg,rgba(7,39,20,.87),rgba(12,67,32,.59) 48%,rgba(15,82,40,.11))}
+.btn-primary{background:#F26A08!important;color:#fff!important;border-color:#F26A08!important;box-shadow:0 8px 23px rgba(242,106,8,.20)!important}
+.btn-primary:hover{background:#D95B04!important;border-color:#D95B04!important}
+.btn-outline,.property-view{border-color:#C8D7C7;color:#16642F}
+.btn-outline:hover,.property-view:hover{background:#EDF7EA;color:#14552B}
+.search-shell{box-shadow:0 22px 64px rgba(19,76,38,.16);border-color:rgba(242,106,8,.24)}
+.search-tabs button.active{color:#165F31!important}
+.search-tabs button.active::after{background:#F26A08!important}
+.search-grid label:focus-within,.advanced-search label:focus-within{border-color:#F26A08}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline-color:#F26A08}
+.property-card{border-color:#E9E6DD}
+.property-card:hover{border-color:#F26A08}
+.property-price,.property-info h3{color:#16642F}
+.badge-premium{background:#F26A08}
+.exclusive-card{background:linear-gradient(110deg,#105127,#237943)}
+.premium{background:#FFF8F1}
+.cta,.emotion-strip{background:#12562E!important}
+.emotion-item>span,.emotion-item b{color:#FFAA57!important}
+.emotion-item p{color:#D5E8D6}
+footer{background:#103B23!important}
+.sidebar{background:#12552D!important}
+.sidebar-nav button.active,.sidebar-nav button:hover,.sidebar-nav .visitas-nav:hover{background:#EA670C!important;color:#fff!important}
+.metric-icon.gold{background:#FFF0E3;color:#DF5B00}
+.metric-icon.blue{background:#E9F5E7;color:#16642F}
+.editor-nav button.active{background:#16642F!important;border-color:#F26A08!important}
+.editor-status{background:linear-gradient(90deg,#EFF8ED,#FFF9F3)!important;border-color:#D6E6D0!important}
+.editor-status .status-dot{background:#26934B!important;box-shadow:0 0 0 5px rgba(38,147,75,.12)!important}
+.asset-preview.dark{background:#12552D!important}
+.color-grid input[type=color]{border-color:#D4DFC9}
+.site-editor input:focus,.site-editor textarea:focus,.site-editor select:focus{border-color:#F26A08;box-shadow:0 0 0 3px rgba(242,106,8,.10)}
+.login-shade{background:linear-gradient(90deg,rgba(8,42,23,.89),rgba(17,93,40,.48))!important}
+.dream-widget:not(.compact) .dream-reveal{background:linear-gradient(135deg,rgba(17,91,44,.91),rgba(30,123,55,.81))}
+.story-shade{background:linear-gradient(90deg,rgba(8,43,22,.90),rgba(13,69,32,.67) 48%,rgba(15,82,40,.17) 80%)}
+.sidebar-brand .brand-copy b{font-size:12px!important;white-space:nowrap;letter-spacing:-.35px}
+.sidebar-brand .brand-copy small{color:#FFC68F!important}
+.site-editor .upload-btn{border-color:#A9D4AA!important;color:#155B2D!important;background:#F4FBF1!important}

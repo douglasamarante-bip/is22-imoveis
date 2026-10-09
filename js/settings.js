@@ -4,8 +4,8 @@
   let publishedHeroImage=null; // referência pública persistida no Railway
   const withPublishedHero=s=>{if(publishedHeroImage && s?.hero)s.hero.image=publishedHeroImage;return s};
     const defaults={
-    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Lilian e Douglas',logoNavy:'assets/casal-logo-header-lilian-douglas.svg',logoWhite:'assets/casal-logo-footer-lilian-douglas.svg',symbolWhite:'assets/casal-symbol-white-v2.svg'},
-    colors:{primary:'#0E2A47',secondary:'#173B59',accent:'#D4AF7F',text:'#172A3E',soft:'#F8F7F4'},
+    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Realizando Sonhos',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
+    colors:{primary:'#16642F',secondary:'#105127',accent:'#F26A08',text:'#1E3D2A',soft:'#FFF8F1'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
     hero:{image:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=88',kicker:'IMÓVEIS COM PROPÓSITO',title:'Mais que imóveis.',strong:'Realizamos histórias.',description:'Comprar ou vender um imóvel é uma decisão importante. A Casal Corretores une parceria, confiança e atendimento próximo para transformar essa escolha em uma conquista segura.',emotion1:'Parceria',emotion2:'Confiança',emotion3:'Realizações',overlay:'70'},
@@ -29,6 +29,20 @@
   function updatedBrand(s){
     const oldColors={primary:['#0B2D4F','#0E2A47'],secondary:['#123C63','#173B59'],accent:['#D4AF7C','#D4AF7F'],text:['#18283A','#172A3E']};
     Object.entries(oldColors).forEach(([key,[previous,next]])=>{if(s.colors?.[key]===previous)s.colors[key]=next});
+    // Migração apenas de cores anteriores do template, mantendo customizações reais.
+    const oldBrandPalette={
+      primary:['#0E2A47','#0B2D4F','#082452'],secondary:['#173B59','#123C63','#0D356C'],
+      accent:['#D4AF7F','#D4AF7C','#D3A54D'],text:['#172A3E','#18283A','#102038'],soft:['#F8F7F4','#F5F8FB']
+    };
+    const newPalette={primary:'#16642F',secondary:'#105127',accent:'#F26A08',text:'#1E3D2A',soft:'#FFF8F1'};
+    Object.entries(oldBrandPalette).forEach(([key,previous])=>{
+      if(previous.some(color=>String(s.colors?.[key]).toUpperCase()===color.toUpperCase()))s.colors[key]=newPalette[key];
+    });
+    if(s.brand?.tagline==='Lilian e Douglas')s.brand.tagline='Realizando Sonhos';
+    // Logos personalizados enviados pelo usuário não são sobrescritos.
+    if(['assets/casal-logo-header-lilian-douglas.svg','assets/casal-logo-header-v2.svg','assets/casal-logo-navy.svg'].includes(s.brand?.logoNavy))s.brand.logoNavy='assets/lilian-douglas-logo-verde-laranja.svg';
+    if(['assets/casal-logo-footer-lilian-douglas.svg','assets/casal-logo-footer-v2.svg','assets/casal-logo-white.svg'].includes(s.brand?.logoWhite))s.brand.logoWhite='assets/lilian-douglas-logo-escura.svg';
+    if(['assets/casal-symbol-white-v2.svg','assets/casal-symbol-white.svg'].includes(s.brand?.symbolWhite))s.brand.symbolWhite='assets/lilian-douglas-simbolo.svg';
     if(['Imóveis com propósito','Sonhos em endereços reais','Lilian & Douglas','Liliam & Douglas'].includes(s.brand?.tagline))s.brand.tagline='Lilian e Douglas';
     // Upgrade assets that still use the previous shipped logo, without replacing custom uploads.
     const oldAssets={
@@ -76,7 +90,7 @@
     img('headerLogo',s.brand.logoNavy);img('footerLogo',s.brand.logoWhite);img('dreamSymbol',s.brand.symbolWhite);
     text('navBuy',s.nav.buy);text('navRent',s.nav.rent);text('navLaunch',s.nav.launch);text('navPremium',s.nav.premium);text('navAbout',s.nav.about);text('navContact',s.nav.contact);text('headerCta',s.nav.cta);
     img('heroImage',s.hero.image);text('heroKicker',s.hero.kicker);text('heroTitle',s.hero.title);text('heroStrong',s.hero.strong);text('heroDescription',s.hero.description);text('heroEmotion1',s.hero.emotion1);text('heroEmotion2',s.hero.emotion2);text('heroEmotion3',s.hero.emotion3);
-    const overlay=document.getElementById('heroOverlay');if(overlay){const a=Math.max(.2,Math.min(.95,Number(s.hero.overlay||70)/100));overlay.style.background=`linear-gradient(90deg,rgba(6,25,44,${Math.min(.95,a+.13)}),rgba(11,45,79,${Math.max(.25,a-.16)}) 48%,rgba(11,45,79,.12))`}
+    const overlay=document.getElementById('heroOverlay');if(overlay){const a=Math.max(.2,Math.min(.95,Number(s.hero.overlay||70)/100));overlay.style.background=`linear-gradient(90deg,rgba(8,42,23,${Math.min(.95,a+.13)}),rgba(13,66,32,${Math.max(.25,a-.16)}) 48%,rgba(15,88,39,.12))`}
     document.querySelectorAll('.dream-house-half').forEach(h=>h.style.backgroundImage=`linear-gradient(rgba(6,25,44,.08),rgba(6,25,44,.26)),url("${s.experience.image}")`);
     text('dreamKicker',s.experience.kicker);text('dreamPhrase1',s.experience.phrase1);text('dreamPhrase2',s.experience.phrase2);text('dreamPhrase3',s.experience.phrase3);text('dreamPhrase4',s.experience.phrase4);text('dreamFooter',s.experience.footer);
     const dw=document.getElementById('dreamWidget');if(dw){dw.classList.remove('pos-bottom-right','pos-bottom-left','pos-top-right','pos-top-left');dw.classList.add('pos-'+s.experience.position)}
