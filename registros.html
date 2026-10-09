@@ -1,0 +1,143 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Registros e propostas | Casal Corretores</title><link rel="icon" href="assets/casal-favicon.svg" type="image/svg+xml">
+<style>
+:root{--navy:#0E2A47;--gold:#D4AF7F;--line:#dce3e8}
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 Arial,sans-serif;background:#f3f5f7;color:#243447}
+header{background:var(--navy);color:white;padding:14px max(20px,calc((100vw - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}
+header img{width:195px;height:59px;object-fit:contain}header nav{display:flex;gap:12px;flex-wrap:wrap}
+header a{color:white;text-decoration:none;font-weight:700;font-size:12px}
+main{width:min(1100px,calc(100% - 24px));margin:22px auto 45px}
+h1{font:700 31px Georgia,serif;color:var(--navy);margin:0}
+h2{font:700 23px Georgia,serif;color:var(--navy);margin:0 0 10px}
+p{color:#637489}
+.card{background:white;padding:22px;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 26px #102c4012;margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.button,button{border:0;border-radius:8px;background:var(--navy);color:white;text-decoration:none;cursor:pointer;padding:11px 15px;font-size:12px;font-weight:700;display:inline-block}
+.button.gold{background:#C49A62;color:#152e42}.button.outline{background:#fff;color:var(--navy);border:1px solid #c9d4de}
+input{padding:11px;border:1px solid #cbd6df;border-radius:7px;font:inherit}
+#query{min-width:280px;max-width:100%}
+#results{display:grid;gap:10px;margin-top:16px}
+.entry{padding:14px;background:#fbfcfd;border:1px solid var(--line);border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.entry b{font-size:14px;color:var(--navy)}.entry small{display:block;color:#64748b;margin-top:3px}
+.entry button{padding:9px 14px}
+#detail{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.info{background:#f7f9fb;border-radius:8px;border:1px solid var(--line);padding:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.info small{font-size:11px;font-weight:700;display:block;color:#64748b}
+.info b{font-size:13px;color:var(--navy)}
+#qrCode{background:white;border:1px solid var(--line);padding:6px;width:180px;height:180px}
+.code{display:inline-block;border-radius:7px;background:#f5e8d2;padding:7px 12px;color:#122d45;font-size:27px;font-weight:800;letter-spacing:3px}
+#pinNotice{padding:12px;border:1px solid #d6b27b;background:#fcf7ed;border-radius:8px;margin:10px 0;display:none}
+.warning{color:#9b3333;font-weight:700}
+.docs{display:grid;gap:8px}
+.doc{display:flex;justify-content:space-between;gap:15px;padding:11px;border:1px solid var(--line);border-radius:7px;align-items:center;flex-wrap:wrap}
+.doc span{font-size:13px;overflow-wrap:anywhere}
+#uploadDoc{max-width:350px}
+#messages{color:#a63737;font-weight:700;min-height:15px}
+#empty{display:none}
+@media(max-width:700px){header{align-items:flex-start;flex-direction:column}header img{width:170px}h1{font-size:25px}.grid{grid-template-columns:1fr}.card{padding:15px}}
+</style></head><body>
+<header><a href="index.html"><img src="assets/casal-logo-footer-v2.svg" alt="Casal Corretores"></a><nav><a href="admin.html">← Painel administrativo</a><a href="registro-visita.html">+ Novo registro</a></nav></header>
+<main>
+<section class="card"><div class="row"><div><h1>Registros de visita e propostas</h1><p>Negociações e documentos salvos no banco de dados. Apenas administradores autenticados.</p></div><a class="button gold" href="registro-visita.html">+ Novo registro</a></div>
+<div class="row"><input id="query" placeholder="Buscar por cliente, imóvel ou código..." aria-label="Buscar"><button id="refresh">Atualizar lista</button></div><p id="messages" role="status"></p>
+<div id="results"></div><p id="empty">Nenhum registro cadastrado.</p></section>
+<section id="detail">
+<div class="card"><div class="row"><div><h2 id="detailTitle">Registro</h2><p id="detailMeta"></p></div><div><a id="editLink" class="button gold">Editar proposta</a> <a id="pdfLink" class="button" target="_blank">Abrir PDF</a></div></div>
+<div class="grid"><div class="info"><small>Cliente</small><b id="detailClient"></b></div><div class="info"><small>Imóvel</small><b id="detailProperty"></b></div><div class="info"><small>Proposta (R$)</small><b id="detailProposal"></b></div><div class="info"><small>Contraproposta (R$)</small><b id="detailCounter"></b></div></div></div>
+<div class="card"><h2>QR Code privado</h2><div class="row"><img id="qrCode" alt="QR Code exclusivo deste registro"><div style="flex:1;min-width:225px">
+<p>Escaneie para abrir o registro. As informações e documentos só aparecem depois de informar o código de acesso.</p>
+<a id="shareLink" target="_blank" rel="noreferrer noopener" class="button outline">Testar link do QR</a>
+<button id="rotatePin" type="button">Gerar novo código de acesso</button>
+<p class="warning">Guarde o novo código e informe-o separadamente. Ao gerar outro, o anterior perde a validade.</p>
+<div id="pinNotice"><small>Código de acesso — aparece somente agora:</small><div id="pinValue" class="code"></div><p>Copie e envie em canal separado ao destinatário.</p><button type="button" id="copyPin" class="button outline">Copiar código</button></div></div></div></div>
+<div class="card"><h2>Documentos da negociação</h2>
+<p>Anexe contratos, propostas assinadas, fotos de documentos ou comprovantes. Aceita PDF, JPG e PNG de até 5 MB. Arquivos só podem ser acessados após autorização.</p>
+<div class="row"><input type="file" id="uploadDoc" accept="application/pdf,image/png,image/jpeg"><button id="uploadBtn" type="button">Anexar documento</button></div>
+<div id="docList" class="docs" style="margin-top:18px"></div></div>
+</section></main>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+let records=[],selected=null;
+function node(tag,text,klass){const el=document.createElement(tag);if(text!=null)el.textContent=text;if(klass)el.className=klass;return el}
+async function api(url,opts={}){
+ const r=await fetch(url,{...opts,credentials:'same-origin',cache:'no-store'});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw new Error(d.error||'Erro ao acessar os registros.');
+ return d
+}
+function fail(e){$('messages').textContent=e.message;if(/login|administrador/i.test(e.message)){const a=node('a','Entrar novamente','button outline');a.href='login.html';$('messages').append(a)}}
+async function fetchList(){
+ try{const d=await api('/api/visitas');records=d.records;draw();
+ const params=new URLSearchParams(location.search);const id=params.get('id');if(id&&/^[A-Za-z0-9_-]+$/.test(id))await openItem(id);
+ }catch(e){fail(e)}
+}
+function draw(){
+ const query=$('query').value.trim().toLocaleLowerCase('pt-BR');
+ const rows=records.filter(x=>(x.cliente+' '+x.imovel+' '+x.id).toLocaleLowerCase('pt-BR').includes(query));
+ $('results').replaceChildren();$('empty').style.display=rows.length?'none':'block';
+ for(const r of rows){
+  const line=node('article',null,'entry'),left=node('div'),name=node('b',r.cliente||'Cliente não identificado');
+  left.append(name,node('small','Registro '+r.id+' · '+(r.imovel||'Sem imóvel')+' · '+r.status+' · '+new Date(r.updatedAt).toLocaleString('pt-BR')));
+  const btn=node('button','Abrir');btn.onclick=()=>openItem(r.id);
+  line.append(left,btn);$('results').append(line);
+ }
+}
+function set(id,val){$(id).textContent=String(val||'Não informado')}
+async function openItem(id){
+ try{
+ const {record:r}=await api('/api/visitas/'+encodeURIComponent(id));
+ selected=r;$('detail').style.display='block';
+ history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(r.id));
+ set('detailTitle','Registro '+r.id);set('detailMeta','Criado em '+new Date(r.createdAt).toLocaleString('pt-BR')+' · Atualizado em '+new Date(r.updatedAt).toLocaleString('pt-BR'));
+ set('detailClient',r.cliente);set('detailProperty',r.imovel_procurado||r.proposta_codigo);set('detailProposal',r.proposta_valor);set('detailCounter',r.contra_valor);
+ $('editLink').href='registro-visita.html?id='+encodeURIComponent(r.id);
+ $('pdfLink').href='/api/visitas/'+encodeURIComponent(r.id)+'/pdf';
+ $('qrCode').src=r.qrPath;
+ $('shareLink').href=r.shareUrl;
+ $('pinNotice').style.display='none';
+ drawDocs();
+ $('detail').scrollIntoView({behavior:'smooth',block:'start'});
+ }catch(e){fail(e)}
+}
+function drawDocs(){
+ const list=$('docList');list.replaceChildren();
+ const docs=selected?.documents||[];
+ if(!docs.length){list.append(node('p','Nenhum documento anexo.'));return}
+ for(const d of docs){
+ const row=node('div',null,'doc');row.append(node('span',d.name+' · '+Math.round(d.size/1024)+' KB'));
+ const actions=node('div');
+ const a=node('a','Abrir arquivo','button outline');a.target='_blank';a.rel='noopener noreferrer';a.href='/api/visitas/'+encodeURIComponent(selected.id)+'/documentos/'+encodeURIComponent(d.id);
+ const del=node('button','Excluir');del.style.marginLeft='6px';del.onclick=async()=>{
+  if(!confirm('Excluir este documento anexado?'))return;
+  try{const result=await api('/api/visitas/'+encodeURIComponent(selected.id)+'/documentos/'+encodeURIComponent(d.id),{method:'DELETE'});selected.documents=result.documents;drawDocs()}catch(e){fail(e)}
+ };
+ actions.append(a,del);row.append(actions);list.append(row);
+ }
+}
+$('rotatePin').onclick=async()=>{
+ if(!selected||!confirm('Gerar novo código? O anterior deixará de funcionar.'))return;
+ try{const r=await api('/api/visitas/'+encodeURIComponent(selected.id)+'/pin',{method:'POST'});set('pinValue',r.accessPin);$('pinNotice').style.display='block'}catch(e){fail(e)}
+};
+$('copyPin').onclick=()=>{if($('pinValue').textContent)navigator.clipboard.writeText($('pinValue').textContent)};
+$('uploadBtn').onclick=async()=>{
+ const file=$('uploadDoc').files?.[0];if(!selected)return;
+ if(!file){$('messages').textContent='Selecione um arquivo.';return}
+ if(file.size>5*1024*1024){$('messages').textContent='Máximo 5 MB por documento.';return}
+ if(!['application/pdf','image/png','image/jpeg'].includes(file.type)){$('messages').textContent='Aceito PDF, JPG ou PNG.';return}
+ $('uploadBtn').disabled=true;$('uploadBtn').textContent='Enviando...';
+ try{
+ const base64=await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(',')[1]||'');fr.onerror=()=>reject(new Error('Erro ao ler o arquivo'));fr.readAsDataURL(file)});
+ const d=await api('/api/visitas/'+encodeURIComponent(selected.id)+'/documentos',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:file.name,mime:file.type,base64})});
+ selected.documents=d.documents;$('uploadDoc').value='';drawDocs();$('messages').textContent='Documento anexado.'; 
+ }catch(e){fail(e)}
+ finally{$('uploadBtn').disabled=false;$('uploadBtn').textContent='Anexar documento'}
+};
+$('query').addEventListener('input',draw);
+$('refresh').onclick=fetchList;
+fetchList();
+})();
+</script></body></html>
