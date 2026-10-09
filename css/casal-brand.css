@@ -196,3 +196,14 @@ footer{background:#103B23!important}
 .sidebar-brand .brand-copy b{font-size:12px!important;white-space:nowrap;letter-spacing:-.35px}
 .sidebar-brand .brand-copy small{color:#FFC68F!important}
 .site-editor .upload-btn{border-color:#A9D4AA!important;color:#155B2D!important;background:#F4FBF1!important}
+
+
+/* CRECI no bloco de contato do rodapé */
+.footer-creci{
+  display:block;
+  color:#E8F2EA;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.35px;
+  margin-top:3px;
+}
