@@ -261,3 +261,230 @@ footer{background:#103B23!important}
     padding-left:4px;
   }
 }
+
+
+/* ===== MOBILE PREMIUM FINAL 2026 ===== */
+@media (max-width:760px){
+  :root{--mobile-gutter:14px}
+
+  /* Cabeçalho compacto */
+  .topbar{height:72px!important}
+  .nav-wrap{width:calc(100% - 28px)!important;gap:10px!important}
+  .topbar .brand-full img{width:190px!important;height:48px!important}
+  .header-creci{font-size:7.5px!important;margin-top:0!important;padding-left:4px!important}
+  .mobile-menu{width:42px!important;height:42px!important;flex:0 0 42px!important;border-radius:11px!important}
+
+  /* Hero: a foto termina antes da busca, evitando zoom/corte exagerado */
+  .hero{
+    display:block!important;
+    min-height:0!important;
+    padding:0 0 24px!important;
+    overflow:visible!important;
+    background:#fff!important;
+  }
+  .hero-bg,.hero-overlay{
+    top:0!important;bottom:auto!important;
+    height:510px!important;min-height:510px!important;
+  }
+  .hero-bg{
+    object-fit:cover!important;
+    object-position:68% center!important;
+  }
+  .hero-overlay{
+    background:linear-gradient(90deg,rgba(7,39,20,.91) 0%,rgba(10,56,27,.78) 46%,rgba(12,66,31,.31) 100%)!important;
+  }
+  .hero-content{
+    min-height:510px!important;
+    padding:62px 0 54px!important;
+    justify-content:center!important;
+  }
+  .hero .kicker{font-size:9px!important;letter-spacing:2px!important}
+  .hero h1{
+    max-width:340px!important;
+    margin:14px 0 18px!important;
+    font-size:39px!important;
+    line-height:1.02!important;
+    letter-spacing:-.025em!important;
+  }
+  .hero p{
+    max-width:345px!important;
+    margin:0!important;
+    font-size:14px!important;
+    line-height:1.55!important;
+    color:rgba(255,255,255,.94)!important;
+  }
+
+  /* Busca: só o essencial aparece primeiro */
+  .search-shell{
+    position:relative!important;
+    left:auto!important;right:auto!important;bottom:auto!important;
+    transform:none!important;
+    width:calc(100% - 28px)!important;
+    margin:-26px auto 0!important;
+    border-radius:20px!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    box-shadow:0 18px 48px rgba(18,85,40,.16)!important;
+    z-index:8!important;
+  }
+  .search-tabs{
+    height:49px!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    overflow:hidden!important;
+  }
+  .search-tabs button{
+    min-width:0!important;
+    padding:0 4px!important;
+    font-size:11px!important;
+    white-space:nowrap!important;
+  }
+  .search-tabs button.active:after{
+    left:9px!important;right:9px!important;height:2px!important;
+  }
+  .search-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding:12px!important;
+  }
+  .search-grid label{
+    min-height:54px!important;
+    padding:8px 11px!important;
+    border-radius:12px!important;
+  }
+  .search-grid label span{font-size:8px!important}
+  .search-grid input,.search-grid select{
+    font-size:15px!important;
+    line-height:1.2!important;
+  }
+  .search-grid label:nth-of-type(4),
+  .search-grid label:nth-of-type(5){
+    display:none!important;
+  }
+  .search-shell.mobile-filters-open .search-grid label:nth-of-type(4),
+  .search-shell.mobile-filters-open .search-grid label:nth-of-type(5){
+    display:grid!important;
+  }
+  .search-btn{
+    width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+    border-radius:12px!important;
+    margin-top:1px!important;
+  }
+  .advanced-search{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding:0 12px 12px!important;
+  }
+  .advanced-search.collapsed>label{display:none!important}
+  .advanced-search:not(.collapsed)>label{display:grid!important}
+  .advanced-search .toggle-search{min-height:48px!important}
+  .more-filter-toggle{
+    width:100%!important;
+    height:44px!important;
+    border-radius:11px!important;
+  }
+
+  /* Faixa logo abaixo da busca */
+  .emotion-strip{margin-top:0!important}
+  .emotion-grid{grid-template-columns:1fr!important}
+  .emotion-item{padding:18px 4px!important}
+
+  /* WhatsApp vira um botão redondo e não tampa o conteúdo */
+  .dream-widget{
+    right:12px!important;
+    bottom:12px!important;
+    width:58px!important;
+    max-width:58px!important;
+    z-index:84!important;
+    filter:drop-shadow(0 9px 22px rgba(10,80,35,.2))!important;
+  }
+  .dream-widget.compact .dream-scene{
+    width:58px!important;
+    height:58px!important;
+    min-height:58px!important;
+    margin:0!important;
+    border-radius:50%!important;
+    overflow:hidden!important;
+  }
+  .dream-widget.compact .dream-reveal{
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+  }
+  .dream-widget.compact .dream-compact-cta{
+    width:58px!important;height:58px!important;
+    display:grid!important;place-items:center!important;
+    gap:0!important;
+  }
+  .dream-widget.compact .dream-wa-icon{
+    width:58px!important;height:58px!important;
+    flex:0 0 58px!important;
+    display:grid!important;place-items:center!important;
+  }
+  .dream-widget.compact .dream-wa-icon svg,
+  .dream-widget.compact .dream-wa-icon img{
+    width:31px!important;height:31px!important;
+  }
+  .dream-widget.compact .dream-wa-copy,
+  .dream-widget.compact .dream-wa-arrow,
+  .dream-widget.compact .dream-close{
+    display:none!important;
+  }
+
+  /* Comparador nunca aparece quando está vazio */
+  .compare-bar.hidden{display:none!important}
+  .compare-bar:not(.hidden){
+    left:12px!important;
+    right:82px!important;
+    bottom:12px!important;
+    transform:none!important;
+    width:auto!important;
+    min-height:58px!important;
+    padding:8px 10px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:8px!important;
+    border-radius:15px!important;
+    z-index:83!important;
+  }
+  .compare-bar>div:first-child{min-width:0!important}
+  .compare-bar>div:first-child b{font-size:10px!important}
+  .compare-bar>div:first-child span{font-size:7px!important}
+  .compare-bar .compare-chips{display:none!important}
+  .compare-bar .btn{
+    grid-column:auto!important;
+    width:auto!important;
+    min-height:38px!important;
+    padding:9px 11px!important;
+    font-size:9px!important;
+  }
+  .compare-clear{
+    position:absolute!important;
+    right:7px!important;
+    top:3px!important;
+    font-size:7px!important;
+  }
+
+  /* Cards e seções mais leves */
+  .section{padding:46px 0!important}
+  .property-media{height:220px!important}
+  .property-card-actions{grid-template-columns:1fr 1fr!important}
+  .property-view,.compare-btn{min-height:42px!important}
+  .story-panel{min-height:440px!important}
+  .premium-photo{height:270px!important}
+  .cta{padding:42px 0!important}
+  .footer-grid{gap:28px!important}
+}
+
+@media (max-width:390px){
+  .topbar .brand-full img{width:172px!important;height:46px!important}
+  .hero-bg,.hero-overlay,.hero-content{height:auto!important;min-height:490px!important}
+  .hero h1{font-size:36px!important;max-width:315px!important}
+  .hero p{font-size:13.5px!important;max-width:320px!important}
+  .search-tabs button{font-size:10px!important}
+}
