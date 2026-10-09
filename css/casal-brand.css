@@ -93,3 +93,45 @@ footer { background:#0A2035; }
   .brand-full img {width:156px!important;height:45px!important;}
   .nav-wrap {gap:8px;}
 }
+
+/* Revisão da marca: proporção e legibilidade em telas grandes e celulares */
+.topbar{height:94px!important;}
+.nav-wrap{gap:17px!important;}
+.topbar .brand-full{flex-shrink:0;min-width:0;}
+.topbar .brand-full img{
+  width:312px!important;height:82px!important;
+  object-fit:contain!important;object-position:left center!important;
+  display:block;
+}
+.footer-brand .brand-full img{width:300px!important;height:83px!important;}
+.login-form-wrap .login-logo{width:min(360px,100%)!important;}
+.dream-widget.compact .dream-scene{
+  width:280px!important;height:74px!important;min-height:74px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:16px!important;
+}
+.dream-widget.compact .dream-reveal{padding:9px 36px 9px 11px!important;}
+.dream-widget.compact .dream-compact-cta{gap:9px!important;}
+.dream-wa-icon{
+  width:44px!important;height:44px!important;flex:0 0 44px!important;
+  border:0!important;border-radius:50%!important;background:transparent!important;
+  box-shadow:none!important;overflow:visible!important;
+}
+.dream-wa-icon img{
+  display:block;width:43px;height:43px;object-fit:contain;
+  filter:drop-shadow(0 1px 2px rgba(0,80,35,.13));
+}
+.dream-widget.compact .dream-wa-copy b{font:700 12px/1.18 Montserrat,Inter,sans-serif!important;}
+.dream-widget.compact .dream-wa-copy small{font:500 9px/1.3 Montserrat,Inter,sans-serif!important;}
+@media(max-width:1100px){
+  .topbar .brand-full img{width:276px!important;height:72px!important;}
+}
+@media(max-width:760px){
+  .topbar{height:74px!important;}
+  .topbar .brand-full img{width:208px!important;height:56px!important;}
+  .dream-widget.compact .dream-scene{width:min(280px,calc(100vw - 24px))!important;}
+}
+@media(max-width:390px){
+  .topbar .brand-full img{width:178px!important;height:49px!important;}
+  .nav-wrap{gap:9px!important;}
+}

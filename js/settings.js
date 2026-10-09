@@ -2,7 +2,7 @@
   const STORAGE='casalCorretoresSiteSettingsV1';
   const OLD_STORAGE='is22SiteSettingsV1';
     const defaults={
-    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Sonhos em endereços reais',logoNavy:'assets/casal-logo-navy.svg',logoWhite:'assets/casal-logo-white.svg',symbolWhite:'assets/casal-symbol-white.svg'},
+    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Sonhos em endereços reais',logoNavy:'assets/casal-logo-header-v2.svg',logoWhite:'assets/casal-logo-footer-v2.svg',symbolWhite:'assets/casal-symbol-white-v2.svg'},
     colors:{primary:'#0E2A47',secondary:'#173B59',accent:'#D4AF7F',text:'#172A3E',soft:'#F8F7F4'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
@@ -28,6 +28,13 @@
     const oldColors={primary:['#0B2D4F','#0E2A47'],secondary:['#123C63','#173B59'],accent:['#D4AF7C','#D4AF7F'],text:['#18283A','#172A3E']};
     Object.entries(oldColors).forEach(([key,[previous,next]])=>{if(s.colors?.[key]===previous)s.colors[key]=next});
     if(s.brand?.tagline==='Imóveis com propósito')s.brand.tagline='Sonhos em endereços reais';
+    // Upgrade assets that still use the previous shipped logo, without replacing custom uploads.
+    const oldAssets={
+      logoNavy:['assets/casal-logo-navy.svg','assets/casal-logo-header-v2.svg'],
+      logoWhite:['assets/casal-logo-white.svg','assets/casal-logo-footer-v2.svg'],
+      symbolWhite:['assets/casal-symbol-white.svg','assets/casal-symbol-white-v2.svg']
+    };
+    Object.entries(oldAssets).forEach(([key,[before,after]])=>{if(s.brand?.[key]===before)s.brand[key]=after});
     return s;
   }
   function get(){
