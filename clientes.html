@@ -1,0 +1,164 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0E2A47"><title>Clientes cadastrados | Casal Corretores</title>
+<link rel="icon" href="assets/casal-favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e2a47;--gold:#c79d64;--ink:#263a4b;--muted:#657687;--line:#dce3e8}*{box-sizing:border-box}
+body{margin:0;background:#f4f6f7;color:var(--ink);font:12px/1.55 Montserrat,Arial,sans-serif}
+header{background:var(--navy);padding:12px max(17px,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:14px}
+header img{width:200px;max-height:56px;object-fit:contain}header nav{display:flex;gap:12px;flex-wrap:wrap}
+header nav a{color:white;text-decoration:none;font-weight:700}
+main{width:min(1100px,calc(100% - 24px));margin:23px auto 50px}
+h1,h2{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-weight:600}
+h1{font-size:32px;margin:0 0 5px}h2{font-size:24px;margin:0 0 14px}
+p{color:var(--muted)}
+.card{background:white;padding:22px;border-radius:14px;border:1px solid var(--line);box-shadow:0 7px 24px #102f4d0b;margin-bottom:16px}
+.row{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+button,.btn{border:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:8px;padding:11px 14px;font:700 12px Montserrat,Arial,sans-serif;background:var(--navy);color:white;text-decoration:none}
+.btn.outline,button.outline{border:1px solid #d1bd9f;background:white;color:var(--navy)}
+.btn.gold{background:#c69b60;color:#132f45}
+input[type=text],input[type=file]{border:1px solid #cad5de;border-radius:8px;padding:11px;font:inherit;max-width:100%}
+input[type=text]{width:min(490px,100%)}
+#entries{display:grid;gap:9px;margin-top:18px}
+.entry{background:#fafbfd;border:1px solid var(--line);padding:14px;border-radius:9px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.entry strong{font-size:13px;color:var(--navy)}.entry small{color:#697b89;display:block;margin-top:4px}
+#detail{display:none}
+.details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.item{border:1px solid var(--line);background:#fafbfd;border-radius:8px;padding:12px;overflow-wrap:anywhere;white-space:pre-wrap}
+.item small{display:block;color:#6d7e90;font-weight:700;margin-bottom:5px}
+.item strong{color:#1e3348}
+#qr{width:185px;height:185px;border:1px solid var(--line);padding:6px}
+.share{display:flex;align-items:center;gap:21px;flex-wrap:wrap}
+.shareText{flex:1;min-width:220px}
+.pin{font-size:29px;letter-spacing:4px;font-weight:700;display:inline-block;background:#f9ead1;border-radius:7px;padding:5px 12px;margin:7px 0}
+.danger{color:#a33b36;font-weight:600}
+#pinArea{display:none;border-left:4px solid var(--gold);background:#fbf6ea;padding:10px 16px}
+.document{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 0;border-bottom:1px solid #e4e8eb}
+.document small{display:block;color:#718192}
+.document .doc-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.document label{display:flex;align-items:center;gap:6px;color:#51677b;font-weight:600}
+.document input[type=checkbox]{accent-color:var(--navy);height:17px;width:17px}
+#status{min-height:20px;font-size:12px;font-weight:700;color:#9c403b}
+@media(max-width:760px){header{flex-direction:column;align-items:flex-start}.details{grid-template-columns:1fr}.card{padding:16px}h1{font-size:27px}}
+</style></head><body>
+<header><a href="index.html"><img src="assets/casal-logo-footer-v2.svg" alt="Casal Corretores"></a><nav><a href="admin.html">← Painel</a><a href="ficha-cliente.html">+ Nova ficha</a><a href="registros.html">Visitas e propostas</a></nav></header>
+<main>
+<section class="card"><div class="row"><div><h1>Fichas de clientes</h1><p>Cadastros salvos no banco de dados com acesso administrativo.</p></div><a class="btn gold" href="ficha-cliente.html">+ Nova ficha</a></div>
+<div class="row"><input type="text" id="q" placeholder="Buscar por cliente, telefone, corretor ou código" aria-label="Buscar cliente"><button id="refresh">Atualizar</button></div>
+<p id="status" role="status"></p>
+<div id="entries"></div>
+</section>
+<section id="detail">
+<div class="card">
+<div class="row"><div><h2 id="title">Ficha</h2><p id="metadata"></p></div>
+<div class="row"><a class="btn gold" id="edit">Editar ficha</a><a class="btn" id="pdf" target="_blank" rel="noopener">Baixar PDF</a><button class="outline" id="archive">Arquivar ficha</button></div></div>
+<div class="details" id="details"></div>
+</div>
+<div class="card"><h2>QR Code do cliente</h2>
+<div class="share"><img id="qr" alt="QR Code individual da ficha"><div class="shareText">
+<p>Este QR não abre dados pessoais automaticamente. A pessoa deverá informar um código de acesso de oito dígitos, enviado separadamente.</p>
+<a class="btn outline" id="shareLink" target="_blank" rel="noopener noreferrer">Abrir link de consulta</a>
+<button id="rotate">Gerar novo código de acesso</button>
+<p class="danger">Gerar um novo código cancela o anterior e encerra acessos antigos.</p>
+<div id="pinArea"><div>Código de acesso (aparece apenas agora):</div><span class="pin" id="pinText"></span><div><button class="outline" id="copyPin">Copiar código</button></div></div>
+</div></div>
+</div>
+<div class="card"><h2>Documentos do cliente</h2><p>PDF, PNG ou JPG até 5 MB. Os documentos novos ficam <strong>privados por padrão</strong>; você escolhe quais serão visíveis no acesso via QR.</p>
+<div class="row"><input type="file" id="file" accept="application/pdf,image/jpeg,image/png"><button id="upload">Anexar documento</button></div>
+<div id="documents"></div>
+</div>
+</section>
+</main>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+let all=[],client=null;
+function el(tag,text,klass){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(klass)e.className=klass;return e}
+function status(s){$('status').textContent=s}
+async function api(url,opt={}){
+ const r=await fetch(url,{cache:'no-store',credentials:'same-origin',...opt});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(d.error||'Não foi possível concluir a operação.');
+ return d
+}
+function error(err){status(err.message);if(/login|administrativ|acesso/i.test(err.message)){const link=el('a','Entrar no painel','btn');link.href='login.html';$('status').append(link)}}
+async function refresh(){
+ try{status('');const d=await api('/api/clientes');all=d.clients;draw();
+ const id=new URLSearchParams(location.search).get('id');if(id&&/^[A-Za-z0-9_-]+$/.test(id))await open(id)}
+ catch(e){error(e)}
+}
+function draw(){
+ const q=$('q').value.trim().toLocaleLowerCase('pt-BR');
+ const items=all.filter(x=>JSON.stringify(x).toLocaleLowerCase('pt-BR').includes(q));
+ $('entries').replaceChildren();
+ if(!items.length){$('entries').append(el('p','Nenhuma ficha encontrada.'));return}
+ for(const c of items){
+ const item=el('div',undefined,'entry'),txt=el('div');
+ txt.append(el('strong',c.nome),el('small',[c.id,c.telefone,c.etapa,c.objetivo].filter(Boolean).join(' · ')));
+ const btn=el('button','Abrir ficha');btn.onclick=()=>open(c.id);
+ item.append(txt,btn);$('entries').append(item);
+ }
+}
+function cell(label,value){
+ const x=el('div',undefined,'item');x.append(el('small',label),el('strong',String(value===true?'Sim':value===false?'Não':value??'—')));return x
+}
+function renderDocuments(){
+ const box=$('documents');box.replaceChildren();
+ if(!client?.documents?.length){box.append(el('p','Nenhum documento anexado.'));return}
+ for(const d of client.documents){
+ const row=el('div',undefined,'document'),info=el('div');
+ info.append(el('strong',d.name),el('small',Math.round(d.size/1024)+' KB · '+(d.shared?'Compartilhado no QR':'Somente interno')));
+ const acts=el('div',undefined,'doc-actions'),link=el('a','Baixar','btn outline');link.href='/api/clientes/'+encodeURIComponent(client.id)+'/documentos/'+encodeURIComponent(d.id);link.target='_blank';
+ const share=el('label');const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!d.shared;
+ share.append(cb,el('span','Visível via QR'));
+ cb.onchange=async()=>{try{
+ const result=await api('/api/clientes/'+encodeURIComponent(client.id)+'/documentos/'+encodeURIComponent(d.id),{method:'PATCH',headers:{'content-type':'application/json'},body:JSON.stringify({shared:cb.checked})});client.documents=result.documents;renderDocuments()
+ }catch(e){cb.checked=!cb.checked;error(e)}};
+ const del=el('button','Excluir','outline');del.onclick=async()=>{
+ if(!confirm('Excluir definitivamente este arquivo da ficha?'))return;
+ try{const result=await api('/api/clientes/'+encodeURIComponent(client.id)+'/documentos/'+encodeURIComponent(d.id),{method:'DELETE'});client.documents=result.documents;renderDocuments()}catch(e){error(e)}
+ };
+ acts.append(link,share,del);row.append(info,acts);box.append(row);
+ }
+}
+async function open(id){
+ try{const d=await api('/api/clientes/'+encodeURIComponent(id));client=d.client;
+ history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(id));
+ $('detail').style.display='block';$('title').textContent=client.nome;
+ $('metadata').textContent=client.id+' · Última atualização '+new Date(client.updatedAt).toLocaleString('pt-BR')+(d.history?.length?' · '+d.history.length+' alterações anteriores':'');
+ $('edit').href='ficha-cliente.html?id='+encodeURIComponent(id);
+ $('pdf').href='/api/clientes/'+encodeURIComponent(id)+'/pdf';
+ $('shareLink').href=client.shareUrl;$('qr').src=client.qrUrl;
+ $('pinArea').style.display='none';
+ $('details').replaceChildren();
+ const entries=[['Telefone / WhatsApp','telefone'],['E-mail','email'],['CPF (uso interno)','cpf'],['Endereço (uso interno)','endereco'],['Perfil','tipo_cliente'],['Objetivo','objetivo'],['Imóvel desejado','tipo_imovel'],['Região','localizacao_interesse'],['Bairros','bairros'],['Código de imóvel','codigo_imovel'],['Orçamento mínimo','valor_min'],['Orçamento máximo','valor_max'],['Forma de pagamento','forma_pagamento'],['Etapa','etapa'],['Corretor','corretor'],['Próximo contato','proximo_contato'],['Notas internas','notas_internas'],['Observações compartilháveis','observacoes_compartilhaveis']];
+ for(const [label,key] of entries)$('details').append(cell(label,client[key]));
+ renderDocuments();$('detail').scrollIntoView({behavior:'smooth',block:'start'});
+ }catch(e){error(e)}
+}
+$('refresh').onclick=refresh;$('q').oninput=draw;
+$('rotate').onclick=async()=>{
+ if(!client||!confirm('Gerar novo código? O código anterior e sessões autorizadas serão invalidados.'))return;
+ try{const r=await api('/api/clientes/'+encodeURIComponent(client.id)+'/pin',{method:'POST'});client=r.client;$('pinArea').style.display='block';$('pinText').textContent=r.accessPin}catch(e){error(e)}
+};
+$('copyPin').onclick=()=>{if($('pinText').textContent)navigator.clipboard?.writeText($('pinText').textContent)};
+$('archive').onclick=async()=>{
+ if(!client||!confirm('Arquivar esta ficha? Ela deixará de aparecer nas consultas, inclusive pelo QR.'))return;
+ try{await api('/api/clientes/'+encodeURIComponent(client.id),{method:'DELETE'});
+ client=null;$('detail').style.display='none';history.replaceState({},'',location.pathname);await refresh()}catch(e){error(e)}
+};
+$('upload').onclick=async()=>{
+ if(!client)return;const file=$('file').files?.[0];
+ if(!file){status('Selecione um arquivo.');return}
+ if(file.size>5*1024*1024||!['application/pdf','image/png','image/jpeg'].includes(file.type)){status('Aceito PDF, JPG ou PNG até 5 MB.');return}
+ $('upload').disabled=true;$('upload').textContent='Enviando...';
+ try{
+ const base64=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(',')[1]||'');r.onerror=()=>reject(Error('Falha ao ler o arquivo'));r.readAsDataURL(file)});
+ const response=await api('/api/clientes/'+encodeURIComponent(client.id)+'/documentos',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:file.name,mime:file.type,base64})});
+ client.documents=response.documents;$('file').value='';renderDocuments();status('Arquivo anexado com sucesso.')
+ }catch(e){error(e)}finally{$('upload').disabled=false;$('upload').textContent='Anexar documento'}
+};
+refresh();
+})();
+</script></body></html>
