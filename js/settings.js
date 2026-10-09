@@ -124,7 +124,7 @@
     const fp=document.getElementById('footerPhone');if(fp){fp.textContent=s.contact.phone;fp.href='tel:+'+String(s.contact.whatsapp||'').replace(/\D/g,'')}
     const fe=document.getElementById('footerEmail');if(fe){fe.textContent=s.contact.email;fe.href='mailto:'+s.contact.email}
     const fi=document.getElementById('footerInstagram');if(fi){fi.textContent=s.contact.instagram;fi.href=s.contact.instagramUrl}
-    text('footerCreci',`Imobiliária · CRECI ${s.brand.creci}`);text('footerCopyright',s.footer.copyright);
+    text('footerCreci',`CRECI ${s.brand.creci}`);text('footerCopyright',s.footer.copyright);
     visible('dreamWidget',s.visibility.experience);visible('emotionSection',s.visibility.emotions);visible('highlightsSection',s.visibility.highlights);visible('storySection',s.visibility.story);visible('lancamentos',s.visibility.launch);visible('premium',s.visibility.premium);visible('sobre',s.visibility.about);visible('contato',s.visibility.contact);
     return s;
   }
