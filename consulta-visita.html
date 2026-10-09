@@ -1,0 +1,98 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0E2A47">
+<title>Consulta privada | Casal Corretores</title>
+<link rel="icon" href="assets/casal-favicon.svg" type="image/svg+xml">
+<style>
+:root{--navy:#0E2A47;--gold:#D4AF7F;--line:#d8e0e6}
+*{box-sizing:border-box}body{margin:0;background:#f4f6f7;font:14px/1.5 Arial,sans-serif;color:#26394b}
+header{background:var(--navy);color:white;padding:19px 20px}header img{width:230px;max-height:58px}
+main{width:min(790px,calc(100% - 28px));margin:22px auto 45px}
+.card{background:#fff;padding:25px;border-radius:16px;box-shadow:0 8px 35px #0e2a4713;margin-bottom:16px}
+h1{font:700 27px Georgia,serif;color:var(--navy);margin:0 0 8px}
+h2{font:700 20px Georgia,serif;color:var(--navy);margin:15px 0 10px}
+p{color:#657385}label{display:block;color:var(--navy);font-weight:700;margin:15px 0 5px}
+input{width:230px;max-width:100%;border:1px solid #a9b9c8;border-radius:8px;padding:13px;font-size:20px;letter-spacing:2px}
+button,.btn{cursor:pointer;display:inline-block;border:0;border-radius:8px;background:var(--navy);color:#fff;padding:12px 18px;text-decoration:none;font-weight:700;font-size:13px;margin-top:8px}
+.btn.outline{background:#fff;border:1px solid #d1be9d;color:var(--navy)}
+#alert{color:#a52a2a;font-weight:700;min-height:20px}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.info{background:#f8fafb;border:1px solid #e3e8ec;border-radius:8px;padding:11px;white-space:pre-wrap;overflow-wrap:anywhere}
+.info small{display:block;font-weight:700;color:#60728a;margin-bottom:4px}
+.info span{font-size:13px}
+.span2{grid-column:span 2}
+.file{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}
+.caption{font-size:12px;color:#69798c}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.span2{grid-column:auto}.card{padding:17px}header img{width:200px}}
+@media print{header,#pinCard,#actions,.file a{display:none!important};body{background:white}.card{box-shadow:none;padding:4px}}
+</style></head>
+<body><header><a href="/"><img src="assets/casal-logo-footer-v2.svg" alt="Casal Corretores"></a></header>
+<main>
+<section class="card" id="pinCard"><h1>Consulta do registro de visita</h1>
+<p>Este registro contém informações pessoais e propostas de negociação. Informe o <strong>código de oito dígitos</strong> recebido da imobiliária para visualizar.</p>
+<label for="pin">Código de acesso</label>
+<form id="pinForm"><input id="pin" type="password" autocomplete="off" inputmode="numeric" maxlength="8" minlength="8" pattern="[0-9]{8}" required placeholder="••••••••"> <button type="submit">Acessar registro</button></form>
+<p id="alert" role="status"></p><p class="caption">O QR Code sozinho não libera o conteúdo. O código é fornecido separadamente pela Casal Corretores.</p>
+</section>
+<section id="record" class="hidden">
+ <div class="card"><h1>Registro de visita e propostas</h1><p id="meta"></p>
+ <div id="actions"><a id="pdfLink" class="btn" target="_blank" rel="noreferrer noopener">Abrir documento em PDF</a> <button class="btn outline" onclick="window.print()">Imprimir resumo</button></div>
+ </div>
+ <div class="card"><h2>Visita e interessado</h2><div id="visitaGrid" class="grid"></div></div>
+ <div class="card"><h2>Proposta do cliente</h2><div id="propostaGrid" class="grid"></div></div>
+ <div class="card"><h2>Contraproposta do proprietário</h2><div id="contraGrid" class="grid"></div></div>
+ <div class="card"><h2>Documentos anexados</h2><div id="fileList"></div><p class="caption">Os anexos só são disponibilizados após a confirmação do código de acesso.</p></div>
+ <div class="card"><p class="caption">Este registro documenta informações e propostas. A assinatura e a formalização contratual, quando exigíveis, devem ser realizadas separadamente.</p></div>
+</section></main>
+<script>
+(function(){
+'use strict';
+const token=new URLSearchParams(location.search).get('t')||'';
+const endpoint='/api/visitas/consulta/'+encodeURIComponent(token);
+const alertEl=document.getElementById('alert');
+if(!/^[A-Za-z0-9_-]{20,120}$/.test(token)){alertEl.textContent='Link inválido. Solicite um novo QR Code à imobiliária.';document.querySelector('#pinForm button').disabled=true;return}
+const pairs={
+ visitaGrid:[['Nome','cliente'],['CPF','cpf'],['Celular / WhatsApp','celular'],['Endereço','endereco'],['Data da visita','data_visita'],['Corretor(a)','corretor'],['CRECI','creci'],['Imóvel procurado','imovel_procurado'],['Imóveis visitados','visitas_imoveis'],['Local','local'],['Data do registro','data_registro']],
+ propostaGrid:[['Código do imóvel','proposta_codigo'],['Valor ofertado (R$)','proposta_valor'],['Forma de pagamento','proposta_pagamento'],['Validade','proposta_validade'],['Proposta detalhada','proposta_detalhes']],
+ contraGrid:[['Valor da contraproposta (R$)','contra_valor'],['Validade','contra_validade'],['Contraproposta detalhada','contra_detalhes'],['Observações finais','observacoes_finais'],['Aceite','aceite']]
+};
+function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+function show(record){
+ document.getElementById('pinCard').classList.add('hidden');document.getElementById('record').classList.remove('hidden');
+ document.getElementById('meta').textContent='Registro '+record.id+' · Salvo em '+new Date(record.createdAt).toLocaleString('pt-BR')+' · Atualizado em '+new Date(record.updatedAt).toLocaleString('pt-BR');
+ document.getElementById('pdfLink').href=endpoint+'/pdf';
+ for(const [target,fields] of Object.entries(pairs)){
+  const grid=document.getElementById(target);grid.replaceChildren();
+  fields.forEach(([label,key])=>{
+   const div=element('div','info'+(key.endsWith('_detalhes')||key==='observacoes_finais'||key==='visitas_imoveis'?' span2':''));
+   div.append(element('small','',label),element('span','',key==='aceite'?(record[key]?'Aceita':'Não registrado'):String(record[key]??'—')));
+   grid.append(div);
+  });
+ }
+ const list=document.getElementById('fileList');list.replaceChildren();
+ if(!record.documents?.length)list.append(element('p','caption','Nenhum documento complementar anexado.'));
+ for(const file of record.documents||[]){
+  const row=element('div','file');row.append(element('span','',file.name+' · '+Math.round(file.size/1024)+' KB'));
+  const a=element('a','btn outline','Abrir arquivo');a.href=endpoint+'/documentos/'+encodeURIComponent(file.id);a.target='_blank';a.rel='noopener noreferrer';row.append(a);list.append(row);
+ }
+}
+async function getRecord(){
+ const r=await fetch(endpoint,{credentials:'same-origin',cache:'no-store'});
+ if(r.ok){const d=await r.json();show(d.record);return true}
+ return false
+}
+document.getElementById('pinForm').addEventListener('submit',async event=>{
+ event.preventDefault();alertEl.textContent='Verificando código...';
+ try{
+  const r=await fetch(endpoint,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({pin:document.getElementById('pin').value})});
+  const d=await r.json();
+  if(!r.ok)throw Error(d.error||'Não foi possível autorizar a consulta.');
+  document.getElementById('pin').value='';show(d.record);
+ }catch(err){alertEl.textContent=err.message}
+});
+getRecord().catch(()=>{});
+})();
+</script></body></html>
