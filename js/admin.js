@@ -89,13 +89,13 @@ $('saveSiteSettings')?.addEventListener('click',async e=>{
      s.hero.image=result.image;
    }
    Site.publishHeroImage(s.hero.image);
-   Site.save(s);
+   await Site.save(s);
    Site.apply(s);
    heroInput.value=s.hero.image;
    heroPreview.src=s.hero.image;
    if(file){heroUpload.value='';clearHeroPreviewUrl()}
    setHeroStatus('Foto principal publicada com sucesso no site.');
-   toast('Alterações salvas. Foto principal publicada no site.');
+   toast('Alterações publicadas para computador e celular.');
  }catch(err){
    console.error('[Casal Corretores] Falha ao salvar alterações',err);
    setHeroStatus(err.message||'Erro ao publicar foto.',true);
