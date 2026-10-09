@@ -6,6 +6,7 @@ const crypto=require('crypto');
 const {URL}=require('url');
 const importer=require('./plugins/bonanza-importer');
 const visitas=require('./visitas-server');
+const clientes=require('./clientes-server');
 
 const ROOT=__dirname;
 const PORT=Number(process.env.PORT||3000);
@@ -76,5 +77,5 @@ async function api(req,res,url){
   return false;
 }
 
-async function handler(req,res){const url=new URL(req.url,`http://${req.headers.host||'localhost'}`);try{if(url.pathname.startsWith('/api/visitas')){const result=await visitas.route(req,res,url,{isAdmin:!!auth(req)});if(result===false)return sendJSON(res,404,{ok:false,error:'Rota de visita não encontrada.'});return}if(url.pathname.startsWith('/api/')){const done=await api(req,res,url);if(done!==false)return;return sendJSON(res,404,{ok:false,error:'Rota não encontrada.'})}if(url.pathname.startsWith('/uploads/')){const file=safeFile(UPLOAD_DIR,url.pathname.replace(/^\/uploads\//,''));if(file&&serveFile(res,file))return;res.writeHead(404);return res.end('Not found')}let pathname=url.pathname==='/'?'/index.html':url.pathname;const file=safeFile(ROOT,pathname);if(file&&serveFile(res,file))return;res.writeHead(404,{'content-type':'text/plain; charset=utf-8'});res.end('Arquivo não encontrado.')}catch(e){console.error('[IS22]',e);if(url.pathname.startsWith('/api/'))return sendJSON(res,500,{ok:false,error:e.message||'Erro interno.'});res.writeHead(500);res.end('Erro interno.')}}
+async function handler(req,res){const url=new URL(req.url,`http://${req.headers.host||'localhost'}`);try{if(url.pathname.startsWith('/api/clientes')){const result=await clientes.route(req,res,url,{isAdmin:!!auth(req)});if(result===false)return sendJSON(res,404,{ok:false,error:'Rota de cliente não encontrada.'});return}if(url.pathname.startsWith('/api/visitas')){const result=await visitas.route(req,res,url,{isAdmin:!!auth(req)});if(result===false)return sendJSON(res,404,{ok:false,error:'Rota de visita não encontrada.'});return}if(url.pathname.startsWith('/api/')){const done=await api(req,res,url);if(done!==false)return;return sendJSON(res,404,{ok:false,error:'Rota não encontrada.'})}if(url.pathname.startsWith('/uploads/')){const file=safeFile(UPLOAD_DIR,url.pathname.replace(/^\/uploads\//,''));if(file&&serveFile(res,file))return;res.writeHead(404);return res.end('Not found')}let pathname=url.pathname==='/'?'/index.html':url.pathname;const file=safeFile(ROOT,pathname);if(file&&serveFile(res,file))return;res.writeHead(404,{'content-type':'text/plain; charset=utf-8'});res.end('Arquivo não encontrado.')}catch(e){console.error('[IS22]',e);if(url.pathname.startsWith('/api/'))return sendJSON(res,500,{ok:false,error:e.message||'Erro interno.'});res.writeHead(500);res.end('Erro interno.')}}
 http.createServer(handler).listen(PORT,'0.0.0.0',()=>console.log(`IS22 online na porta ${PORT}`));
