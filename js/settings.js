@@ -46,13 +46,13 @@
     if(['Imóveis com propósito','Sonhos em endereços reais','Lilian & Douglas','Liliam & Douglas'].includes(s.brand?.tagline))s.brand.tagline='Lilian e Douglas';
     // Upgrade assets that still use the previous shipped logo, without replacing custom uploads.
     const oldAssets={
-      logoNavy:['assets/casal-logo-navy.svg','assets/casal-logo-header-v2.svg'],
-      logoWhite:['assets/casal-logo-white.svg','assets/casal-logo-footer-v2.svg'],
-      symbolWhite:['assets/casal-symbol-white.svg','assets/casal-symbol-white-v2.svg']
+      logoNavy:['assets/casal-logo-navy.svg','assets/lilian-douglas-logo-verde-laranja.svg'],
+      logoWhite:['assets/casal-logo-white.svg','assets/lilian-douglas-logo-escura.svg'],
+      symbolWhite:['assets/casal-symbol-white.svg','assets/lilian-douglas-simbolo.svg']
     };
     Object.entries(oldAssets).forEach(([key,[before,after]])=>{if(s.brand?.[key]===before)s.brand[key]=after});
-    if(s.brand?.logoNavy==='assets/casal-logo-header-v2.svg')s.brand.logoNavy='assets/casal-logo-header-lilian-douglas.svg';
-    if(s.brand?.logoWhite==='assets/casal-logo-footer-v2.svg')s.brand.logoWhite='assets/casal-logo-footer-lilian-douglas.svg';
+    if(s.brand?.logoNavy==='assets/casal-logo-header-v2.svg')s.brand.logoNavy='assets/lilian-douglas-logo-verde-laranja.svg';
+    if(s.brand?.logoWhite==='assets/casal-logo-footer-v2.svg')s.brand.logoWhite='assets/lilian-douglas-logo-escura.svg';
     return s;
   }
   function get(){
