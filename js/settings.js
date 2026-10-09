@@ -2,6 +2,7 @@
   const STORAGE='casalCorretoresSiteSettingsV1';
   const OLD_STORAGE='is22SiteSettingsV1';
   let publishedHeroImage=null; // referência pública persistida no Railway
+  let sharedSettings=null; // configurações publicadas no servidor para PC e celular
   const withPublishedHero=s=>{if(publishedHeroImage && s?.hero)s.hero.image=publishedHeroImage;return s};
     const defaults={
     brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Realizando Sonhos',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
@@ -57,6 +58,7 @@
   }
   function get(){
     try{
+      if(sharedSettings)return withPublishedHero(updatedBrand(merge(defaults,sharedSettings)));
       const current=JSON.parse(localStorage.getItem(STORAGE)||'null');
       if(current)return withPublishedHero(updatedBrand(merge(defaults,current)));
       const old=JSON.parse(localStorage.getItem(OLD_STORAGE)||'null');
@@ -77,7 +79,22 @@
       return withPublishedHero(clone(defaults));
     }catch{return clone(defaults)}
   }
-  function save(v){localStorage.setItem(STORAGE,JSON.stringify(v));return v}
+  async function save(v){
+    const clean=clone(v);
+    localStorage.setItem(STORAGE,JSON.stringify(clean));
+    sharedSettings=clean;
+    const response=await fetch('/api/settings',{
+      method:'PUT',
+      credentials:'same-origin',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify(clean)
+    });
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok||!data.ok)throw new Error(data.error||'Não foi possível publicar as configurações no servidor.');
+    sharedSettings=data.settings||clean;
+    localStorage.setItem(STORAGE,JSON.stringify(sharedSettings));
+    return sharedSettings;
+  }
   function reset(){localStorage.removeItem(STORAGE);return clone(defaults)}
   const text=(id,v)=>{const e=document.getElementById(id);if(e&&v!=null)e.textContent=v};
   const img=(id,v)=>{const e=document.getElementById(id);if(e&&v)e.src=v};
@@ -111,6 +128,20 @@
     visible('dreamWidget',s.visibility.experience);visible('emotionSection',s.visibility.emotions);visible('highlightsSection',s.visibility.highlights);visible('storySection',s.visibility.story);visible('lancamentos',s.visibility.launch);visible('premium',s.visibility.premium);visible('sobre',s.visibility.about);visible('contato',s.visibility.contact);
     return s;
   }
+  async function refreshSharedSettings(){
+    try{
+      const response=await fetch('/api/settings',{cache:'no-store',credentials:'same-origin'});
+      if(!response.ok)return;
+      const data=await response.json().catch(()=>({}));
+      if(!data.settings||typeof data.settings!=='object')return;
+      sharedSettings=data.settings;
+      localStorage.setItem(STORAGE,JSON.stringify(sharedSettings));
+      apply(get());
+      window.dispatchEvent(new CustomEvent('casal-settings-synced',{detail:{settings:sharedSettings}}));
+    }catch(err){
+      console.warn('Configurações do site: não foi possível sincronizar com o servidor.',err);
+    }
+  }
   function publishHeroImage(image){publishedHeroImage=image;}
   async function refreshSharedHero(){
     try{
@@ -123,7 +154,8 @@
       window.dispatchEvent(new CustomEvent('casal-hero-synced',{detail:{image:data.image}}));
     }catch(err){console.warn('Foto principal: não foi possível sincronizar com o servidor.',err)}
   }
-  window.IS22Settings={STORAGE,defaults,get,save,reset,getPath,setPath,apply,publishHeroImage,refreshSharedHero};
+  window.IS22Settings={STORAGE,defaults,get,save,reset,getPath,setPath,apply,publishHeroImage,refreshSharedHero,refreshSharedSettings};
   apply();
+  refreshSharedSettings();
   refreshSharedHero();
 })();
