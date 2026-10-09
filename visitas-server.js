@@ -26,16 +26,16 @@ const urlFor=token=>BASE+'/consulta-visita.html?t='+encodeURIComponent(token);
 function hashPin(pin,salt){return crypto.scryptSync(String(pin),salt,32).toString('hex')}
 function safeEq(a,b){let x=Buffer.from(a,'utf8'),y=Buffer.from(b,'utf8');return x.length===y.length&&crypto.timingSafeEqual(x,y)}
 function cookie(req,name){const match=String(req.headers.cookie||'').match(new RegExp('(?:^|;\\s*)'+name+'=([^;]*)'));return match?decodeURIComponent(match[1]):''}
-function viewerCookie(token){
- const payload=Buffer.from(JSON.stringify({t:token,e:Date.now()+3600000})).toString('base64url');
+function viewerCookie(row){
+ const payload=Buffer.from(JSON.stringify({t:row.token,h:row.pin_hash,e:Date.now()+3600000})).toString('base64url');
  const sig=crypto.createHmac('sha256',SECRET).update(payload).digest('base64url');return payload+'.'+sig
 }
-function validViewer(req,token){
+function validViewer(req,row){
  if(!SECRET)return false;
  const raw=cookie(req,'casal_visita_view');const parts=raw.split('.');if(parts.length!==2)return false;
  const sig=crypto.createHmac('sha256',SECRET).update(parts[0]).digest('base64url');
  if(!safeEq(sig,parts[1]))return false;
- try{const d=JSON.parse(Buffer.from(parts[0],'base64url').toString());return d.t===token&&d.e>Date.now()}catch{return false}
+ try{const d=JSON.parse(Buffer.from(parts[0],'base64url').toString());return d.t===row.token&&d.h===row.pin_hash&&d.e>Date.now()}catch{return false}
 }
 const findId=id=>db.prepare('SELECT * FROM visitas WHERE id=? AND revoked=0').get(id);
 const findToken=t=>db.prepare('SELECT * FROM visitas WHERE token=? AND revoked=0').get(t);
@@ -92,7 +92,7 @@ async function pdfResponse(res,row){
  pdf.image(q,46,pdf.y+7,{width:92,height:92});pdf.fillColor('#334155').font('Helvetica').fontSize(8).text('Escaneie o código para consultar o registro salvo.',150,pdf.y+25,{width:370});pdf.text('Por segurança, informe também o código de acesso.',150,pdf.y+10,{width:370});
  pdf.end();
 }
-function canRead(req,row,isAdmin){return !!row&&(isAdmin||validViewer(req,row.token))}
+function canRead(req,row,isAdmin){return !!row&&(isAdmin||validViewer(req,row))}
 function failLock(req,token){
  const key=(req.socket.remoteAddress||'remote')+':'+token;
  const timestamp=Date.now();const previous=ATTEMPTS.get(key);if(previous&&timestamp-previous.since<900000)return {key,n:previous.n};return {key,n:0}
@@ -127,7 +127,7 @@ async function route(req,res,url,{isAdmin=false}={}){
     return json(res,403,{ok:false,error:'Código de acesso incorreto.'});
    }
    ATTEMPTS.delete(attempts.key);
-   res.setHeader('Set-Cookie','casal_visita_view='+encodeURIComponent(viewerCookie(row.token))+'; Path=/api/visitas/consulta/; HttpOnly; Secure; SameSite=Lax; Max-Age=3600');
+   res.setHeader('Set-Cookie','casal_visita_view='+encodeURIComponent(viewerCookie(row))+'; Path=/api/visitas/consulta/; HttpOnly; Secure; SameSite=Lax; Max-Age=3600');
    return json(res,200,{ok:true,record:decorate(row,true)});
   }
   if(!canRead(req,row,isAdmin))return json(res,401,{ok:false,error:'Informe o código de acesso para consultar o registro.'});
