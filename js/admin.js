@@ -26,7 +26,85 @@ $('newLeadBtn')?.addEventListener('click',()=>{fillLeadProperty();$('leadForm').
 function populateAccess(){const u=Auth.user();$('accessName').value=u.name;$('accessEmail').value=u.email;$('accessRole').value=u.role;$('accessPassword').value=''}
 $('logoutBtn')?.addEventListener('click',()=>{Auth.logout();location.replace('login.html')});
 function populateSettings(){if(!Site)return;const s=Site.get();document.querySelectorAll('[data-setting]').forEach(el=>{const v=Site.getPath(s,el.dataset.setting);if(el.type==='checkbox')el.checked=!!v;else el.value=v??''});[['previewLogoNavy',s.brand.logoNavy],['previewLogoWhite',s.brand.logoWhite],['previewSymbolWhite',s.brand.symbolWhite],['previewHero',s.hero.image],['previewDream',s.experience.image]].forEach(([id,src])=>{if($(id))$(id).src=src})}
-$('saveSiteSettings')?.addEventListener('click',e=>{e.preventDefault();const s=Site.get(),done={};document.querySelectorAll('[data-setting]').forEach(el=>{const p=el.dataset.setting;if(done[p])return;done[p]=1;Site.setPath(s,p,el.type==='checkbox'?el.checked:el.value)});Site.save(s);Site.apply(s);toast('Site atualizado')});$('resetSiteSettings')?.addEventListener('click',()=>{if(confirm('Restaurar identidade original?')){Site.reset();populateSettings();toast('Identidade restaurada')}});document.querySelectorAll('#editorNav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#editorNav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.editor-pane').forEach(x=>x.classList.toggle('active',x.dataset.editorPane===b.dataset.editorTab))});
+// Upload real da foto de capa; a publicação é persistida no volume do Railway.
+let heroPreviewUrl=null;
+const heroUpload=$('uploadHero'),heroInput=$('setHeroImage'),heroPreview=$('previewHero'),heroStatus=$('heroUploadStatus');
+function setHeroStatus(message,failed=false){
+ if(heroStatus){heroStatus.textContent=message;heroStatus.style.color=failed?'#ad3535':'#456982'}
+}
+function clearHeroPreviewUrl(){
+ if(heroPreviewUrl){URL.revokeObjectURL(heroPreviewUrl);heroPreviewUrl=null}
+}
+heroUpload?.addEventListener('change',()=>{
+ clearHeroPreviewUrl();
+ const file=heroUpload.files?.[0];
+ if(!file){heroPreview.src=heroInput.value||Site.get().hero.image;setHeroStatus('Nenhuma foto selecionada.');return}
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type)){
+   heroUpload.value='';heroPreview.src=Site.get().hero.image;
+   setHeroStatus('Formato não suportado. Use JPG, PNG ou WebP.',true);return
+ }
+ if(file.size>10*1024*1024){
+   heroUpload.value='';heroPreview.src=Site.get().hero.image;
+   setHeroStatus('A foto deve ter no máximo 10 MB.',true);return
+ }
+ heroPreviewUrl=URL.createObjectURL(file);
+ heroPreview.src=heroPreviewUrl;
+ setHeroStatus('Foto selecionada: '+file.name+'. Clique em Salvar alterações para publicar.');
+});
+heroInput?.addEventListener('change',()=>{
+ if(heroUpload?.files?.length)return;
+ const url=heroInput.value.trim();if(url)heroPreview.src=url;
+});
+window.addEventListener('casal-hero-synced',event=>{
+ if(heroUpload?.files?.length || document.activeElement===heroInput)return;
+ heroInput.value=event.detail.image;
+ heroPreview.src=event.detail.image;
+});
+$('saveSiteSettings')?.addEventListener('click',async e=>{
+ e.preventDefault();
+ const button=$('saveSiteSettings');
+ if(button.disabled)return;
+ button.disabled=true;
+ const previousText=button.textContent;
+ button.textContent='Publicando...';
+ try{
+   const previous=Site.get(),s=Site.get(),done={};
+   document.querySelectorAll('[data-setting]').forEach(el=>{
+     const p=el.dataset.setting;if(done[p])return;done[p]=1;
+     Site.setPath(s,p,el.type==='checkbox'?el.checked:el.value);
+   });
+   const file=heroUpload?.files?.[0];
+   if(file){
+     const response=await fetch('/api/site/hero',{method:'POST',credentials:'same-origin',headers:{'content-type':file.type},body:file});
+     const result=await response.json().catch(()=>({}));
+     if(!response.ok||!result.ok)throw new Error(result.error||'Não foi possível enviar a foto ao servidor.');
+     s.hero.image=result.image;
+   }else if(s.hero.image.trim()!==previous.hero.image.trim()){
+     const response=await fetch('/api/site/hero',{
+       method:'PUT',credentials:'same-origin',headers:{'content-type':'application/json'},
+       body:JSON.stringify({image:s.hero.image.trim()})
+     });
+     const result=await response.json().catch(()=>({}));
+     if(!response.ok||!result.ok)throw new Error(result.error||'Não foi possível atualizar a imagem principal.');
+     s.hero.image=result.image;
+   }
+   Site.publishHeroImage(s.hero.image);
+   Site.save(s);
+   Site.apply(s);
+   heroInput.value=s.hero.image;
+   heroPreview.src=s.hero.image;
+   if(file){heroUpload.value='';clearHeroPreviewUrl()}
+   setHeroStatus('Foto principal publicada com sucesso no site.');
+   toast('Alterações salvas. Foto principal publicada no site.');
+ }catch(err){
+   console.error('[Casal Corretores] Falha ao salvar alterações',err);
+   setHeroStatus(err.message||'Erro ao publicar foto.',true);
+   alert('Não foi possível salvar a foto principal: '+(err.message||'Verifique sua conexão e faça login novamente.'));
+ }finally{
+   button.disabled=false;
+   button.textContent=previousText;
+ }
+});$('resetSiteSettings')?.addEventListener('click',()=>{if(confirm('Restaurar identidade original?')){Site.reset();populateSettings();toast('Identidade restaurada')}});document.querySelectorAll('#editorNav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#editorNav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.editor-pane').forEach(x=>x.classList.toggle('active',x.dataset.editorPane===b.dataset.editorTab))});
 async function importerRequest(url,opt={}){const r=await fetch(url,{...opt,credentials:'same-origin',headers:{'content-type':'application/json',...(opt.headers||{})}}),d=await r.json().catch(()=>({}));if(!r.ok||d.ok===false)throw new Error(d.error||'Falha na importação');return d}
 function importerFill(p){importPreviewData=p;$('importRef').value=p.id||p.source?.code||'';if($('importType'))$('importType').value=[...$('importType').options].some(o=>o.value===p.type)?p.type:'Imóvel';$('importTitle').value=p.title||'';$('importPurpose').value=p.purpose==='Aluguel'?'Aluguel':'Venda';$('importPrice').value=+p.price||0;$('importCity').value=p.city||'';$('importNeighborhood').value=p.neighborhood||'';$('importAddress').value=p.address||'';$('importArea').value=+p.area||0;$('importBedrooms').value=+p.bedrooms||0;$('importSuites').value=+p.suites||0;$('importBathrooms').value=+p.bathrooms||0;$('importParking').value=+p.parking||0;$('importDescription').value=p.description||'';$('importPreviewTitle').textContent=p.title||p.id;$('importPreviewSource').textContent='Cód. '+(p.id||'')+' · '+(p.address||p.city||'');$('importPhotoCount').textContent=(p.images||[]).length+' fotos';$('importPhotoStrip').innerHTML=(p.images||[]).map((x,n)=>`<img src="${esc(x)}" alt="Foto ${n+1}">`).join('');$('importSourceLink').href=p.source?.url||'#';$('importRights').checked=false;$('importPreview').classList.remove('hidden')}
 async function runImporterLookup(){const input=($('importCode').value||'').trim();if(!input)return toast('Cole o link do imóvel ou digite o código');$('importLookupBtn').disabled=true;$('importLookupBtn').textContent='Lendo anúncio…';try{const d=await importerRequest('/api/import/bonanza/preview?entrada='+encodeURIComponent(input));importerFill(d.property);toast('Anúncio lido e campos preenchidos')}catch(e){alert(e.message)}finally{$('importLookupBtn').disabled=false;$('importLookupBtn').textContent='Buscar anúncio'}}$('importLookupBtn')?.addEventListener('click',runImporterLookup);$('importCode')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runImporterLookup()}});
