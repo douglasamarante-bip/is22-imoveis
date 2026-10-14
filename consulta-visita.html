@@ -28,8 +28,11 @@ button,.btn{cursor:pointer;display:inline-block;border:0;border-radius:8px;backg
 .caption{font-size:12px;color:#69798c}
 @media(max-width:600px){.grid{grid-template-columns:1fr}.span2{grid-column:auto}.card{padding:17px}header img{width:200px}}
 @media print{header,#pinCard,#actions,.file a{display:none!important};body{background:white}.card{box-shadow:none;padding:4px}}
+
+header a>img.partner-logo{display:block!important;width:90px!important;height:23px!important;object-fit:contain!important;object-position:left!important;margin:3px 0 0 3px}
+@media print{header a>img.partner-logo{width:74px!important;height:20px!important}}
 </style></head>
-<body><header><a href="/"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"></a></header>
+<body><header><a href="/"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"><img class="partner-logo" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda"></a></header>
 <main>
 <section class="card" id="pinCard"><h1>Consulta do registro de visita</h1>
 <p>Este registro contém informações pessoais e propostas de negociação. Informe o <strong>código de oito dígitos</strong> recebido da imobiliária para visualizar.</p>
