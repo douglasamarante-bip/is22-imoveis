@@ -79,13 +79,18 @@ th{padding:6px;font-size:9px}
 #feedback .code{font-size:30px;letter-spacing:3px;font-weight:800;color:#16642F;background:#f2e5d2;padding:6px 12px;border-radius:6px;display:inline-block}
 #feedback a{display:inline-block;padding:9px 12px;background:#16642F;color:white;text-decoration:none;border-radius:7px;font-weight:700;margin:5px}
 #feedback p{margin:8px 0}#feedback .danger{color:#a33333}
-@media print{#feedback{display:none!important}} </style>
+@media print{#feedback{display:none!important}} 
+.brand-stack{display:flex;flex-direction:column;align-items:flex-start;gap:1px;flex:0 0 auto}
+.brand-stack>b{font-size:9px;letter-spacing:.3px;color:#16642F;margin-left:2px}
+.brand-row .brand-stack img.bonanza-mini{width:95px!important;height:25px!important;max-height:25px!important;object-fit:contain!important;object-position:left}
+@media print{.brand-row .brand-stack img.bonanza-mini{width:78px!important;height:22px!important}.brand-stack>b{font-size:7.5px!important}}
+</style>
 </head><body>
 <header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
 <main id="form-container">
 <section id="feedback" class="screen-only" hidden aria-live="polite"></section>
 <section class="paper" aria-label="Página 1, registro da visita">
-<div class="brand-row"><img src="assets/lilian-douglas-logo-verde-laranja.svg" alt="Casal Corretores"><aside>REGISTRO DE VISITA A IMÓVEL<br>COMPROMISSO DE INTERMEDIAÇÃO<br>MODELO PARA PREENCHIMENTO</aside></div>
+<div class="brand-row"><div class="brand-stack"><img src="assets/lilian-douglas-logo-verde-laranja.svg" alt="Lilian e Douglas"><b>CRECI MG 61414</b><img class="bonanza-mini" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda · CRECI PJ 3010"></div><aside>REGISTRO DE VISITA A IMÓVEL<br>COMPROMISSO DE INTERMEDIAÇÃO<br>MODELO PARA PREENCHIMENTO</aside></div>
 <h1>Registro de visita a imóvel</h1><p class="lead">Identificação do interessado, imóvel visitado e declaração da visita.</p>
 <div class="heading">1. Dados do cliente e atendimento</div>
 <div class="grid">
@@ -116,7 +121,7 @@ th{padding:6px;font-size:9px}
 <div class="page-end"><span>Casal Corretores · Modelo para validação jurídica e preenchimento</span><span>Página 1 de 2</span></div>
 </section>
 <section class="paper" aria-label="Página 2, proposta e contraproposta">
-<div class="brand-row"><img src="assets/lilian-douglas-logo-verde-laranja.svg" alt="Casal Corretores"><aside>REGISTRO DE NEGOCIAÇÃO<br>PROPOSTA E CONTRAPROPOSTA</aside></div>
+<div class="brand-row"><div class="brand-stack"><img src="assets/lilian-douglas-logo-verde-laranja.svg" alt="Lilian e Douglas"><b>CRECI MG 61414</b><img class="bonanza-mini" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda · CRECI PJ 3010"></div><aside>REGISTRO DE NEGOCIAÇÃO<br>PROPOSTA E CONTRAPROPOSTA</aside></div>
 <h1>Proposta e contraproposta</h1><p class="lead">Registre por escrito as condições de cada etapa. O aceite deve ser inequívoco.</p>
 <div class="heading">4. Proposta apresentada pelo cliente</div>
 <div class="grid">
