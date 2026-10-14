@@ -5,7 +5,7 @@
   let sharedSettings=null; // configurações publicadas no servidor para PC e celular
   const withPublishedHero=s=>{if(publishedHeroImage && s?.hero)s.hero.image=publishedHeroImage;return s};
     const defaults={
-    brand:{name:'Casal Corretores',creci:'1764-J',tagline:'Realizando Sonhos',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
+    brand:{name:'Casal Corretores',creci:'MG 61414',tagline:'Realizando Sonhos',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
     colors:{primary:'#16642F',secondary:'#105127',accent:'#F26A08',text:'#1E3D2A',soft:'#FFF8F1'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
@@ -28,6 +28,7 @@
   const setPath=(obj,path,value)=>{const a=path.split('.');let o=obj;for(let i=0;i<a.length-1;i++){o[a[i]]??={};o=o[a[i]]}o[a.at(-1)]=value};
   /* Upgrade only previous default values; retain the visitor's custom editor choices. */
   function updatedBrand(s){
+    if(s.brand?.creci==='1764-J')s.brand.creci='MG 61414';
     const oldColors={primary:['#0B2D4F','#0E2A47'],secondary:['#123C63','#173B59'],accent:['#D4AF7C','#D4AF7F'],text:['#18283A','#172A3E']};
     Object.entries(oldColors).forEach(([key,[previous,next]])=>{if(s.colors?.[key]===previous)s.colors[key]=next});
     // Migração apenas de cores anteriores do template, mantendo customizações reais.
