@@ -7,6 +7,7 @@ const crypto=require('crypto');
 const {DatabaseSync}=require('node:sqlite');
 const QR=require('qrcode');
 const PDFDocument=require('pdfkit');
+const {drawBrand}=require('./pdf-brand');
 const ROOT=path.resolve(process.env.DATA_DIR||process.env.UPLOAD_DIR||path.join(__dirname,'data'));
 const DOC_DIR=path.join(ROOT,'visitas-documentos');
 fs.mkdirSync(DOC_DIR,{recursive:true});
@@ -63,11 +64,11 @@ async function pdfResponse(res,row){
  const pdf=new PDFDocument({size:'A4',margin:46,autoFirstPage:true,info:{Title:'Registro de visita - Casal Corretores',Author:'Casal Corretores',Subject:'Visita, proposta e contraproposta'}});
  res.writeHead(200,{'content-type':'application/pdf','cache-control':'private,no-store','content-disposition':'inline; filename="visita-'+row.id+'.pdf"','x-content-type-options':'nosniff'});
  pdf.pipe(res);
- const navy='#0E2A47',gold='#B88C53';
+ const navy='#16642F',gold='#F26A08';
  function title(s){pdf.moveDown(.7).fillColor(navy).font('Helvetica-Bold').fontSize(13).text(s);pdf.moveDown(.45)}
  function field(label,value){pdf.font('Helvetica-Bold').fontSize(9).fillColor(navy).text(label+': ',{continued:true});pdf.font('Helvetica').fillColor('#243447').text(String(value||'Não informado'),{continued:false});pdf.moveDown(.48)}
  function block(label,value){title(label);pdf.font('Helvetica').fontSize(10).fillColor('#253746').text(String(value||'Não informado'),{lineGap:4});pdf.moveDown(.55)}
- function header(sub){pdf.font('Helvetica-Bold').fontSize(19).fillColor(navy).text('CASAL CORRETORES');pdf.font('Helvetica').fontSize(10).fillColor(gold).text('SONHOS EM ENDEREÇOS REAIS');pdf.moveDown(.45);pdf.moveTo(46,pdf.y).lineTo(550,pdf.y).strokeColor(gold).stroke();pdf.moveDown(.7);pdf.font('Helvetica-Bold').fontSize(16).fillColor(navy).text(sub);pdf.moveDown(.65)}
+ function header(sub){drawBrand(pdf,{x:46,y:26});pdf.font('Helvetica-Bold').fontSize(16).fillColor(navy).text(sub);pdf.moveDown(.65)}
  header('REGISTRO DE VISITA A IMÓVEL');
  field('Registro',row.id);field('Data da visita',info.data_visita);field('Cliente',info.cliente);field('CPF',info.cpf);field('Endereço',info.endereco);
  field('Celular',info.celular);field('Telefone',info.telefone);field('Corretor',info.corretor);field('CRECI',info.creci);field('Imóvel procurado',info.imovel_procurado);
