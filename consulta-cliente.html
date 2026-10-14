@@ -29,8 +29,11 @@ button,.btn{border:0;background:var(--navy);color:white;border-radius:8px;paddin
 .caption{font-size:11px;color:#68788a}
 @media(max-width:640px){header img{width:200px}.card{padding:17px}h1{font-size:25px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
 @media print{header,#lock,#actionBtns,.doc a{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}}
+
+header a>img.partner-logo{display:block!important;width:90px!important;height:23px!important;object-fit:contain!important;object-position:left!important;margin:3px 0 0 3px}
+@media print{header a>img.partner-logo{width:74px!important;height:20px!important}}
 </style></head><body>
-<header><a href="/"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"></a></header>
+<header><a href="/"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"><img class="partner-logo" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda"></a></header>
 <main>
 <section id="lock" class="card">
 <h1>Consulta de ficha de cliente</h1>
