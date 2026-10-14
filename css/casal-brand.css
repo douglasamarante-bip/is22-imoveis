@@ -590,3 +590,9 @@ footer{background:#103B23!important}
     grid-column:auto!important;
   }
 }
+
+/* Bonanza Imóveis: assinatura pequena sob a marca principal */
+.topbar .header-brand img.header-bonanza{width:98px!important;max-width:98px!important;height:24px!important;object-fit:contain!important;object-position:left center!important;display:block!important;margin:2px 0 0 4px!important;flex:none!important}
+.footer-brand img.footer-bonanza{width:122px!important;height:32px!important;object-fit:contain!important;object-position:left center!important;display:block!important;margin:5px 0 0 4px!important}
+@media(min-width:761px){.topbar{min-height:100px!important;height:auto!important}.topbar .nav-wrap{min-height:100px!important}}
+@media(max-width:760px){.topbar{height:84px!important}.topbar .header-brand img.header-bonanza{width:78px!important;max-width:78px!important;height:19px!important;margin-top:1px!important}.footer-brand img.footer-bonanza{width:102px!important;height:27px!important}}
