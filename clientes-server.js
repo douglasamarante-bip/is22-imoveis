@@ -7,6 +7,7 @@ const crypto=require('crypto');
 const {DatabaseSync}=require('node:sqlite');
 const QR=require('qrcode');
 const PDFDocument=require('pdfkit');
+const {drawBrand}=require('./pdf-brand');
 const ROOT=path.resolve(process.env.DATA_DIR||process.env.UPLOAD_DIR||path.join(__dirname,'data'));
 const DIR=path.join(ROOT,'clientes-documentos');
 fs.mkdirSync(DIR,{recursive:true});
@@ -77,12 +78,11 @@ async function pdfResponse(res,row,admin){
  const d=view(row,admin),doc=new PDFDocument({size:'A4',margin:44,info:{Title:'Ficha de cliente - Casal Corretores',Author:'Casal Corretores'}});
  res.writeHead(200,{'content-type':'application/pdf','cache-control':'private,no-store','content-disposition':'attachment; filename="ficha-'+row.id+'.pdf"','x-content-type-options':'nosniff'});
  doc.pipe(res);
- const navy='#0E2A47',gold='#BA9057',muted='#3A4B5E';
+ const navy='#16642F',gold='#F26A08',muted='#3A4B5E';
  function heading(text){doc.moveDown(.65).font('Helvetica-Bold').fontSize(12).fillColor(navy).text(text);doc.moveDown(.35)}
  function field(label,value){doc.font('Helvetica-Bold').fontSize(9).fillColor(navy).text(label+': ',{continued:true});doc.font('Helvetica').fillColor(muted).text(String(value===true?'Sim':value===false?'Não':value||'—'));doc.moveDown(.34)}
  function block(label,value){heading(label);doc.font('Helvetica').fontSize(10).fillColor(muted).text(String(value||'—'),{lineGap:3});doc.moveDown(.25)}
- doc.font('Helvetica-Bold').fontSize(21).fillColor(navy).text('CASAL CORRETORES');doc.font('Helvetica').fontSize(10).fillColor(gold).text('SONHOS EM ENDEREÇOS REAIS');
- doc.moveDown(.5).strokeColor(gold).moveTo(44,doc.y).lineTo(550,doc.y).stroke();
+ drawBrand(doc,{x:44,y:26});
  doc.moveDown(.6).font('Helvetica-Bold').fontSize(17).fillColor(navy).text('FICHA DE CLIENTE');
  field('Registro',row.id);field('Atualizado em',new Date(row.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'}));
  heading('IDENTIFICAÇÃO E CONTATO');field('Nome completo',d.nome);
