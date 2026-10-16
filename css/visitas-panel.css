@@ -1,0 +1,84 @@
+/* Visitas e propostas dentro do mesmo painel administrativo */
+#panel-visitas .visit-stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;margin:0 0 17px;
+}
+#panel-visitas .visit-admin-card{margin-bottom:16px}
+#panel-visitas .visit-admin-card .admin-card-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px
+}
+#panel-visitas .admin-card-head h2,
+#panel-visitas #visitRecordDetail h2{
+  font-family:Montserrat,Inter,Arial,sans-serif;
+  color:#14582E;font-size:17px;font-weight:800;margin:0 0 4px
+}
+#panel-visitas .admin-card-head p{
+  color:#697F72;font-size:11px;line-height:1.5;margin:0
+}
+#panel-visitas .crm-toolbar input{
+  width:100%;font-size:14px;min-height:43px;
+  color:#214632;background:#fff
+}
+#panel-visitas .visit-record-list{display:grid;gap:8px}
+#panel-visitas .visit-entry{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:13px 12px;
+  border:1px solid #DFE7DE;border-radius:12px;background:#FBFDFB
+}
+#panel-visitas .visit-entry-copy{min-width:0;overflow-wrap:anywhere}
+#panel-visitas .visit-entry-copy b{display:block;font-size:13px;color:#17472E}
+#panel-visitas .visit-entry-copy small{
+  display:block;font-size:11px;color:#60786B;
+  margin-top:5px;line-height:1.5
+}
+#panel-visitas .visit-entry-actions{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:8px;flex-wrap:wrap;flex:0 0 auto
+}
+#panel-visitas .visit-entry-actions .btn,
+#panel-leads .visit-from-lead{
+  white-space:nowrap;min-height:39px;
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:9px 11px;font-size:11px;
+  line-height:1.25;text-decoration:none;border-radius:9px
+}
+#panel-leads .visit-from-lead{
+  background:#FFF5EA;color:#A94A00;border-color:#F6BC82;
+}
+#panel-leads .visit-from-lead:hover{background:#FCE7D4}
+#panel-visitas .visit-empty{
+  color:#637468;font-size:12px;line-height:1.6;margin:10px 0;
+  padding:16px;background:#F7FAF7;border-radius:9px
+}
+#panel-visitas .visit-panel-message:not(:empty){
+  color:#B24524;font-weight:700;background:#FFF5EC;
+  padding:10px;border-radius:8px
+}
+#panel-visitas .visit-info-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:11px;margin-top:14px
+}
+#panel-visitas .visit-info-item{
+  background:#F7FAF8;border:1px solid #E1E9E2;
+  border-radius:10px;padding:12px;overflow-wrap:anywhere
+}
+#panel-visitas .visit-info-item small{
+  display:block;font-size:10px;color:#6D8174;margin-bottom:5px
+}
+#panel-visitas .visit-info-item strong{font-size:12px;color:#15492C}
+#panel-leads .lead-row{grid-template-columns:auto minmax(180px,1.5fr) auto auto}
+@media(max-width:900px){
+  #panel-visitas .visit-entry{align-items:flex-start;flex-direction:column}
+  #panel-visitas .visit-entry-actions{width:100%;justify-content:flex-start}
+  #panel-visitas .visit-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #panel-leads .lead-row{grid-template-columns:auto minmax(0,1fr)!important}
+  #panel-leads .lead-row .visit-from-lead{grid-column:2;justify-self:start}
+  #panel-leads .lead-row select{grid-column:2;justify-self:start;min-width:125px}
+}
+@media(max-width:520px){
+  #panel-visitas .visit-stats{grid-template-columns:1fr}
+  #panel-visitas .visit-info-grid{grid-template-columns:1fr}
+  #panel-visitas .visit-entry-actions .btn{width:100%}
+  #panel-visitas .admin-title>a{width:100%;text-align:center}
+}
