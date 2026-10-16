@@ -598,3 +598,14 @@ footer{background:#103B23!important}
 @media(max-width:760px){.topbar{height:84px!important}.topbar .header-brand img.header-bonanza{width:78px!important;max-width:78px!important;height:19px!important;margin-top:1px!important}.footer-brand img.footer-bonanza{width:102px!important;height:27px!important}}
 
 .footer-brand img.footer-bonanza{background:#fff!important;border-radius:5px!important;padding:2px!important;box-sizing:border-box!important}
+
+
+/* Subtítulo atualizado da marca na barra lateral */
+.sidebar-brand .brand-copy small{
+  display:block;
+  font-size:8px!important;
+  line-height:1.35!important;
+  letter-spacing:.1px!important;
+  white-space:normal!important;
+  max-width:142px;
+}
