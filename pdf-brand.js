@@ -46,13 +46,13 @@ function drawAuthorizationBrand(doc,opts={}){
  const leftWidth=Number(opts.leftWidth??229);
  // Imprime a logo oficial enviada pelo usuário em suas cores originais,
  // sobre o papel branco. Não usar a variante branca ou tarja verde.
- const logoPath=path.join(__dirname,'assets','lilian-douglas-logo-verde-laranja.svg');
+ const logoPath=path.join(__dirname,'assets','bonanza-mini.svg');
  const svg=fs.readFileSync(logoPath,'utf8');
  doc.save();
  doc.roundedRect(x,y,outerWidth,outerHeight,9)
    .lineWidth(1.05).strokeColor('#202020').stroke();
  const logoWidth=leftWidth-9;
- const logoHeight=logoWidth*190/800;
+ const logoHeight=logoWidth*82/335;
  const lx=x+7,ly=y+(outerHeight-logoHeight)/2;
  SVGtoPDF(doc,svg,lx,ly,{
    width:logoWidth,height:logoHeight,
@@ -62,7 +62,7 @@ function drawAuthorizationBrand(doc,opts={}){
  });
  // CRECI da imobiliária na posição indicada, logo abaixo da marca.
  doc.font('Helvetica-Bold').fontSize(8.5).fillColor('#155B32')
-   .text('CRECI MG 61414',lx+3,ly+logoHeight+4,{width:logoWidth-6,align:'left',lineBreak:false});
+   .text('CRECI PJ 3010',lx+3,ly+logoHeight+5,{width:logoWidth-6,align:'left',lineBreak:false});
  const headingX=x+leftWidth+8;
  const headingWidth=outerWidth-leftWidth-16;
  const heading=String(opts.title||['AUTORIZAÇÃO PARA VENDA DE IMÓVEIS','URBANOS E RURAIS'].join(String.fromCharCode(10)))
