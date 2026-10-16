@@ -26,7 +26,7 @@ function drawBrand(doc,opts={}){
  doc.fillColor(green).circle(x+61,y+37,3).fill();
  doc.font('Helvetica-Bold').fontSize(21).fillColor(green).text('Lilian e Douglas',x+86,y+10,{lineBreak:false});
  doc.strokeColor(orange).lineWidth(2).moveTo(x+86,y+36).lineTo(x+378,y+36).stroke();
- doc.font('Times-Italic').fontSize(15.5).fillColor(orange).text('Realizando Sonhos',x+91,y+41,{lineBreak:false});
+ doc.font('Times-Italic').fontSize(12).fillColor(orange).text('Conectando você ao imóvel certo',x+91,y+41,{width:289,lineBreak:false});
  doc.font('Helvetica-Bold').fontSize(9).fillColor(green).text('CRECI MG 61414',x+2,y+69,{lineBreak:false});
  bonanzaMini(doc,x+3,y+83);
  doc.strokeColor('#E6E4DD').lineWidth(.7).moveTo(x,y+123).lineTo(x+504,y+123).stroke();
