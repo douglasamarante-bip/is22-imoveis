@@ -69,18 +69,36 @@ function section(pdf,label){
  pdf.font('Helvetica-Bold').fontSize(11).fillColor('#16642F').text(label);
  pdf.moveDown(0.35);
 }
+function editableField(pdf,label,x,y,width,height,value,fontSize=9){
+ pdf._authorizationFormCount=(pdf._authorizationFormCount||0)+1;
+ const name='autorizacao.campo_'+pdf._authorizationFormCount;
+ pdf.font('Helvetica');
+ pdf.formText(name,x,y,Math.max(24,width),height,{
+  value:String(value??''),defaultValue:String(value??''),
+  fontSize,align:'left',noSpell:true,borderColor:'#FFFFFF'
+ });
+}
 function line(pdf,label,value){
- const y=pdf.y;
- pdf.font('Helvetica-Bold').fontSize(9).fillColor('#214A30').text(label+': ',{continued:true});
- pdf.font('Helvetica').fillColor('#202E27').text(text(value),{lineGap:2});
- pdf.y=Math.max(pdf.y,y+17);
+ const x=44,y=pdf.y,total=pdf.page.width-88;
+ pdf.font('Helvetica-Bold').fontSize(9).fillColor('#214A30');
+ if(label==='Registro'){
+  pdf.text('Registro: '+String(value||''),x,y,{lineBreak:false});
+ }else{
+  const title=label+':';
+  const lw=Math.min(total*.57,Math.max(65,pdf.widthOfString(title)+11));
+  pdf.text(title,x,y,{lineBreak:false});
+  editableField(pdf,label,x+lw,y-1,total-lw-4,17,value,9);
+ }
+ pdf.y=Math.max(pdf.y,y+19);
 }
 function pair(pdf,leftLabel,leftValue,rightLabel,rightValue){
- const x=44, gap=10,w=(pdf.page.width-88-gap)/2,y=pdf.y;
- pdf.font('Helvetica-Bold').fontSize(8.5).fillColor('#214A30').text(leftLabel+':',x,y,{width:w});
- pdf.font('Helvetica').fillColor('#243428').text(text(leftValue),x,y+12,{width:w});
- pdf.font('Helvetica-Bold').fillColor('#214A30').text(rightLabel+':',x+w+gap,y,{width:w});
- pdf.font('Helvetica').fillColor('#243428').text(text(rightValue),x+w+gap,y+12,{width:w});
+ const x=44,gap=10,w=(pdf.page.width-88-gap)/2,y=pdf.y;
+ pdf.font('Helvetica-Bold').fontSize(8.5).fillColor('#214A30')
+   .text(leftLabel+':',x,y,{width:w,lineBreak:false});
+ editableField(pdf,leftLabel,x,y+12,w-6,17,leftValue,9);
+ pdf.font('Helvetica-Bold').fontSize(8.5).fillColor('#214A30')
+   .text(rightLabel+':',x+w+gap,y,{width:w,lineBreak:false});
+ editableField(pdf,rightLabel,x+w+gap,y+12,w-6,17,rightValue,9);
  pdf.y=Math.max(y+39,pdf.y);
 }
 function signature(pdf,label,x,y,width){
@@ -96,6 +114,8 @@ async function outputPdf(res,row){
   'content-disposition':'inline; filename="autorizacao-venda-'+row.id+'.pdf"',
   'x-content-type-options':'nosniff'
  });
+ pdf.font('Helvetica');
+ pdf.initForm();
  pdf.pipe(res);
  // Cabeçalho: logo branca idêntica à do rodapé em faixa verde e título ao lado.
  drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:95,leftWidth:229});
@@ -135,9 +155,9 @@ async function outputPdf(res,row){
  pair(pdf,'E-mail',d.email,'Telefone',d.telefone);
  pair(pdf,'Corretor(a) responsável',d.corretor_responsavel,'CRECI do(a) corretor(a)',d.creci_corretor);
  section(pdf,'5. OBSERVAÇÕES');
- pdf.font('Helvetica').fontSize(9).fillColor('#263B2C')
-  .text(d.observacoes||'Sem observações adicionais.',{height:75,ellipsis:true});
- pdf.y+=85;
+ const notesY=pdf.y;
+ editableField(pdf,'Observações',44,notesY,507,75,d.observacoes||'',9);
+ pdf.y=notesY+85;
  section(pdf,'6. LOCAL, DATA E ASSINATURAS');
  line(pdf,'Local',d.local_assinatura);
  line(pdf,'Data de assinatura (a preencher/confirmar)',d.data_assinatura);
