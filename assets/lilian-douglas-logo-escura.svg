@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 190" width="800" height="190" role="img" aria-labelledby="brandTitle brandDescription">
-<title id="brandTitle">Lilian e Douglas</title><desc id="brandDescription">Imóveis, realizando sonhos. Casa e chave em laranja e verde.</desc>
+<title id="brandTitle">Lilian e Douglas</title><desc id="brandDescription">Conectando você ao imóvel certo. Casa e chave em laranja e verde.</desc>
 <g transform="translate(10 4) scale(.93)"><g aria-label="Casa e chave">
 <path d="M9 89 L99 15 157 63 157 27 180 27 180 81" fill="none" stroke="#F26A08" stroke-width="17" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M35 81 L99 33 164 86" fill="none" stroke="#FF962D" stroke-width="5.5" stroke-linejoin="round" opacity=".93"/>
@@ -14,5 +14,5 @@
 </g></g>
 <text x="233" y="91" fill="#FFFFFF" font-family="Montserrat,Arial,Helvetica,sans-serif" font-size="56" font-weight="800" letter-spacing="-1.8">Lilian e Douglas</text>
 <line x1="235" y1="106" x2="759" y2="106" stroke="#F26A08" stroke-width="3.5" stroke-linecap="round"/>
-<text x="259" y="153" fill="#FF9A43" font-family="'Brush Script MT','Segoe Script',Georgia,serif" font-style="italic" font-size="36" font-weight="600" letter-spacing=".1">Realizando Sonhos</text>
+<text x="259" y="153" fill="#FF9A43" font-family="'Brush Script MT','Segoe Script',Georgia,serif" font-style="italic" font-size="29" textLength="478" lengthAdjust="spacingAndGlyphs" font-weight="600" letter-spacing=".1">Conectando você ao imóvel certo</text>
 </svg>
