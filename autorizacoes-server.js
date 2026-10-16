@@ -97,13 +97,8 @@ async function outputPdf(res,row){
   'x-content-type-options':'nosniff'
  });
  pdf.pipe(res);
- // Página 1: identificação, descrição e condições
- drawAuthorizationBrand(pdf,{x:44,y:25,width:235});
- pdf.moveDown(.05);
- pdf.font('Helvetica-Bold').fontSize(15).fillColor('#16642F')
-  .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS', {align:'center'});
- pdf.font('Helvetica-Bold').fontSize(12).text('URBANOS E RURAIS',{align:'center'});
- pdf.moveDown(.65);
+ // Cabeçalho: logo branca idêntica à do rodapé em faixa verde e título ao lado.
+ drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:95,leftWidth:229});
  pdf.font('Helvetica').fontSize(8.7).fillColor('#314136')
   .text('Identificação do documento: '+row.id+'  |  Emitido em '+new Date().toLocaleDateString('pt-BR'),{align:'center'});
  section(pdf,'1. CONDIÇÕES DA AUTORIZAÇÃO');
