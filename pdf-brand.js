@@ -62,12 +62,15 @@ function drawAuthorizationBrand(doc,opts={}){
  });
  const headingX=x+leftWidth+8;
  const headingWidth=outerWidth-leftWidth-16;
- doc.font('Times-Bold').fillColor('#191919').fontSize(12.1)
-   .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS',headingX,y+29,
-     {width:headingWidth,align:'center',lineBreak:false});
- doc.font('Times-Bold').fillColor('#191919').fontSize(12.1)
-   .text('URBANOS E RURAIS',headingX,y+50,
-     {width:headingWidth,align:'center',lineBreak:false});
+ const heading=String(opts.title||'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS\\nURBANOS E RURAIS')
+   .replace(/\\r/g,'').slice(0,130).split('\\n');
+ const first=heading[0]||'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS';
+ const second=heading.slice(1).join(' ').trim();
+ const headingSize=first.length>38?10:12.1;
+ doc.font('Times-Bold').fillColor('#191919').fontSize(headingSize)
+   .text(first,headingX,y+28,{width:headingWidth,height:26,ellipsis:true,align:'center'});
+ if(second)doc.font('Times-Bold').fillColor('#191919').fontSize(second.length>36?10:12.1)
+   .text(second,headingX,y+52,{width:headingWidth,height:25,ellipsis:true,align:'center'});
  doc.restore();
  doc.x=x;
  doc.y=y+outerHeight+18;
