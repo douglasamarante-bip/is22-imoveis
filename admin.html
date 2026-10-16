@@ -31,6 +31,7 @@ IS22Auth.verify().then(ok=>{if(!ok)location.replace('login.html?motivo=sessao')}
       <a class="visitas-nav" href="clientes.html">▤ <span>Fichas de clientes</span></a>
       <button data-panel="agenda">▣ <span>Agendamentos</span></button>
       <button type="button" data-panel="visitas">▤ <span>Visitas e propostas</span></button>
+      <a class="visitas-nav" href="autorizacao-venda.html">▤ <span>Autorizações de venda</span></a>
       <button data-panel="mensagens">✉ <span>Mensagens</span></button>
       <button data-panel="relatorios">▥ <span>Relatórios</span></button>
       <button data-panel="captacoes">⌂ <span>Captações</span></button>
@@ -108,7 +109,7 @@ IS22Auth.verify().then(ok=>{if(!ok)location.replace('login.html?motivo=sessao')}
     <section class="admin-panel hidden" id="panel-visitas" aria-labelledby="visitasPanelTitle">
       <div class="admin-title">
         <div><h1 id="visitasPanelTitle">Visitas e propostas</h1><p>Acompanhe contatos e negociações no mesmo painel, com dados preservados.</p></div>
-        <a class="btn btn-primary" href="registro-visita.html" target="_blank" rel="noopener">+ Novo registro ↗</a>
+        <div class="visit-entry-actions"><a class="btn btn-outline" href="autorizacao-venda.html">+ Autorização de venda ↗</a><a class="btn btn-primary" href="registro-visita.html" target="_blank" rel="noopener">+ Novo registro ↗</a></div>
       </div>
       <div class="stats-grid visit-stats">
         <div class="metric"><small>Visitas e propostas registradas</small><strong id="visitRecordCount">0</strong><em>salvas no servidor</em></div>
