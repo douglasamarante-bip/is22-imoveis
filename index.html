@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/v2.css" />
   <link rel="stylesheet" href="css/mobile.css" />
   <link rel="stylesheet" href="css/casal-brand.css" />
+  <link rel="stylesheet" href="css/lead-popup.css" />
 </head>
 <body>
 
@@ -204,6 +205,44 @@
     <div class="container footer-bottom" id="footerCopyright">© 2026 Casal Corretores. Todos os direitos reservados.</div>
   </footer>
 
+  <!-- Contato inicial opcional: o visitante pode dispensar o pop-up sem preencher. -->
+  <section class="cc-welcome" id="ccWelcome" hidden aria-label="Convite para atendimento da Casal Corretores">
+    <div class="cc-welcome-backdrop" aria-hidden="true"></div>
+    <div class="cc-welcome-dialog" role="dialog" aria-modal="true" aria-labelledby="ccWelcomeTitle" aria-describedby="ccWelcomeIntro">
+      <div class="cc-welcome-art">
+        <span class="cc-welcome-eyebrow">Lilian e Douglas · Casal Corretores</span>
+        <h2>Seu próximo imóvel começa com <span>uma boa conversa.</span></h2>
+        <p>Conte como falar com você. Nossa equipe pode ajudar a encontrar o imóvel que combina com o seu momento.</p>
+        <small>Conectando você ao imóvel certo.</small>
+      </div>
+      <div class="cc-welcome-main">
+        <button class="cc-welcome-close" id="ccWelcomeClose" type="button" aria-label="Fechar formulário">×</button>
+        <h3 id="ccWelcomeTitle">Vamos conversar?</h3>
+        <p class="cc-welcome-intro" id="ccWelcomeIntro">Deixe seu WhatsApp e e-mail para nossa equipe entrar em contato. É rápido e sem compromisso.</p>
+        <form class="cc-welcome-form" id="ccWelcomeForm">
+          <label class="cc-welcome-field" for="ccWelcomePhone">WhatsApp com DDD
+            <input id="ccWelcomePhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="(31) 99999-9999" required />
+          </label>
+          <label class="cc-welcome-field" for="ccWelcomeEmail">Seu e-mail
+            <input id="ccWelcomeEmail" name="email" type="email" autocomplete="email" maxlength="180" placeholder="voce@exemplo.com" required />
+          </label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-99999px;width:1px;height:1px;opacity:0" />
+          <label class="cc-welcome-consent" for="ccWelcomeConsent">
+            <input type="checkbox" id="ccWelcomeConsent" required />
+            <span>Autorizo a Casal Corretores a entrar em contato comigo por WhatsApp e e-mail sobre imóveis e atendimento.</span>
+          </label>
+          <p class="cc-welcome-error" id="ccWelcomeError" role="alert" aria-live="polite"></p>
+          <button class="cc-welcome-submit" id="ccWelcomeSubmit" type="submit">Quero receber atendimento <span aria-hidden="true">→</span></button>
+          <button class="cc-welcome-skip" id="ccWelcomeSkip" type="button">Agora não, quero conhecer o site</button>
+          <details class="cc-welcome-privacy">
+            <summary>Como meus dados serão utilizados?</summary>
+            <p>Seu telefone e e-mail serão armazenados no sistema de atendimento da Casal Corretores e usados para responder ao seu interesse em imóveis. Você pode solicitar acesso ou exclusão pelos contatos disponíveis no rodapé do site.</p>
+          </details>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <div class="compare-bar hidden" id="compareBar"><div><b>Comparar imóveis</b><span id="compareCount">0 selecionados</span></div><div class="compare-chips" id="compareChips"></div><button class="btn btn-light btn-sm" id="openCompare">Comparar agora</button><button class="compare-clear" id="clearCompare">Limpar</button></div>
   <div class="modal hidden" id="propertyModal"><div class="modal-box property-modal-box"><button class="modal-close" id="closeModal">×</button><div id="modalContent"></div></div></div>
   <div class="modal hidden" id="scheduleModal"><div class="modal-box schedule-modal-box"><button class="modal-close" id="closeSchedule">×</button><div id="scheduleContent"></div></div></div>
@@ -213,5 +252,6 @@
   <script src="js/data.js"></script>
   <script src="js/site.js"></script>
   <script src="js/mobile.js"></script>
+  <script src="js/lead-popup.js"></script>
 </body>
 </html>
