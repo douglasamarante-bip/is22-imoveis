@@ -44,28 +44,30 @@ function drawAuthorizationBrand(doc,opts={}){
  const outerWidth=Number(opts.outerWidth??(doc.page.width-88));
  const outerHeight=Number(opts.outerHeight??95);
  const leftWidth=Number(opts.leftWidth??229);
- // Mesma versão branca usada no rodapé do site; a tarja verde mantém
- // a leitura das letras brancas no fundo branco da ficha impressa.
- const svg=fs.readFileSync(path.join(__dirname,'assets','lilian-douglas-logo-escura.svg'),'utf8');
- const bx=x+6,by=y+6,bw=leftWidth,bh=outerHeight-12;
+ // Imprime a logo oficial enviada pelo usuário em suas cores originais,
+ // sobre o papel branco. Não usar a variante branca ou tarja verde.
+ const logoPath=path.join(__dirname,'assets','lilian-douglas-logo-verde-laranja.svg');
+ const svg=fs.readFileSync(logoPath,'utf8');
  doc.save();
- doc.roundedRect(x,y,outerWidth,outerHeight,9).lineWidth(1.05).strokeColor('#203A29').stroke();
- doc.roundedRect(bx,by,bw,bh,7).fillColor('#12552D').fill();
- const logoWidth=bw-12;
+ doc.roundedRect(x,y,outerWidth,outerHeight,9)
+   .lineWidth(1.05).strokeColor('#202020').stroke();
+ const logoWidth=leftWidth-9;
  const logoHeight=logoWidth*190/800;
- const ly=by+(bh-logoHeight)/2;
- SVGtoPDF(doc,svg,bx+6,ly,{
+ const lx=x+7,ly=y+(outerHeight-logoHeight)/2;
+ SVGtoPDF(doc,svg,lx,ly,{
    width:logoWidth,height:logoHeight,
    preserveAspectRatio:'xMinYMid meet',
    assumePt:false,
    fontCallback:()=> 'Helvetica'
  });
- const headingX=bx+bw+7;
- const headingWidth=outerWidth-(headingX-x)-10;
- doc.font('Times-Bold').fillColor('#173425').fontSize(12.1)
-   .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS',headingX,y+29,{width:headingWidth,align:'center',lineBreak:false});
- doc.font('Times-Bold').fillColor('#173425').fontSize(12.1)
-   .text('URBANOS E RURAIS',headingX,y+50,{width:headingWidth,align:'center',lineBreak:false});
+ const headingX=x+leftWidth+8;
+ const headingWidth=outerWidth-leftWidth-16;
+ doc.font('Times-Bold').fillColor('#191919').fontSize(12.1)
+   .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS',headingX,y+29,
+     {width:headingWidth,align:'center',lineBreak:false});
+ doc.font('Times-Bold').fillColor('#191919').fontSize(12.1)
+   .text('URBANOS E RURAIS',headingX,y+50,
+     {width:headingWidth,align:'center',lineBreak:false});
  doc.restore();
  doc.x=x;
  doc.y=y+outerHeight+18;
