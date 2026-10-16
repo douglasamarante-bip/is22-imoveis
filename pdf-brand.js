@@ -60,6 +60,9 @@ function drawAuthorizationBrand(doc,opts={}){
    assumePt:false,
    fontCallback:()=> 'Helvetica'
  });
+ // CRECI da imobiliária na posição indicada, logo abaixo da marca.
+ doc.font('Helvetica-Bold').fontSize(8.5).fillColor('#155B32')
+   .text('CRECI MG 61414',lx+3,ly+logoHeight+4,{width:logoWidth-6,align:'left',lineBreak:false});
  const headingX=x+leftWidth+8;
  const headingWidth=outerWidth-leftWidth-16;
  const heading=String(opts.title||['AUTORIZAÇÃO PARA VENDA DE IMÓVEIS','URBANOS E RURAIS'].join(String.fromCharCode(10)))
