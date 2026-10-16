@@ -43,7 +43,7 @@
   root.addEventListener('keydown',e=>{
     if(e.key==='Escape'){e.preventDefault();close();return}
     if(e.key!=='Tab')return;
-    const focusables=[...dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),summary')].filter(x=>x.getClientRects().length);
+    const focusables=[...dialog.querySelectorAll('button:not([disabled]),input:not([disabled]):not([tabindex="-1"]),summary')].filter(x=>x.getClientRects().length);
     if(!focusables.length)return;
     const first=focusables[0],last=focusables[focusables.length-1];
     if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
