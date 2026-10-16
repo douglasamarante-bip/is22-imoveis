@@ -119,6 +119,57 @@ async function api(req,res,url){
   if(req.method==='POST'&&url.pathname==='/api/properties'){if(!requireAuth(req,res))return;const p=upsertProperty(await readBody(req));return sendJSON(res,200,{ok:true,property:p})}
   if(req.method==='PUT'&&url.pathname==='/api/properties'){if(!requireAuth(req,res))return;const b=await readBody(req);const arr=Array.isArray(b)?b:(Array.isArray(b.properties)?b.properties:null);if(!arr)return sendJSON(res,400,{ok:false,error:'Lista de imóveis inválida.'});const clean=arr.map(cleanProperty);writeJSON('properties',clean);return sendJSON(res,200,{ok:true,properties:clean})}
   const pm=url.pathname.match(/^\/api\/properties\/([^/]+)$/);if(pm){const id=decodeURIComponent(pm[1]);if(req.method==='PUT'){if(!requireAuth(req,res))return;const p=upsertProperty({...await readBody(req),id});return sendJSON(res,200,{ok:true,property:p})}if(req.method==='DELETE'){if(!requireAuth(req,res))return;let arr=readJSON('properties',seedProperties);arr=arr.filter(x=>String(x.id)!==id);writeJSON('properties',arr);return sendJSON(res,200,{ok:true})}}
+  // Captação voluntária do pop-up de boas-vindas (não exige login).
+  // Dados ficam apenas no arquivo de leads do volume persistente e a leitura é restrita ao CRM.
+  if(req.method==='POST'&&url.pathname==='/api/leads/capture'){
+    const type=String(req.headers['content-type']||'').split(';')[0].trim().toLowerCase();
+    if(type!=='application/json')return sendJSON(res,415,{ok:false,error:'Envie os dados no formato correto.'});
+    const body=await readBody(req,4096);
+    if(body.website)return sendJSON(res,200,{ok:true});
+    const rawPhone=String(body.phone||'').trim().slice(0,30);
+    const digits=rawPhone.replace(/\D/g,'');
+    const email=String(body.email||'').trim().toLowerCase().slice(0,180);
+    if(body.consent!==true)return sendJSON(res,400,{ok:false,error:'É necessário autorizar o contato para enviar seus dados.'});
+    if(!/^(?:\d{10,11}|55\d{10,11})$/.test(digits))return sendJSON(res,400,{ok:false,error:'Informe um WhatsApp válido com DDD.'});
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return sendJSON(res,400,{ok:false,error:'Informe um e-mail válido.'});
+    const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim().slice(0,100);
+    const now=Date.now(),windowMs=15*60*1000;
+    globalThis.ccLeadRate??=new Map();
+    // Podamos entradas antigas para que o mapa não cresça indefinidamente.
+    if(globalThis.ccLeadRate.size>3000){
+      for(const [k,v] of globalThis.ccLeadRate)if(now-v.start>windowMs)globalThis.ccLeadRate.delete(k);
+    }
+    const entry=globalThis.ccLeadRate.get(ip);
+    const quota=entry&&now-entry.start<windowMs?entry:{start:now,count:0};
+    quota.count++;
+    globalThis.ccLeadRate.set(ip,quota);
+    if(quota.count>12)return sendJSON(res,429,{ok:false,error:'Muitas tentativas. Aguarde alguns minutos para tentar novamente.'});
+    const arr=readJSON('leads',[]);
+    const match=arr.find(x=>x.source==='Pop-up do site'&&(x.email===email||x.phone.replace(/\D/g,'')===digits));
+    if(match){
+      match.email=email;
+      match.phone=rawPhone;
+      match.updatedAt=new Date().toISOString();
+      match.consentContact=true;
+      match.consentAt=match.updatedAt;
+    }else{
+      arr.unshift({
+        id:'L-'+now+'-'+crypto.randomBytes(3).toString('hex'),
+        name:'Visitante do site',
+        phone:rawPhone,
+        email,
+        propertyId:'',
+        source:'Pop-up do site',
+        stage:'Novo',
+        message:'Solicitou atendimento pelo formulário de boas-vindas.',
+        consentContact:true,
+        consentAt:new Date().toISOString(),
+        createdAt:new Date().toISOString()
+      });
+    }
+    writeJSON('leads',arr);
+    return sendJSON(res,201,{ok:true,message:'Contato recebido com sucesso.'});
+  }
   if(req.method==='POST'&&url.pathname==='/api/leads'){const b=await readBody(req);const arr=readJSON('leads',[]);const lead={id:'L-'+Date.now(),name:String(b.name||'').trim(),phone:String(b.phone||'').trim(),email:String(b.email||'').trim(),propertyId:String(b.propertyId||'').trim(),message:String(b.message||'').trim(),stage:'Novo',createdAt:new Date().toISOString()};if(!lead.name||!lead.phone)return sendJSON(res,400,{ok:false,error:'Informe nome e telefone.'});arr.unshift(lead);writeJSON('leads',arr);return sendJSON(res,200,{ok:true,lead})}
   if(req.method==='GET'&&url.pathname==='/api/leads'){if(!requireAuth(req,res))return;return sendJSON(res,200,{ok:true,leads:readJSON('leads',[])})}
   if(req.method==='PUT'&&url.pathname.startsWith('/api/leads/')){if(!requireAuth(req,res))return;const id=decodeURIComponent(url.pathname.split('/').pop());const b=await readBody(req);const arr=readJSON('leads',[]),i=arr.findIndex(x=>x.id===id);if(i<0)return sendJSON(res,404,{ok:false,error:'Lead não encontrado.'});arr[i]={...arr[i],...b,id};writeJSON('leads',arr);return sendJSON(res,200,{ok:true,lead:arr[i]})}
