@@ -145,7 +145,7 @@ async function api(req,res,url){
     globalThis.ccLeadRate.set(ip,quota);
     if(quota.count>12)return sendJSON(res,429,{ok:false,error:'Muitas tentativas. Aguarde alguns minutos para tentar novamente.'});
     const arr=readJSON('leads',[]);
-    const match=arr.find(x=>x.source==='Pop-up do site'&&(x.email===email||x.phone.replace(/\D/g,'')===digits));
+    const match=arr.find(x=>x.source==='Pop-up do site'&&(x.email===email||String(x.phone||'').replace(/\D/g,'')===digits));
     if(match){
       match.email=email;
       match.phone=rawPhone;
