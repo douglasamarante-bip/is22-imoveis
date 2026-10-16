@@ -234,6 +234,46 @@ saveBtn.addEventListener('click',async()=>{
 });
 if(currentId){
  request('/api/visitas/'+encodeURIComponent(currentId)).then(({record})=>{populate(record);replaceFooterQR(record)}).catch(err=>alertMessage(err.message));
+}else{
+ const leadId=new URLSearchParams(location.search).get('lead')||'';
+ if(/^[A-Za-z0-9_-]{1,100}$/.test(leadId)){
+   (async()=>{
+     let lead=null;
+     try{
+       const {leads}=await request('/api/leads');
+       if(Array.isArray(leads))lead=leads.find(x=>String(x.id)===leadId)||null;
+     }catch(e){
+       console.warn('Buscando lead no cadastro deste navegador:',e.message);
+     }
+     if(!lead){
+       try{
+         const cached=JSON.parse(localStorage.getItem('is22LeadsV1')||'[]');
+         if(Array.isArray(cached))lead=cached.find(x=>String(x.id)===leadId)||null;
+       }catch{}
+     }
+     if(!lead){
+       message.hidden=false;
+       const p=document.createElement('p');
+       p.textContent='Não foi possível localizar o lead. Preencha os dados manualmente antes de salvar.';
+       message.replaceChildren(p);
+       return;
+     }
+     const fill=(name,value)=>{
+       const input=fields.find(x=>x.name===name);
+       if(input&&value!=null&&!input.value)input.value=String(value);
+     };
+     if(lead.name&&!['Contato pelo site','Visitante do site'].includes(lead.name))fill('cliente',lead.name);
+     fill('celular',lead.phone);
+     if(lead.propertyId){
+       fill('imovel_procurado',lead.propertyId);
+       fill('proposta_codigo',lead.propertyId);
+     }
+     message.hidden=false;
+     const p=document.createElement('p');
+     p.textContent='Dados do lead pré-preenchidos. Confira as informações e complete o registro antes de salvar. Nenhuma visita ou proposta foi criada automaticamente.';
+     message.replaceChildren(p);
+   })();
+ }
 }
 })();
 </script>
