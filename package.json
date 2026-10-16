@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "pdfkit": "^0.17.2",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "svg-to-pdfkit": "^0.1.8"
   }
 }
