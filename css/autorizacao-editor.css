@@ -13,7 +13,9 @@
 .doc-original *, .doc-original *::before,.doc-original *::after{box-sizing:border-box}
 .doc-original input,.doc-original textarea{background:transparent!important;color:#141414!important;-webkit-text-fill-color:#141414!important;font-family:"Times New Roman",Times,serif!important;font-weight:400;box-shadow:none!important}
 .doc-heading{border:1.8px solid #161616;border-radius:11px;display:grid;grid-template-columns:34% 1fr;align-items:center;gap:8px;height:111px;padding:10px 12px;margin-bottom:10px}
-.doc-heading img{width:100%;height:auto;max-height:80px;object-fit:contain;object-position:left center}
+.doc-brand-block{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-width:0}
+.doc-heading img{width:100%;height:auto;max-height:69px;object-fit:contain;object-position:left center}
+.doc-brand-creci{display:block;font:700 11px/1.15 Montserrat,Arial,sans-serif;letter-spacing:.02em;color:#155B32;white-space:nowrap;padding-left:3px}
 .doc-title{width:100%;min-width:0;max-width:100%;min-height:61px;height:61px!important;padding:4px 0;overflow:hidden;resize:none;border:0!important;text-align:center;font:bold 19px/1.2 "Times New Roman",Times,serif!important;outline-offset:2px;white-space:pre-wrap}
 .doc-contract{margin:0 0 9px}
 .doc-textarea{display:block;min-width:0}
@@ -104,7 +106,8 @@
  .sheet-scroll{display:block!important;width:100%!important;overflow:visible!important;background:none!important;border:0!important;padding:0!important;margin:0!important}
  .sheet-paper.doc-original{box-shadow:none!important;border:0!important;width:100%!important;min-height:0!important;margin:0!important;padding:0!important}
  .doc-heading{height:94px!important;margin-bottom:7px!important}
- .doc-heading img{max-height:74px!important}
+ .doc-heading img{max-height:61px!important}
+ .doc-brand-creci{font-size:9px!important}
  .doc-title{font-size:16px!important;max-height:56px}
  .doc-contract textarea{min-height:74px!important;height:74px!important;font-size:12px!important}
  .doc-contract-fields{margin:3px 0!important;padding-top:1px!important}
