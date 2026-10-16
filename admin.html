@@ -29,7 +29,7 @@ IS22Auth.verify().then(ok=>{if(!ok)location.replace('login.html?motivo=sessao')}
       <button data-panel="clientes">♙ <span>Clientes</span></button>
       <a class="visitas-nav" href="clientes.html">▤ <span>Fichas de clientes</span></a>
       <button data-panel="agenda">▣ <span>Agendamentos</span></button>
-      <a class="visitas-nav" href="registros.html">▤ <span>Visitas e propostas</span></a>
+      <button type="button" data-panel="visitas">▤ <span>Visitas e propostas</span></button>
       <button data-panel="mensagens">✉ <span>Mensagens</span></button>
       <button data-panel="relatorios">▥ <span>Relatórios</span></button>
       <button data-panel="captacoes">⌂ <span>Captações</span></button>
@@ -104,6 +104,27 @@ IS22Auth.verify().then(ok=>{if(!ok)location.replace('login.html?motivo=sessao')}
     </section>
 
     <section class="admin-panel hidden" id="panel-leads"><div class="admin-title"><div><h1>CRM de leads</h1><p>Acompanhe cada contato até o fechamento.</p></div><button class="btn btn-primary" id="newLeadBtn">+ Novo lead</button></div><div class="crm-summary" id="crmSummary"></div><div class="admin-card"><div class="crm-toolbar"><input id="leadSearch" placeholder="Buscar por nome, telefone ou imóvel"><select id="leadStageFilter"><option value="">Todas as etapas</option><option>Novo</option><option>Contatado</option><option>Visita</option><option>Proposta</option><option>Negociação</option><option>Fechado</option><option>Perdido</option></select></div><div class="lead-list" id="leadList"></div></div></section>
+    <section class="admin-panel hidden" id="panel-visitas" aria-labelledby="visitasPanelTitle">
+      <div class="admin-title">
+        <div><h1 id="visitasPanelTitle">Visitas e propostas</h1><p>Acompanhe contatos e negociações no mesmo painel, com dados preservados.</p></div>
+        <a class="btn btn-primary" href="registro-visita.html" target="_blank" rel="noopener">+ Novo registro ↗</a>
+      </div>
+      <div class="stats-grid visit-stats">
+        <div class="metric"><small>Visitas e propostas registradas</small><strong id="visitRecordCount">0</strong><em>salvas no servidor</em></div>
+        <div class="metric"><small>Leads disponíveis</small><strong id="visitLeadCount">0</strong><em>contatos que podem gerar registro</em></div>
+      </div>
+      <div class="admin-card visit-admin-card">
+        <div class="admin-card-head"><div><h2>Registros salvos</h2><p>Documentos, QR Code e propostas já criados.</p></div><button class="btn btn-outline" id="visitRefresh" type="button">Atualizar</button></div>
+        <div class="crm-toolbar"><input id="visitSearch" type="search" placeholder="Buscar cliente, imóvel ou código" aria-label="Buscar registros salvos" /></div>
+        <p id="visitPanelError" class="visit-panel-message" role="status" aria-live="polite"></p>
+        <div id="visitRecordList" class="visit-record-list"><p class="visit-empty">Carregando registros...</p></div>
+      </div>
+      <div class="admin-card visit-admin-card">
+        <div class="admin-card-head"><div><h2>Contatos para acompanhamento</h2><p>Leads ainda não são documentos de visita. Você pode iniciar um registro com os dados existentes.</p></div></div>
+        <div id="visitLeadList" class="visit-record-list"><p class="visit-empty">Carregando contatos...</p></div>
+      </div>
+      <div id="visitRecordDetail" class="admin-card visit-admin-card hidden" aria-live="polite"></div>
+    </section>
     <section class="admin-panel hidden" id="panel-clientes"><div class="admin-title"><div><h1>Clientes</h1><p>Organize cadastros, preferências, documentos e propostas por cliente.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-primary" href="ficha-cliente.html">+ Nova ficha</a><a class="btn btn-outline" href="clientes.html">Gerenciar fichas</a></div></div><div class="admin-card"><h2>Contatos recebidos como leads</h2><p>Para gerar ficha completa, clique em Nova ficha.</p><div class="client-grid" id="clientGrid"></div></div></section>
     <section class="admin-panel hidden" id="panel-agenda"><div class="admin-title"><div><h1>Agendamentos</h1><p>Visitas presenciais e vídeo chamadas solicitadas pelo site.</p></div></div><div class="admin-card"><div class="appointment-list" id="appointmentList"></div></div></section>
     <section class="admin-panel hidden" id="panel-mensagens"><div class="placeholder-panel"><h1>Mensagens</h1><p>Use o CRM para acompanhar os contatos. A integração de mensagens em tempo real entra quando conectarmos WhatsApp/API ao backend.</p></div></section>
@@ -229,6 +250,7 @@ IS22Auth.verify().then(ok=>{if(!ok)location.replace('login.html?motivo=sessao')}
   <script src="js/settings.js"></script>
   <script src="js/data.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/visitas-panel.js"></script>
   <script src="js/mobile.js"></script>
 </body>
 </html>
