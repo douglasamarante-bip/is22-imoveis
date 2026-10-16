@@ -28,7 +28,7 @@ editor.innerHTML=[
 '</div><button type="button" id="authPrintVisual" class="auth-btn auth-btn-outline">Imprimir ficha / salvar PDF</button></div>',
 '<p class="auth-edit-hint">Esta ficha reproduz a organização do modelo enviado. Clique nas linhas para digitar, depois use <strong>Salvar rascunho</strong>. A assinatura é feita após revisão.</p>',
 '<div class="sheet-scroll"><article id="authSheetPaper" class="sheet-paper doc-original" aria-label="Autorização para venda editável">',
-'<div class="doc-heading"><div class="doc-brand-block"><img src="assets/lilian-douglas-logo-verde-laranja.svg" alt="Logo Lilian e Douglas"><span class="doc-brand-creci">CRECI MG 61414</span></div>',
+'<div class="doc-heading"><div class="doc-brand-block"><img src="assets/bonanza-mini.svg" alt="Logo Bonanza Imóveis"><span class="doc-brand-creci">CRECI PJ 3010</span></div>',
 '<textarea class="doc-title" data-sheet-field="titulo_documento" rows="2" maxlength="130" aria-label="Título do documento"></textarea></div>',
 '<div class="doc-contract">',ta('Texto da autorização','texto_autorizacao','doc-contract-text',5),'</div>',
 '<div class="doc-contract-fields">',
