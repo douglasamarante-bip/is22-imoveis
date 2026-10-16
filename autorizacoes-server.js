@@ -59,7 +59,7 @@ function text(v){return String(v||'Não informado')}
 function pdfPage(pdf){
  const previousY=pdf.y,previousX=pdf.x,width=pdf.page.width;
  pdf.font('Helvetica').fontSize(8).fillColor('#728076')
-   .text('Casal Corretores  |  Modelo para conferência jurídica e assinatura manuscrita',43,pdf.page.height-39,
+   .text('Casal Corretores  |  Modelo para conferência jurídica e assinatura manuscrita',43,pdf.page.height-76,
      {width:width-86,align:'center'});
  pdf.x=previousX;
  pdf.y=previousY;
