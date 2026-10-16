@@ -34,6 +34,7 @@ function onError(e){
  }
 }
 function collect(){
+ window.CasalAuthVisual?.syncToDetails?.();
  const data={};
  for(const item of fields)data[item.name]=item.value.trim();
  return data;
@@ -45,6 +46,7 @@ function populate(data={}){
  if(!data.documentacao)form.elements.documentacao.value='Escritura';
  if(!data.aceita_propostas)form.elements.aceita_propostas.value='Sim';
  if(!data.local_assinatura)form.elements.local_assinatura.value='Conselheiro Lafaiete - MG';
+ window.CasalAuthVisual?.syncFromDetails?.();
 }
 function setCurrent(id=''){
  state.id=id;
@@ -60,7 +62,7 @@ function reset(){
  setCurrent();populate();
  report('Novo formulário pronto. Preencha e clique em Salvar rascunho.');
  history.replaceState({},'',location.pathname);
- form.querySelector('input[name="empresa_autorizada"]').focus({preventScroll:true});
+ window.CasalAuthVisual?.focusField?.('imovel');
  drawList();
 }
 function make(tag,text,className){
@@ -111,10 +113,18 @@ async function loadOne(id){
 }
 async function save(e){
  e.preventDefault();
- if(!form.reportValidity())return;
+ const isDetailsVisible=!document.getElementById('authorizationDetails')?.hidden;
+ if(isDetailsVisible&&!form.reportValidity())return;
  const data=collect();
  if(!data.proprietario||!data.imovel){
-  report('Preencha o proprietário e o imóvel antes de salvar.',true);return;
+  const missing=data.imovel?'proprietario':'imovel';
+  report('Preencha o imóvel e o nome completo do proprietário antes de salvar.',true);
+  window.CasalAuthVisual?.focusField?.(missing);
+  return;
+ }
+ if(data.email&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(data.email)){
+  report('Digite um e-mail válido antes de salvar.',true);
+  window.CasalAuthVisual?.focusField?.('email');return;
  }
  const btn=$('saveAuth');btn.disabled=true;btn.textContent='Salvando...';
  report('Salvando rascunho com segurança...');
@@ -124,7 +134,7 @@ async function save(e){
    method:editing?'PUT':'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)
   });
   setCurrent(record.id);
-  report('Autorização salva! Agora você pode abrir o PDF para conferência e assinatura.');
+  report('Ficha salva no servidor! Continue editando aqui ou imprima a ficha para conferência e assinatura.');
   history.replaceState({},'',location.pathname+'?id='+encodeURIComponent(record.id));
   await loadList();
  }catch(err){onError(err)}
