@@ -5,7 +5,7 @@
   let sharedSettings=null; // configurações publicadas no servidor para PC e celular
   const withPublishedHero=s=>{if(publishedHeroImage && s?.hero)s.hero.image=publishedHeroImage;return s};
     const defaults={
-    brand:{name:'Casal Corretores',creci:'MG 61414',tagline:'Realizando Sonhos',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
+    brand:{name:'Casal Corretores',creci:'MG 61414',tagline:'Conectando você ao imóvel certo',logoNavy:'assets/lilian-douglas-logo-verde-laranja.svg',logoWhite:'assets/lilian-douglas-logo-escura.svg',symbolWhite:'assets/lilian-douglas-simbolo.svg'},
     colors:{primary:'#16642F',secondary:'#105127',accent:'#F26A08',text:'#1E3D2A',soft:'#FFF8F1'},
     appearance:{radius:'18px',shadow:'soft'},
     nav:{buy:'Comprar',rent:'Alugar',launch:'Lançamentos',premium:'Imóveis Premium',about:'Sobre nós',contact:'Contato',cta:'Falar com um corretor'},
@@ -40,7 +40,7 @@
     Object.entries(oldBrandPalette).forEach(([key,previous])=>{
       if(previous.some(color=>String(s.colors?.[key]).toUpperCase()===color.toUpperCase()))s.colors[key]=newPalette[key];
     });
-    if(s.brand?.tagline==='Lilian e Douglas')s.brand.tagline='Realizando Sonhos';
+    if(['Lilian e Douglas','Realizando Sonhos'].includes(s.brand?.tagline))s.brand.tagline='Conectando você ao imóvel certo';
     // Logos personalizados enviados pelo usuário não são sobrescritos.
     if(['assets/casal-logo-header-lilian-douglas.svg','assets/casal-logo-header-v2.svg','assets/casal-logo-navy.svg'].includes(s.brand?.logoNavy))s.brand.logoNavy='assets/lilian-douglas-logo-verde-laranja.svg';
     if(['assets/casal-logo-footer-lilian-douglas.svg','assets/casal-logo-footer-v2.svg','assets/casal-logo-white.svg'].includes(s.brand?.logoWhite))s.brand.logoWhite='assets/lilian-douglas-logo-escura.svg';
@@ -55,6 +55,9 @@
     Object.entries(oldAssets).forEach(([key,[before,after]])=>{if(s.brand?.[key]===before)s.brand[key]=after});
     if(s.brand?.logoNavy==='assets/casal-logo-header-v2.svg')s.brand.logoNavy='assets/lilian-douglas-logo-verde-laranja.svg';
     if(s.brand?.logoWhite==='assets/casal-logo-footer-v2.svg')s.brand.logoWhite='assets/lilian-douglas-logo-escura.svg';
+    // Atualiza somente as logos padrão; mantém imagens personalizadas no editor.
+    if(s.brand?.logoNavy==='assets/lilian-douglas-logo-verde-laranja.svg')s.brand.logoNavy='assets/lilian-douglas-logo-verde-laranja.svg?v=20261016';
+    if(s.brand?.logoWhite==='assets/lilian-douglas-logo-escura.svg')s.brand.logoWhite='assets/lilian-douglas-logo-escura.svg?v=20261016';
     return s;
   }
   function get(){
