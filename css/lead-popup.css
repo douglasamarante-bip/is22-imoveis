@@ -106,7 +106,11 @@
 .cc-welcome-success{color:#1A663B;font-size:13px;line-height:1.6;font-weight:600}
 body.cc-welcome-visible{overflow:hidden!important}
 @media(max-width:700px){
-  .cc-welcome{padding:10px;align-items:center}
+  /* Apenas no celular: remove o painel verde marcado na referência. */
+  .cc-welcome-art{display:none!important}
+  .cc-welcome{padding:14px;align-items:center}
+  .cc-welcome-dialog{width:min(420px,100%);background:#fff}
+  .cc-welcome-main{padding:32px 23px 22px}
   .cc-welcome-dialog{
     display:flex;flex-direction:column;width:min(420px,100%);
     max-height:calc(100dvh - 20px);border-radius:17px
