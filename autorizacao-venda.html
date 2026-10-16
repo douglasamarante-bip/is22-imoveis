@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Autorizações de venda | Lilian e Douglas</title>
+<link rel="icon" href="assets/lilian-douglas-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/autorizacoes.css">
+<script src="js/auth.js"></script>
+<script>if(!IS22Auth.requireAuth())throw new Error('Sessão necessária');</script>
+</head>
+<body>
+<header class="auth-header">
+  <div class="auth-header-inner">
+    <a href="admin.html" class="auth-brand" aria-label="Voltar para o painel Lilian e Douglas">
+      <img src="assets/lilian-douglas-logo-escura.svg" alt="Lilian e Douglas - Casal Corretores">
+    </a>
+    <nav aria-label="Navegação">
+      <a href="admin.html">← Painel</a>
+      <a href="registros.html">Visitas e propostas</a>
+    </nav>
+  </div>
+</header>
+<main class="auth-container">
+  <div class="auth-heading">
+    <div><span class="auth-kicker">DOCUMENTOS DA CORRETORA</span>
+      <h1>Autorização para venda de imóveis</h1>
+      <p>Modelo para imóveis urbanos e rurais, baseado no documento enviado. Preencha, salve e gere o PDF para conferência e assinatura.</p>
+    </div>
+    <button id="newAuthorization" class="auth-btn auth-btn-orange" type="button">+ Nova autorização</button>
+  </div>
+  <div class="auth-layout">
+    <aside class="auth-list-card">
+      <div class="auth-card-header">
+        <div><h2>Autorizações cadastradas</h2><small>Rascunhos salvos com privacidade.</small></div>
+        <button id="refreshAuthorization" class="auth-btn auth-btn-ghost" type="button" aria-label="Atualizar autorizações">↻ Atualizar</button>
+      </div>
+      <input id="authSearch" type="search" placeholder="Buscar por proprietário, endereço..." aria-label="Buscar autorização" autocomplete="off">
+      <p class="auth-muted" id="authListMessage">Carregando...</p>
+      <div id="authList" class="auth-list" aria-live="polite"></div>
+    </aside>
+    <section class="auth-form-card">
+      <div class="auth-card-header auth-form-top">
+        <div><span id="authBadge" class="auth-badge">Novo rascunho</span>
+          <h2 id="formHeading">Autorização para venda de imóveis urbanos e rurais</h2>
+          <p>Os campos refletem o modelo impresso, mas não geram assinatura nem autorização automática.</p>
+        </div>
+        <a id="pdfAuthLink" class="auth-btn auth-btn-outline" hidden target="_blank" rel="noopener">Visualizar PDF ↗</a>
+      </div>
+      <p class="auth-notice"><strong>Importante:</strong> confirme a empresa autorizada, o CRECI, o prazo, a comissão e os termos antes de imprimir e assinar. Modelo sujeito à revisão jurídica.</p>
+      <form id="authForm">
+        <fieldset><legend>01 · Autorização e condições</legend>
+          <div class="auth-form-grid">
+            <label class="span-2">Empresa ou profissional autorizado(a)<input name="empresa_autorizada" maxlength="500" placeholder="Nome da empresa ou corretor autorizado"></label>
+            <label>CRECI da empresa / profissional<input name="creci_empresa" maxlength="500" placeholder="Ex.: PJ 3010"></label>
+            <label>Prazo da autorização (meses)<input name="prazo_meses" maxlength="500" placeholder="Ex.: 6"></label>
+            <label class="span-2">Comissão de intermediação<input name="comissao" maxlength="500" placeholder="Ex.: 6% do valor da venda, conforme acordo"></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>02 · Descrição do imóvel</legend>
+          <div class="auth-form-grid">
+            <label class="span-2">Imóvel <input name="imovel" maxlength="500" placeholder="Casa, apartamento, sítio, lote, fazenda..." required></label>
+            <label class="span-2">Endereço do imóvel<input name="endereco_imovel" maxlength="500" placeholder="Rua, número, bairro, referência"></label>
+            <label class="span-2">Município<input name="municipio_imovel" maxlength="500"></label>
+            <label>Área total<input name="area_total" maxlength="500" placeholder="Ex.: 1.000 m²"></label>
+            <label>Área construída<input name="area_construida" maxlength="500" placeholder="Ex.: 180 m²"></label>
+            <label>Documentação<select name="documentacao"><option>Escritura</option><option>Contrato</option><option>Outro</option></select></label>
+            <label>Matrícula nº<input name="matricula" maxlength="500"></label>
+            <label>Comarca<input name="comarca" maxlength="500"></label>
+            <label>Valor pretendido de venda (R$)<input name="valor_venda" maxlength="500" placeholder="Ex.: 450.000,00" inputmode="decimal"></label>
+            <label>Aceita receber propostas?<select name="aceita_propostas"><option>Sim</option><option>Não</option></select></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>03 · Qualificação do(s) proprietário(s)</legend>
+          <div class="auth-form-grid">
+            <label class="span-2">Nome completo do(a) proprietário(a)<input name="proprietario" maxlength="500" autocomplete="name" required></label>
+            <label>CPF<input name="cpf" maxlength="500" inputmode="numeric"></label>
+            <label>RG<input name="rg" maxlength="500"></label>
+            <label>Profissão<input name="profissao" maxlength="500"></label>
+            <label>Nascimento<input name="nascimento" maxlength="500" placeholder="dd/mm/aaaa"></label>
+            <label>Estado civil<input name="estado_civil" maxlength="500"></label>
+            <label>Nome do(a) cônjuge<input name="conjuge" maxlength="500"></label>
+            <label>CPF do(a) cônjuge<input name="conjuge_cpf" maxlength="500"></label>
+            <label>RG do(a) cônjuge<input name="conjuge_rg" maxlength="500"></label>
+            <label>Profissão do(a) cônjuge<input name="conjuge_profissao" maxlength="500"></label>
+            <label>Nascimento do(a) cônjuge<input name="conjuge_nascimento" maxlength="500" placeholder="dd/mm/aaaa"></label>
+            <label class="span-2">Endereço do(s) proprietário(s)<input name="endereco_proprietario" maxlength="500"></label>
+            <label>Município<input name="municipio_proprietario" maxlength="500"></label>
+            <label>E-mail<input name="email" type="email" maxlength="180" autocomplete="email"></label>
+            <label>Telefone / WhatsApp<input name="telefone" type="tel" maxlength="500" autocomplete="tel"></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>04 · Local, responsáveis e assinaturas</legend>
+          <div class="auth-form-grid">
+            <label>Local da assinatura<input name="local_assinatura" maxlength="500" value="Conselheiro Lafaiete - MG"></label>
+            <label>Data da assinatura<input name="data_assinatura" maxlength="500" placeholder="Preencher no momento da assinatura"></label>
+            <label>Corretor(a) responsável<input name="corretor_responsavel" maxlength="500"></label>
+            <label>CRECI do(a) corretor(a)<input name="creci_corretor" maxlength="500" placeholder="Ex.: MG 61414"></label>
+            <label>Testemunha 1<input name="testemunha1" maxlength="500"></label>
+            <label>Testemunha 2<input name="testemunha2" maxlength="500"></label>
+            <label class="span-2">Observações<textarea name="observacoes" maxlength="2500" rows="4" placeholder="Informações complementares ou condições específicas"></textarea></label>
+          </div>
+        </fieldset>
+        <div class="auth-actions">
+          <button class="auth-btn auth-btn-orange" id="saveAuth" type="submit">Salvar rascunho</button>
+          <button class="auth-btn auth-btn-outline" id="resetAuth" type="button">Limpar formulário</button>
+          <a id="bottomPdfAuthLink" class="auth-btn auth-btn-outline" hidden target="_blank" rel="noopener">Abrir PDF ↗</a>
+        </div>
+        <p class="auth-muted">O PDF é destinado à conferência e assinatura das partes. Nenhum documento é marcado como assinado automaticamente.</p>
+      </form>
+      <p id="authFeedback" class="auth-feedback" role="status" aria-live="polite"></p>
+    </section>
+  </div>
+</main>
+<script src="js/autorizacoes.js"></script>
+</body>
+</html>
