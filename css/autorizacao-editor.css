@@ -65,6 +65,25 @@ background:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,#8
  .sheet-paper{padding:15px;min-height:890px}
  .auth-edit-hint{font-size:10px}
 }
+
+/* No celular, edite os campos sem precisar arrastar o documento lateralmente.
+   A impressão permanece no formato A4 de duas colunas. */
+@media screen and (max-width:610px){
+ .sheet-paper{width:100%;min-width:0;min-height:0;padding:12px}
+ .sheet-header{display:grid;justify-items:center;gap:8px;padding:12px 7px;min-height:0}
+ .sheet-header img{width:min(270px,95%);max-width:95%;height:auto}
+ .sheet-title{max-width:100%;width:100%;font-size:17px}
+ .sheet-row,.sheet-row.sheet-one,.sheet-row.sheet-three,.sheet-row.sheet-four{grid-template-columns:1fr}
+ .sheet-table>.sheet-row{border-bottom:0}
+ .sheet-field{min-height:42px;border-right:0;border-bottom:1px solid #8c8c8c}
+ .sheet-field span,.sheet-row.sheet-four .sheet-field span{font-size:13px}
+ .sheet-field input,.sheet-field select,.sheet-row.sheet-four .sheet-field input{font-size:14px}
+ .sheet-main-terms .sheet-row{grid-template-columns:1fr}
+ .sheet-signatures{grid-template-columns:1fr}
+ .sheet-paper h3{font-size:17px}
+ .sheet-legal textarea{font-size:13px}
+}
+
 @page{size:A4;margin:9mm}
 @media print{
  html,body{background:#fff!important;margin:0!important;padding:0!important}
