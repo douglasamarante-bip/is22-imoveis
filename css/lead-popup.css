@@ -1,0 +1,133 @@
+/* Casal Corretores | captacao de leads com consentimento */
+.cc-welcome[hidden]{display:none!important}
+.cc-welcome{
+  position:fixed;inset:0;z-index:10050;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  font-family:Montserrat,Inter,Arial,sans-serif
+}
+.cc-welcome *{box-sizing:border-box}
+.cc-welcome-backdrop{
+  position:absolute;inset:0;background:rgba(3,22,12,.67);
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)
+}
+.cc-welcome-dialog{
+  position:relative;z-index:1;display:grid;
+  grid-template-columns:minmax(250px,.9fr) minmax(330px,1.1fr);
+  width:min(800px,100%);max-height:min(90dvh,740px);
+  background:#fff;border-radius:22px;overflow:auto;
+  box-shadow:0 35px 90px rgba(0,32,14,.35)
+}
+.cc-welcome-art{
+  position:relative;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(150deg,#0A3920 0%,#166B36 100%);
+  color:#fff;padding:42px 35px;min-height:460px;overflow:hidden
+}
+.cc-welcome-art:after{
+  content:"";position:absolute;right:-100px;bottom:-145px;width:320px;height:320px;
+  border:1px solid rgba(255,255,255,.18);border-radius:50%;
+  box-shadow:0 0 0 60px rgba(255,255,255,.04),0 0 0 120px rgba(255,255,255,.04);
+  pointer-events:none
+}
+.cc-welcome-eyebrow{
+  position:relative;z-index:1;font-size:10px;line-height:1.4;
+  font-weight:800;letter-spacing:2.3px;color:#F6C48B;text-transform:uppercase
+}
+.cc-welcome-art h2{
+  position:relative;z-index:1;font-family:"Playfair Display",Georgia,serif;
+  font-size:clamp(30px,3.4vw,40px);line-height:1.1;
+  letter-spacing:-.035em;margin:22px 0 16px;color:#fff
+}
+.cc-welcome-art h2 span{color:#FFC895}
+.cc-welcome-art p{
+  position:relative;z-index:1;color:rgba(255,255,255,.85);
+  line-height:1.65;font-size:13px;margin:0;max-width:330px
+}
+.cc-welcome-art small{
+  position:relative;z-index:1;font-size:10px;margin-top:30px;
+  font-weight:700;color:#F8DBBB
+}
+.cc-welcome-main{
+  position:relative;min-width:0;padding:43px 40px 36px
+}
+.cc-welcome-close{
+  position:absolute;right:17px;top:15px;
+  border:0;background:#F3F6F2;color:#22543A;
+  font-size:23px;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer
+}
+.cc-welcome-close:hover{background:#E2EDE2}
+.cc-welcome-main h3{
+  font-family:"Playfair Display",Georgia,serif;
+  color:#15472B;font-size:29px;line-height:1.12;
+  letter-spacing:-.035em;margin:0 36px 9px 0
+}
+.cc-welcome-intro{
+  font-size:12px;line-height:1.6;color:#617268;
+  margin:0 0 21px
+}
+.cc-welcome-form{display:grid;gap:14px}
+.cc-welcome-field{display:grid;gap:7px;font-weight:700;color:#28523B;font-size:11px}
+.cc-welcome-field input{
+  width:100%;height:49px;border:1px solid #C9D9CD;border-radius:11px;
+  background:#fff;color:#183B2A!important;-webkit-text-fill-color:#183B2A;
+  padding:0 13px;font-size:15px;font-weight:500;
+  font-family:inherit;opacity:1
+}
+.cc-welcome-field input::placeholder{color:#86988A;opacity:1}
+.cc-welcome-field input:focus{outline:2px solid #F26A08;outline-offset:2px}
+.cc-welcome-consent{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:10.5px;line-height:1.55;font-weight:500;color:#53695A;
+  cursor:pointer
+}
+.cc-welcome-consent input{
+  flex:0 0 17px;width:17px;height:17px;margin:2px 0 0;accent-color:#156C37
+}
+.cc-welcome-submit{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:50px;border:0;border-radius:11px;
+  background:#F26A08;color:#fff;cursor:pointer;
+  font:800 13px Montserrat,Inter,Arial,sans-serif;
+  transition:background .15s,transform .15s
+}
+.cc-welcome-submit:hover{background:#DA5F07;transform:translateY(-1px)}
+.cc-welcome-submit:disabled{opacity:.7;cursor:wait;transform:none}
+.cc-welcome-skip{
+  width:100%;min-height:35px;border:0;background:transparent;color:#6F8074;
+  font:600 11px Montserrat,Inter,Arial,sans-serif;cursor:pointer
+}
+.cc-welcome-skip:hover{text-decoration:underline}
+.cc-welcome-privacy{font-size:10px;color:#627567;line-height:1.6}
+.cc-welcome-privacy summary{color:#27573B;cursor:pointer;font-weight:700}
+.cc-welcome-privacy p{margin:8px 0 0}
+.cc-welcome-error{font-size:11px;line-height:1.4;color:#A72D20;font-weight:700;min-height:0;margin:0}
+.cc-welcome-error:empty{display:none}
+.cc-welcome-success{color:#1A663B;font-size:13px;line-height:1.6;font-weight:600}
+body.cc-welcome-visible{overflow:hidden!important}
+@media(max-width:700px){
+  .cc-welcome{padding:10px;align-items:center}
+  .cc-welcome-dialog{
+    display:flex;flex-direction:column;width:min(420px,100%);
+    max-height:calc(100dvh - 20px);border-radius:17px
+  }
+  .cc-welcome-art{min-height:0;padding:20px 23px 18px}
+  .cc-welcome-art h2{font-size:27px;margin:8px 0 8px;max-width:290px}
+  .cc-welcome-art p{font-size:11px;line-height:1.45}
+  .cc-welcome-art small{display:none}
+  .cc-welcome-main{padding:25px 23px 16px}
+  .cc-welcome-main h3{font-size:23px;margin-right:22px}
+  .cc-welcome-intro{font-size:11px;margin:0 0 14px}
+  .cc-welcome-form{gap:11px}
+  .cc-welcome-field input{height:45px;font-size:16px}
+  .cc-welcome-submit{height:45px}
+  .cc-welcome-close{right:9px;top:9px;width:32px;height:32px}
+  .cc-welcome-privacy{font-size:9px}
+}
+@media(max-height:590px) and (max-width:700px){
+  .cc-welcome-art{padding:13px 18px}
+  .cc-welcome-art h2{font-size:22px}
+  .cc-welcome-main{padding:15px 19px}
+  .cc-welcome-dialog{max-height:calc(100dvh - 12px)}
+}
+@media(prefers-reduced-motion:reduce){.cc-welcome-submit{transition:none}}
