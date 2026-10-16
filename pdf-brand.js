@@ -40,19 +40,35 @@ function drawBrand(doc,opts={}){
 function drawAuthorizationBrand(doc,opts={}){
  const fs=require('fs'),path=require('path');
  const SVGtoPDF=require('svg-to-pdfkit');
- const x=Number(opts.x??44),y=Number(opts.y??26);
- const width=Number(opts.width??245);
- const svg=fs.readFileSync(path.join(__dirname,'assets','lilian-douglas-logo-verde-laranja.svg'),'utf8');
- const height=width*190/800;
+ const x=Number(opts.x??44),y=Number(opts.y??30);
+ const outerWidth=Number(opts.outerWidth??(doc.page.width-88));
+ const outerHeight=Number(opts.outerHeight??95);
+ const leftWidth=Number(opts.leftWidth??229);
+ // Mesma versão branca usada no rodapé do site; a tarja verde mantém
+ // a leitura das letras brancas no fundo branco da ficha impressa.
+ const svg=fs.readFileSync(path.join(__dirname,'assets','lilian-douglas-logo-escura.svg'),'utf8');
+ const bx=x+6,by=y+6,bw=leftWidth,bh=outerHeight-12;
  doc.save();
- SVGtoPDF(doc,svg,x,y,{
-   width,height,
+ doc.roundedRect(x,y,outerWidth,outerHeight,9).lineWidth(1.05).strokeColor('#203A29').stroke();
+ doc.roundedRect(bx,by,bw,bh,7).fillColor('#12552D').fill();
+ const logoWidth=bw-12;
+ const logoHeight=logoWidth*190/800;
+ const ly=by+(bh-logoHeight)/2;
+ SVGtoPDF(doc,svg,bx+6,ly,{
+   width:logoWidth,height:logoHeight,
    preserveAspectRatio:'xMinYMid meet',
    assumePt:false,
-   fontCallback:(family,bold,italic,options)=>'Helvetica'
+   fontCallback:()=> 'Helvetica'
  });
+ const headingX=bx+bw+7;
+ const headingWidth=outerWidth-(headingX-x)-10;
+ doc.font('Times-Bold').fillColor('#173425').fontSize(12.1)
+   .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS',headingX,y+29,{width:headingWidth,align:'center',lineBreak:false});
+ doc.font('Times-Bold').fillColor('#173425').fontSize(12.1)
+   .text('URBANOS E RURAIS',headingX,y+50,{width:headingWidth,align:'center',lineBreak:false});
  doc.restore();
- doc.y=Math.max(doc.y,y+height+18);
+ doc.x=x;
+ doc.y=y+outerHeight+18;
  return doc.y;
 }
 
