@@ -1,0 +1,94 @@
+
+/* Editor da própria ficha de autorização — apenas a página de autorizações */
+.auth-visual-editor{margin:8px 0 19px}
+.auth-visual-editor [hidden],.auth-detailed-fields[hidden]{display:none!important}
+.auth-mode-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 10px}
+.auth-mode-tabs{display:inline-flex;border:1px solid #c8dacd;background:#f2f7f3;padding:4px;border-radius:11px;gap:3px}
+.auth-mode{background:transparent;color:#3c644a;border:0;padding:9px 12px;border-radius:8px;cursor:pointer;font:800 11px Montserrat,Arial,sans-serif}
+.auth-mode.active{background:#16642F;color:white;box-shadow:0 3px 9px #1c683b20}
+.auth-mode:focus-visible{outline:3px solid #f26a08;outline-offset:2px}
+.auth-edit-hint{background:#edfaed;border:1px solid #c8e2cb;border-radius:9px;color:#29583b;padding:10px 12px;line-height:1.55;font-size:11px;margin:0 0 12px}
+.sheet-scroll{background:#e9edea;border:1px solid #d7dfd8;padding:18px 12px;overflow-x:auto;border-radius:13px}
+.sheet-paper{width:735px;min-height:990px;margin:auto;padding:20px 23px 16px;background:#fff;color:#171717;box-shadow:0 8px 24px #1d3c2730;font-family:"Times New Roman",Times,serif;font-size:13px;line-height:1.4}
+.sheet-paper *{box-sizing:border-box}
+.sheet-header{border:2px solid #1b1b1b;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;min-height:112px;margin-bottom:13px}
+.sheet-header img{width:46%;max-width:322px;height:auto;object-fit:contain;display:block}
+.sheet-title{flex:1;max-width:52%;border:0;resize:none;overflow:hidden;background:transparent;color:#121212;font:800 20px/1.25 "Times New Roman",Times,serif;text-align:center;padding:4px 0;outline-offset:2px;white-space:pre-wrap}
+.sheet-legal textarea{display:block;width:100%;margin:0 0 8px;padding:8px 7px;min-height:102px;resize:vertical;background:transparent;color:#202020;border:1px dashed transparent;font:14px/1.4 "Times New Roman",Times,serif;text-align:justify}
+.sheet-legal textarea:hover,.sheet-legal textarea:focus{border-color:#9dcaa8;background:#fbfffb}
+.sheet-main-terms{border-top:1px solid #3c3c3c;margin:9px 0 13px;padding-top:8px}
+.sheet-main-terms .sheet-row{border:0;padding:0;gap:8px;min-height:30px}
+.sheet-main-terms .sheet-field{border:0;gap:5px;padding:2px 0}
+.sheet-main-terms .sheet-field input{border-bottom:1px solid #838383;border-radius:0}
+.sheet-paper h3{font:700 19px/1.25 "Times New Roman",Times,serif;text-align:center;margin:13px 0 8px;color:#111}
+.sheet-table{border:1px solid #303030}
+.sheet-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-height:33px}
+.sheet-row.sheet-one{grid-template-columns:1fr}
+.sheet-row.sheet-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sheet-row.sheet-four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sheet-table>.sheet-row{border-bottom:1px solid #484848}
+.sheet-table>.sheet-row:last-of-type{border-bottom:0}
+.sheet-field{min-width:0;display:flex;align-items:center;gap:6px;padding:3px 7px;border-right:1px solid #484848;min-height:32px;white-space:nowrap}
+.sheet-field:last-child{border-right:0}
+.sheet-field span{color:#121212;font:14px/1.2 "Times New Roman",Times,serif;white-space:normal;flex-shrink:0}
+.sheet-field input,.sheet-field select{border:1px solid transparent;background:transparent;min-width:0;flex:1 1 auto;width:30px;color:#1c1c1c;padding:3px 2px;border-radius:3px;font:13px/1.2 "Times New Roman",Times,serif;height:25px;outline-offset:0;-webkit-text-fill-color:#1c1c1c}
+.sheet-field input:hover,.sheet-field select:hover{background:#f1f8f1;border-color:#c8e1cd}
+.sheet-field input:focus,.sheet-field select:focus{outline:2px solid #f26a08;background:#fffdf7}
+.sheet-row.sheet-four .sheet-field{gap:3px;padding:3px 4px}
+.sheet-row.sheet-four .sheet-field span{font-size:11px}
+.sheet-row.sheet-four .sheet-field input{font-size:11px}
+.sheet-note{font-size:13px;margin:7px 0 8px}
+.sheet-observations{display:grid;gap:3px;padding:7px 9px 4px}
+.sheet-observations>span{font-size:11px;color:#565656;font-style:italic}
+.sheet-observations textarea{display:block;min-height:83px;resize:vertical;width:100%;border:1px solid transparent;outline-offset:0;color:#222;font:13px/1.5 "Times New Roman",Times,serif;
+background:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,#898989 27px,#898989 28px);padding:1px 4px}
+.sheet-observations textarea:hover,.sheet-observations textarea:focus{background-color:#f7fcf7;outline:2px solid #f26a08}
+.sheet-date{margin-top:22px}
+.sheet-date .sheet-row,.sheet-signatory .sheet-row{border:0;gap:12px}
+.sheet-date .sheet-field,.sheet-signatory .sheet-field{border:0}
+.sheet-date .sheet-field input,.sheet-signatory .sheet-field input{border-bottom:1px solid #999;border-radius:0}
+.sheet-signatory{margin:11px 0 0}
+.sheet-signatures{display:grid;grid-template-columns:1fr 1fr;gap:10px 19px;text-align:center;font-size:13px;line-height:1.4;padding:13px 6px 5px}
+.sheet-signatures>div{min-width:0}
+.sheet-signatures small{font-size:11px;display:block;margin-top:2px}
+.sheet-signatures .sheet-witness .sheet-field{white-space:normal}
+.sheet-signatures .sheet-witness .sheet-field span{font-size:11px}
+.sheet-unsigned{font:10px/1.3 Arial,sans-serif;text-align:center;color:#666;margin:16px 0 0}
+.sheet-scroll input::placeholder,.sheet-scroll textarea::placeholder{color:#8e9d92}
+@media(max-width:950px){.sheet-scroll{padding:12px;}.sheet-paper{margin-left:0;margin-right:0}}
+@media(max-width:610px){
+ .auth-mode-toolbar{align-items:stretch}
+ .auth-mode-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .auth-mode{font-size:10px;padding:10px 3px}
+ .auth-mode-toolbar>.auth-btn{width:100%}
+ .sheet-scroll{padding:8px;margin-left:-5px;margin-right:-5px;scrollbar-color:#8caf97 #e9edea}
+ .sheet-paper{padding:15px;min-height:890px}
+ .auth-edit-hint{font-size:10px}
+}
+@page{size:A4;margin:9mm}
+@media print{
+ html,body{background:#fff!important;margin:0!important;padding:0!important}
+ body *{visibility:hidden!important}
+ .auth-visual-editor,.auth-visual-editor .sheet-scroll,.auth-visual-editor .sheet-paper,.auth-visual-editor .sheet-paper *{visibility:visible!important}
+ .auth-visual-editor{position:absolute!important;top:0!important;left:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
+ .auth-mode-toolbar,.auth-edit-hint{display:none!important}
+ .sheet-scroll{display:block!important;overflow:visible!important;padding:0!important;margin:0!important;border:0!important;background:#fff!important;width:100%!important}
+ .sheet-paper{width:100%!important;max-width:none!important;min-height:0!important;padding:0!important;border:0!important;box-shadow:none!important;font-size:10pt!important}
+ .sheet-header{min-height:86px!important;padding:8px!important;margin-bottom:8px!important}
+ .sheet-header img{width:44%!important}
+ .sheet-title{font-size:15px!important}
+ .sheet-paper h3{font-size:13px!important;margin:7px 0 4px!important}
+ .sheet-legal textarea{font-size:10px!important;min-height:73px!important}
+ .sheet-row,.sheet-field{min-height:25px!important}
+ .sheet-field span{font-size:10px!important}
+ .sheet-field input,.sheet-field select{font-size:10px!important;height:21px!important}
+ .sheet-main-terms{margin:4px 0 5px!important;padding-top:3px!important}
+ .sheet-note{margin:4px 0!important;font-size:10px!important}
+ .sheet-observations textarea{min-height:60px!important}
+ .sheet-date{margin-top:11px!important}
+ .sheet-signatures{gap:7px 12px!important;padding:7px 5px!important;font-size:11px!important}
+ .sheet-unsigned{margin:8px 0 0!important;font-size:8px!important}
+ .sheet-header,.sheet-row,.sheet-table,.sheet-signatures{break-inside:avoid;page-break-inside:avoid}
+ .sheet-scroll textarea{resize:none!important;border:0!important}
+ .sheet-scroll input,.sheet-scroll select{border-color:transparent!important;outline:none!important}
+}
