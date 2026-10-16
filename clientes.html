@@ -43,8 +43,35 @@ input[type=text]{width:min(490px,100%)}
 
 header a>img.partner-logo{background:#fff!important;padding:2px!important;border-radius:4px!important;box-sizing:border-box!important;display:block!important;width:90px!important;height:23px!important;object-fit:contain!important;object-position:left!important;margin:3px 0 0 3px}
 @media print{header a>img.partner-logo{width:74px!important;height:20px!important}}
-</style></head><body>
-<header><a href="index.html"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"><img class="partner-logo" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda"></a><nav><a href="admin.html">← Painel</a><a href="ficha-cliente.html">+ Nova ficha</a><a href="registros.html">Visitas e propostas</a></nav></header>
+</style><link rel="stylesheet" href="css/clientes-menu.css"></head><body class="client-layout">
+<aside class="client-sidebar" id="clientSidebar" aria-label="Navegação administrativa">
+  <a href="admin.html" class="client-sidebar-brand">
+    <img src="assets/lilian-douglas-simbolo.svg" alt="">
+    <span><b>Lilian e Douglas</b><small>Conectando você ao imóvel certo</small></span>
+  </a>
+  <nav class="client-side-nav" aria-label="Menu do painel">
+    <a href="admin.html?panel=dashboard"><span class="nav-icon">⌂</span>Dashboard</a>
+    <a href="admin.html?panel=imoveis"><span class="nav-icon">⌂</span>Meus imóveis</a>
+    <a href="admin.html?panel=importador"><span class="nav-icon">⇩</span>Importar anúncio</a>
+    <a href="admin.html?panel=leads"><span class="nav-icon">◎</span>Leads</a>
+    <a href="admin.html?panel=clientes"><span class="nav-icon">♙</span>Clientes</a>
+    <a href="clientes.html" class="active" aria-current="page"><span class="nav-icon">▤</span>Fichas de clientes</a>
+    <a href="admin.html?panel=agenda"><span class="nav-icon">▣</span>Agendamentos</a>
+    <a href="admin.html?panel=visitas"><span class="nav-icon">▤</span>Visitas e propostas</a>
+    <a href="autorizacao-venda.html"><span class="nav-icon">▤</span>Autorizações de venda</a>
+    <a href="admin.html?panel=mensagens"><span class="nav-icon">✉</span>Mensagens</a>
+    <a href="admin.html?panel=relatorios"><span class="nav-icon">▥</span>Relatórios</a>
+    <a href="admin.html?panel=captacoes"><span class="nav-icon">⌂</span>Captações</a>
+    <a href="admin.html?panel=acessos"><span class="nav-icon">♙</span>Acessos</a>
+    <a href="admin.html?panel=config"><span class="nav-icon">✦</span>Editor do site</a>
+  </nav>
+  <div class="client-sidebar-bottom"><strong id="clientUserName">Equipe Casal</strong>
+    <span>Administrador</span><a href="index.html">↗ Ver site público</a>
+    <button id="clientSidebarLogout" type="button">Sair do painel</button>
+  </div>
+</aside>
+<div class="client-shade" id="clientShade" aria-hidden="true"></div>
+<header><button type="button" id="clientMenuBtn" class="client-menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="clientSidebar">☰</button><a href="index.html"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"><img class="partner-logo" src="assets/bonanza-mini.svg" alt="Bonanza Imóveis Ltda"></a><nav><a href="admin.html">← Painel</a><a href="ficha-cliente.html">+ Nova ficha</a><a href="registros.html">Visitas e propostas</a></nav></header>
 <main>
 <section class="card"><div class="row"><div><h1>Fichas de clientes</h1><p>Cadastros salvos no banco de dados com acesso administrativo.</p></div><a class="btn gold" href="ficha-cliente.html">+ Nova ficha</a></div>
 <div class="row"><input type="text" id="q" placeholder="Buscar por cliente, telefone, corretor ou código" aria-label="Buscar cliente"><button id="refresh">Atualizar</button></div>
@@ -164,4 +191,4 @@ $('upload').onclick=async()=>{
 };
 refresh();
 })();
-</script></body></html>
+</script><script src="js/auth.js"></script><script src="js/clientes-menu.js"></script></body></html>
