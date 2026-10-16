@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/autorizacoes.css">
+<link rel="stylesheet" href="css/autorizacao-editor.css">
 <script src="js/auth.js"></script>
 <script>if(!IS22Auth.requireAuth())throw new Error('Sessão necessária');</script>
 </head>
@@ -29,7 +30,7 @@
   <div class="auth-heading">
     <div><span class="auth-kicker">DOCUMENTOS DA CORRETORA</span>
       <h1>Autorização para venda de imóveis</h1>
-      <p>Modelo para imóveis urbanos e rurais, baseado no documento enviado. Preencha, salve e gere o PDF para conferência e assinatura.</p>
+      <p>Modelo para imóveis urbanos e rurais, baseado no documento enviado. Edite diretamente na ficha, salve no sistema e imprima para conferência e assinatura.</p>
     </div>
     <button id="newAuthorization" class="auth-btn auth-btn-orange" type="button">+ Nova autorização</button>
   </div>
@@ -47,7 +48,7 @@
       <div class="auth-card-header auth-form-top">
         <div><span id="authBadge" class="auth-badge">Novo rascunho</span>
           <h2 id="formHeading">Autorização para venda de imóveis urbanos e rurais</h2>
-          <p>Os campos refletem o modelo impresso, mas não geram assinatura nem autorização automática.</p>
+          <p>Agora você pode editar diretamente na ficha abaixo. O documento permanece como rascunho até ser revisado e assinado.</p>
         </div>
         <a id="pdfAuthLink" class="auth-btn auth-btn-outline" hidden target="_blank" rel="noopener">Visualizar PDF ↗</a>
       </div>
@@ -63,7 +64,7 @@
         </fieldset>
         <fieldset><legend>02 · Descrição do imóvel</legend>
           <div class="auth-form-grid">
-            <label class="span-2">Imóvel <input name="imovel" maxlength="500" placeholder="Casa, apartamento, sítio, lote, fazenda..." required></label>
+            <label class="span-2">Imóvel <input name="imovel" maxlength="500" placeholder="Casa, apartamento, sítio, lote, fazenda..."></label>
             <label class="span-2">Endereço do imóvel<input name="endereco_imovel" maxlength="500" placeholder="Rua, número, bairro, referência"></label>
             <label class="span-2">Município<input name="municipio_imovel" maxlength="500"></label>
             <label>Área total<input name="area_total" maxlength="500" placeholder="Ex.: 1.000 m²"></label>
@@ -77,7 +78,7 @@
         </fieldset>
         <fieldset><legend>03 · Qualificação do(s) proprietário(s)</legend>
           <div class="auth-form-grid">
-            <label class="span-2">Nome completo do(a) proprietário(a)<input name="proprietario" maxlength="500" autocomplete="name" required></label>
+            <label class="span-2">Nome completo do(a) proprietário(a)<input name="proprietario" maxlength="500" autocomplete="name"></label>
             <label>CPF<input name="cpf" maxlength="500" inputmode="numeric"></label>
             <label>RG<input name="rg" maxlength="500"></label>
             <label>Profissão<input name="profissao" maxlength="500"></label>
@@ -116,6 +117,7 @@
     </section>
   </div>
 </main>
+<script src="js/autorizacao-editor.js"></script>
 <script src="js/autorizacoes.js"></script>
 </body>
 </html>
