@@ -115,7 +115,14 @@ function syncToDetails(){
  if(detailed.has('aceita_propostas'))detailed.get('aceita_propostas').value=proposal.checked?'Sim':'Não';
 }
 visualInputs.forEach(input=>{
- const update=()=>{const other=detailed.get(input.dataset.sheetField);if(other)other.value=input.value;resize(input)};
+ const update=()=>{
+  const key=input.dataset.sheetField;
+  const other=detailed.get(key);
+  if(other)other.value=input.value;
+  // Empresa e CRECI também aparecem no fechamento do documento: mantê-los idênticos.
+  visualInputs.filter(x=>x!==input&&x.dataset.sheetField===key).forEach(x=>{x.value=input.value;resize(x)});
+  resize(input);
+ };
  input.addEventListener('input',update);
  input.addEventListener('change',update);
 });
