@@ -25,7 +25,7 @@ const FIELDS=[
 ];
 const DEFAULTS={
  titulo_documento:'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS\nURBANOS E RURAIS',
- texto_autorizacao:"Pelo presente instrumento particular, o(s) proprietário(s) abaixo qualificado(s) autoriza(m) a empresa ou profissional identificado(a) neste documento a divulgar e promover a venda do imóvel descrito, inclusive por anúncios e visitas, pelo prazo e comissão acordados. Eventual renovação deverá ser expressamente acertada pelas partes.",
+ texto_autorizacao:"Pelo presente instrumento particular, outorgo(amos) à empresa ou profissional acima identificado(a) autorização para promover a venda do imóvel de minha propriedade, adiante identificado, com liberdade para anúncios em qualquer veículo de comunicação e visitas ao mesmo. A presente autorização é dada pelo período de meses indicado a contar da data de sua assinatura, e se prorrogará automaticamente por prazo idêntico, sempre que não houver manifestação escrita em contrário, findando-se, para os efeitos legais, somente com a ocorrência de manifestação escrita das partes antes de sua prorrogação.",
  empresa_autorizada:'',creci_empresa:'',prazo_meses:'',comissao:'',
  aceita_propostas:'Sim',documentacao:'Escritura',local_assinatura:'Conselheiro Lafaiete - MG'
 };
