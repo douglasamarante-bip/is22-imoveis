@@ -5,7 +5,7 @@ const path=require('path');
 const crypto=require('crypto');
 const {DatabaseSync}=require('node:sqlite');
 const PDFDocument=require('pdfkit');
-const {drawBrand}=require('./pdf-brand');
+const {drawAuthorizationBrand}=require('./pdf-brand');
 
 const ROOT=path.resolve(process.env.DATA_DIR||process.env.UPLOAD_DIR||path.join(__dirname,'data'));
 fs.mkdirSync(ROOT,{recursive:true});
@@ -98,7 +98,7 @@ async function outputPdf(res,row){
  });
  pdf.pipe(res);
  // Página 1: identificação, descrição e condições
- drawBrand(pdf,{x:44,y:18});
+ drawAuthorizationBrand(pdf,{x:44,y:25,width:235});
  pdf.moveDown(.05);
  pdf.font('Helvetica-Bold').fontSize(15).fillColor('#16642F')
   .text('AUTORIZAÇÃO PARA VENDA DE IMÓVEIS', {align:'center'});
