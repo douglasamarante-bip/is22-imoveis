@@ -34,4 +34,26 @@ function drawBrand(doc,opts={}){
  doc.y=y+133;
  return doc.y;
 }
-module.exports={drawBrand};
+
+/* Autorização de venda: usa a logo oficial do site (não redesenha a marca).
+   As fichas de cliente e visitas continuam usando o cabeçalho já existente. */
+function drawAuthorizationBrand(doc,opts={}){
+ const fs=require('fs'),path=require('path');
+ const SVGtoPDF=require('svg-to-pdfkit');
+ const x=Number(opts.x??44),y=Number(opts.y??26);
+ const width=Number(opts.width??245);
+ const svg=fs.readFileSync(path.join(__dirname,'assets','lilian-douglas-logo-verde-laranja.svg'),'utf8');
+ const height=width*190/800;
+ doc.save();
+ SVGtoPDF(doc,svg,x,y,{
+   width,height,
+   preserveAspectRatio:'xMinYMid meet',
+   assumePt:false,
+   fontCallback:(family,bold,italic,options)=>'Helvetica'
+ });
+ doc.restore();
+ doc.y=Math.max(doc.y,y+height+18);
+ return doc.y;
+}
+
+module.exports={drawBrand,drawAuthorizationBrand};
