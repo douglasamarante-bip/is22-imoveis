@@ -62,8 +62,8 @@ function drawAuthorizationBrand(doc,opts={}){
  });
  const headingX=x+leftWidth+8;
  const headingWidth=outerWidth-leftWidth-16;
- const heading=String(opts.title||'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS\\nURBANOS E RURAIS')
-   .replace(/\\r/g,'').slice(0,130).split('\\n');
+ const heading=String(opts.title||['AUTORIZAÇÃO PARA VENDA DE IMÓVEIS','URBANOS E RURAIS'].join(String.fromCharCode(10)))
+   .replaceAll(String.fromCharCode(13),'').slice(0,130).split(String.fromCharCode(10));
  const first=heading[0]||'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS';
  const second=heading.slice(1).join(' ').trim();
  const headingSize=first.length>38?10:12.1;
