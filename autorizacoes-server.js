@@ -57,10 +57,12 @@ function view(row){
 function find(id){return db.prepare('SELECT * FROM autorizacoes WHERE id=?').get(id)}
 function text(v){return String(v||'Não informado')}
 function pdfPage(pdf){
- const width=pdf.page.width;
+ const previousY=pdf.y,previousX=pdf.x,width=pdf.page.width;
  pdf.font('Helvetica').fontSize(8).fillColor('#728076')
    .text('Casal Corretores  |  Modelo para conferência jurídica e assinatura manuscrita',43,pdf.page.height-39,
      {width:width-86,align:'center'});
+ pdf.x=previousX;
+ pdf.y=previousY;
 }
 function section(pdf,label){
  pdf.moveDown(0.6);
@@ -156,7 +158,6 @@ async function outputPdf(res,row){
  pdf.font('Helvetica-Oblique').fontSize(8).fillColor('#6C786D')
   .text('Documento gerado sem assinatura. A autorização só deve ser tratada como formalizada após revisão e assinatura das partes.',
     44,y+49,{width:510,align:'left'});
- pdfPage(pdf);
  pdf.end();return true;
 }
 async function route(req,res,url,{isAdmin=false}={}){
