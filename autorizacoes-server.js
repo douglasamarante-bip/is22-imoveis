@@ -14,6 +14,7 @@ db.exec('PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;');
 db.exec('CREATE TABLE IF NOT EXISTS autorizacoes (id TEXT PRIMARY KEY, data TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)');
 const now=()=>new Date().toISOString();
 const FIELDS=[
+ 'titulo_documento','texto_autorizacao',
  'empresa_autorizada','creci_empresa','prazo_meses','comissao','imovel','endereco_imovel',
  'municipio_imovel','area_total','area_construida','documentacao','matricula','comarca',
  'valor_venda','aceita_propostas','proprietario','cpf','rg','profissao','nascimento',
@@ -22,12 +23,16 @@ const FIELDS=[
  'data_assinatura','corretor_responsavel','creci_corretor','testemunha1','testemunha2',
  'observacoes'
 ];
-const DEFAULTS={empresa_autorizada:'',creci_empresa:'',prazo_meses:'',comissao:'',
- aceita_propostas:'Sim',documentacao:'Escritura',local_assinatura:'Conselheiro Lafaiete - MG'};
+const DEFAULTS={
+ titulo_documento:'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS\nURBANOS E RURAIS',
+ texto_autorizacao:"Pelo presente instrumento particular, o(s) proprietário(s) abaixo qualificado(s) autoriza(m) a empresa ou profissional identificado(a) neste documento a divulgar e promover a venda do imóvel descrito, inclusive por anúncios e visitas, pelo prazo e comissão acordados. Eventual renovação deverá ser expressamente acertada pelas partes.",
+ empresa_autorizada:'',creci_empresa:'',prazo_meses:'',comissao:'',
+ aceita_propostas:'Sim',documentacao:'Escritura',local_assinatura:'Conselheiro Lafaiete - MG'
+};
 function clean(input){
  const d={...DEFAULTS};
  for(const k of FIELDS){
-  const max=k==='observacoes'?2500:500;
+  const max=k==='texto_autorizacao'?4000:k==='titulo_documento'?130:k==='observacoes'?2500:500;
   d[k]=String(input?.[k]??DEFAULTS[k]??'').trim().slice(0,max);
  }
  if(!['Escritura','Contrato','Outro'].includes(d.documentacao))d.documentacao='Outro';
@@ -118,14 +123,14 @@ async function outputPdf(res,row){
  pdf.initForm();
  pdf.pipe(res);
  // Cabeçalho: logo branca idêntica à do rodapé em faixa verde e título ao lado.
- drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:95,leftWidth:229});
+ drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:95,leftWidth:229,title:d.titulo_documento||DEFAULTS.titulo_documento});
  pdf.font('Helvetica').fontSize(8.7).fillColor('#314136')
   .text('Identificação do documento: '+row.id+'  |  Emitido em '+new Date().toLocaleDateString('pt-BR'),{align:'center'});
  section(pdf,'1. CONDIÇÕES DA AUTORIZAÇÃO');
  line(pdf,'Empresa / profissional autorizado',d.empresa_autorizada);
  pair(pdf,'CRECI da empresa',d.creci_empresa,'Prazo (meses)',d.prazo_meses);
  line(pdf,'Comissão de intermediação acordada',d.comissao);
- const clause='Por este instrumento, o(s) proprietário(s) identificado(s) autoriza(m) o profissional ou empresa acima indicado(a) a divulgar o imóvel descrito e promover atendimentos e visitas para sua venda, pelo prazo informado, contado da assinatura. As condições de venda, a remuneração e eventual renovação dependerão de acordo entre as partes e da legislação aplicável. Este documento é um modelo para revisão e assinatura pelas partes.';
+ const clause=String(d.texto_autorizacao||DEFAULTS.texto_autorizacao).slice(0,4000);
  pdf.moveDown(.3);
  pdf.font('Helvetica').fontSize(9).fillColor('#2D3D32').text(clause,{align:'justify',lineGap:3});
  section(pdf,'2. DESCRIÇÃO DO IMÓVEL');
