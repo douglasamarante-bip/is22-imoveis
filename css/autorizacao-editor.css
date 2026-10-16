@@ -1,113 +1,131 @@
-
-/* Editor da própria ficha de autorização — apenas a página de autorizações */
-.auth-visual-editor{margin:8px 0 19px}
+/* Autorização de venda — editor fiel à ficha enviada, sem imagem fixa.
+   Os espaços editáveis pertencem ao documento e mantêm a identidade Lilian e Douglas. */
+.auth-visual-editor{margin:10px 0 20px}
 .auth-visual-editor [hidden],.auth-detailed-fields[hidden]{display:none!important}
-.auth-mode-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 10px}
-.auth-mode-tabs{display:inline-flex;border:1px solid #c8dacd;background:#f2f7f3;padding:4px;border-radius:11px;gap:3px}
-.auth-mode{background:transparent;color:#3c644a;border:0;padding:9px 12px;border-radius:8px;cursor:pointer;font:800 11px Montserrat,Arial,sans-serif}
-.auth-mode.active{background:#16642F;color:white;box-shadow:0 3px 9px #1c683b20}
-.auth-mode:focus-visible{outline:3px solid #f26a08;outline-offset:2px}
-.auth-edit-hint{background:#edfaed;border:1px solid #c8e2cb;border-radius:9px;color:#29583b;padding:10px 12px;line-height:1.55;font-size:11px;margin:0 0 12px}
-.sheet-scroll{background:#e9edea;border:1px solid #d7dfd8;padding:18px 12px;overflow-x:auto;border-radius:13px}
-.sheet-paper{width:735px;min-height:990px;margin:auto;padding:20px 23px 16px;background:#fff;color:#171717;box-shadow:0 8px 24px #1d3c2730;font-family:"Times New Roman",Times,serif;font-size:13px;line-height:1.4}
-.sheet-paper *{box-sizing:border-box}
-.sheet-header{border:2px solid #1b1b1b;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;min-height:112px;margin-bottom:13px}
-.sheet-header img{width:46%;max-width:322px;height:auto;object-fit:contain;display:block}
-.sheet-title{flex:1;max-width:52%;border:0;resize:none;overflow:hidden;background:transparent;color:#121212;font:800 20px/1.25 "Times New Roman",Times,serif;text-align:center;padding:4px 0;outline-offset:2px;white-space:pre-wrap}
-.sheet-legal textarea{display:block;width:100%;margin:0 0 8px;padding:8px 7px;min-height:102px;resize:vertical;background:transparent;color:#202020;border:1px dashed transparent;font:14px/1.4 "Times New Roman",Times,serif;text-align:justify}
-.sheet-legal textarea:hover,.sheet-legal textarea:focus{border-color:#9dcaa8;background:#fbfffb}
-.sheet-main-terms{border-top:1px solid #3c3c3c;margin:9px 0 13px;padding-top:8px}
-.sheet-main-terms .sheet-row{border:0;padding:0;gap:8px;min-height:30px}
-.sheet-main-terms .sheet-field{border:0;gap:5px;padding:2px 0}
-.sheet-main-terms .sheet-field input{border-bottom:1px solid #838383;border-radius:0}
-.sheet-paper h3{font:700 19px/1.25 "Times New Roman",Times,serif;text-align:center;margin:13px 0 8px;color:#111}
-.sheet-table{border:1px solid #303030}
-.sheet-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-height:33px}
-.sheet-row.sheet-one{grid-template-columns:1fr}
-.sheet-row.sheet-three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.sheet-row.sheet-four{grid-template-columns:repeat(4,minmax(0,1fr))}
-.sheet-table>.sheet-row{border-bottom:1px solid #484848}
-.sheet-table>.sheet-row:last-of-type{border-bottom:0}
-.sheet-field{min-width:0;display:flex;align-items:center;gap:6px;padding:3px 7px;border-right:1px solid #484848;min-height:32px;white-space:nowrap}
-.sheet-field:last-child{border-right:0}
-.sheet-field span{color:#121212;font:14px/1.2 "Times New Roman",Times,serif;white-space:normal;flex-shrink:0}
-.sheet-field input,.sheet-field select{border:1px solid transparent;background:transparent;min-width:0;flex:1 1 auto;width:30px;color:#1c1c1c;padding:3px 2px;border-radius:3px;font:13px/1.2 "Times New Roman",Times,serif;height:25px;outline-offset:0;-webkit-text-fill-color:#1c1c1c}
-.sheet-field input:hover,.sheet-field select:hover{background:#f1f8f1;border-color:#c8e1cd}
-.sheet-field input:focus,.sheet-field select:focus{outline:2px solid #f26a08;background:#fffdf7}
-.sheet-row.sheet-four .sheet-field{gap:3px;padding:3px 4px}
-.sheet-row.sheet-four .sheet-field span{font-size:11px}
-.sheet-row.sheet-four .sheet-field input{font-size:11px}
-.sheet-note{font-size:13px;margin:7px 0 8px}
-.sheet-observations{display:grid;gap:3px;padding:7px 9px 4px}
-.sheet-observations>span{font-size:11px;color:#565656;font-style:italic}
-.sheet-observations textarea{display:block;min-height:83px;resize:vertical;width:100%;border:1px solid transparent;outline-offset:0;color:#222;font:13px/1.5 "Times New Roman",Times,serif;
-background:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,#898989 27px,#898989 28px);padding:1px 4px}
-.sheet-observations textarea:hover,.sheet-observations textarea:focus{background-color:#f7fcf7;outline:2px solid #f26a08}
-.sheet-date{margin-top:22px}
-.sheet-date .sheet-row,.sheet-signatory .sheet-row{border:0;gap:12px}
-.sheet-date .sheet-field,.sheet-signatory .sheet-field{border:0}
-.sheet-date .sheet-field input,.sheet-signatory .sheet-field input{border-bottom:1px solid #999;border-radius:0}
-.sheet-signatory{margin:11px 0 0}
-.sheet-signatures{display:grid;grid-template-columns:1fr 1fr;gap:10px 19px;text-align:center;font-size:13px;line-height:1.4;padding:13px 6px 5px}
-.sheet-signatures>div{min-width:0}
-.sheet-signatures small{font-size:11px;display:block;margin-top:2px}
-.sheet-signatures .sheet-witness .sheet-field{white-space:normal}
-.sheet-signatures .sheet-witness .sheet-field span{font-size:11px}
-.sheet-unsigned{font:10px/1.3 Arial,sans-serif;text-align:center;color:#666;margin:16px 0 0}
-.sheet-scroll input::placeholder,.sheet-scroll textarea::placeholder{color:#8e9d92}
-@media(max-width:950px){.sheet-scroll{padding:12px;}.sheet-paper{margin-left:0;margin-right:0}}
-@media(max-width:610px){
- .auth-mode-toolbar{align-items:stretch}
- .auth-mode-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr}
- .auth-mode{font-size:10px;padding:10px 3px}
- .auth-mode-toolbar>.auth-btn{width:100%}
- .sheet-scroll{padding:8px;margin-left:-5px;margin-right:-5px;scrollbar-color:#8caf97 #e9edea}
- .sheet-paper{padding:15px;min-height:890px}
- .auth-edit-hint{font-size:10px}
-}
-
-/* No celular, edite os campos sem precisar arrastar o documento lateralmente.
-   A impressão permanece no formato A4 de duas colunas. */
+.auth-mode-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.auth-mode-tabs{display:flex;align-items:center;gap:4px;border:1px solid #D6E4D8;background:#F3F8F4;border-radius:12px;padding:4px}
+.auth-mode{border:0;border-radius:9px;background:transparent;color:#436D50;padding:10px 13px;font:800 11px/1.2 Montserrat,Arial,sans-serif;cursor:pointer}
+.auth-mode.active{background:#176339;color:#fff}
+.auth-mode:focus-visible{outline:2px solid #F26A08;outline-offset:2px}
+.auth-edit-hint{background:#EFF8F0;border:1px solid #CDE4CF;border-radius:10px;padding:10px 12px;color:#315E40;font:500 11px/1.5 Montserrat,Arial,sans-serif;margin:0 0 12px}
+.sheet-scroll{background:#E8EBE8;border:1px solid #D4DED5;border-radius:12px;padding:14px;overflow:auto}
+.sheet-paper.doc-original{background:white;color:#101010;margin:0 auto;width:735px;min-height:1036px;box-shadow:0 12px 34px rgba(0,0,0,.15);padding:14px 20px 15px;font-family:"Times New Roman",Times,serif;font-size:14px;line-height:1.3;box-sizing:border-box}
+.doc-original *, .doc-original *::before,.doc-original *::after{box-sizing:border-box}
+.doc-original input,.doc-original textarea{background:transparent!important;color:#141414!important;-webkit-text-fill-color:#141414!important;font-family:"Times New Roman",Times,serif!important;font-weight:400;box-shadow:none!important}
+.doc-heading{border:1.8px solid #161616;border-radius:11px;display:grid;grid-template-columns:34% 1fr;align-items:center;gap:8px;height:111px;padding:10px 12px;margin-bottom:10px}
+.doc-heading img{width:100%;height:auto;max-height:80px;object-fit:contain;object-position:left center}
+.doc-title{width:100%;min-width:0;max-width:100%;min-height:61px;height:61px!important;padding:4px 0;overflow:hidden;resize:none;border:0!important;text-align:center;font:bold 19px/1.2 "Times New Roman",Times,serif!important;outline-offset:2px;white-space:pre-wrap}
+.doc-contract{margin:0 0 9px}
+.doc-textarea{display:block;min-width:0}
+.doc-textarea>span{display:none}
+.doc-contract textarea{display:block;border:1px solid transparent!important;border-radius:3px;resize:vertical;width:100%;min-height:89px;height:89px;text-align:justify;font:14px/1.3 "Times New Roman",Times,serif!important;letter-spacing:-.18px;padding:2px 0}
+.doc-original textarea:hover,.doc-original textarea:focus{outline:1.5px solid #F26A08;outline-offset:0;background:#FBFFF9!important}
+.doc-contract-fields{border-top:1px solid #555;padding-top:4px;margin:4px 0}
+.doc-row{display:grid;grid-template-columns:1fr 1fr;min-width:0}
+.doc-row.doc-single{grid-template-columns:1fr}
+.doc-row.doc-three{grid-template-columns:1fr 0.81fr 1.66fr}
+.doc-row.doc-four{grid-template-columns:1fr .74fr 1.12fr .73fr}
+.doc-row.doc-address{grid-template-columns:2.35fr 1fr}
+.doc-original .doc-field{display:flex;align-items:center;gap:5px;min-height:29px;padding:3px 6px;min-width:0;border-right:1px solid #555;cursor:text}
+.doc-original .doc-field:last-child{border-right:0}
+.doc-original .doc-field>span{font:14px/1.2 "Times New Roman",Times,serif;color:#111;white-space:nowrap;flex-shrink:0}
+.doc-original .doc-field input{display:block;flex:1 1 auto;min-width:20px;width:30px;height:23px;border:1px solid transparent!important;border-radius:1px;outline-offset:-1px;padding:1px 2px;font-size:13px!important}
+.doc-original .doc-field input:focus{outline:2px solid #F26A08!important;background:#fff8ed!important}
+.doc-original .doc-field input:hover{background:#F1F8F2!important}
+.doc-cf-top{grid-template-columns:2.5fr 1fr}
+.doc-contract-fields .doc-field{border:0;padding:1px 0;min-height:25px}
+.doc-contract-fields .doc-field input{border-bottom:1px solid #777!important}
+.doc-contract-fields .doc-cf-term{display:flex;align-items:center;gap:5px}
+.doc-contract-fields .doc-cf-term .doc-field{width:128px}
+.doc-original .doc-static{font-size:14px}
+.doc-commission{margin:5px 0 10px}
+.doc-commission .doc-field{border:0;border-top:1px solid #555;padding-top:9px;height:37px}
+.doc-commission .doc-field>span{font-size:14px}
+.doc-commission .doc-field input{border-bottom:1px solid #555!important}
+.doc-original h3{font:bold 19px/1.2 "Times New Roman",Times,serif!important;color:#111;text-align:center;margin:6px 0 8px;letter-spacing:0}
+.doc-table{border:1px solid #343434}
+.doc-table>.doc-row{border-bottom:1px solid #555;min-height:29px}
+.doc-table>.doc-row:last-of-type{border-bottom:1px solid #555}
+.doc-original .doc-document-line{grid-template-columns:1fr 1fr;min-height:29px}
+.doc-document-types{display:flex;align-items:center;justify-content:space-around;gap:4px;min-width:0;border-right:1px solid #555;font-size:13px}
+.doc-document-types label{display:flex;align-items:center;gap:4px;white-space:nowrap;cursor:pointer}
+.doc-document-types input,.doc-proposal input{accent-color:#226839;cursor:pointer}
+.doc-proposal{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 8px;font-size:13px}
+.doc-proposal-checkbox{font-size:10px;color:#526156;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.doc-owner .doc-four .doc-field>span{font-size:12px}
+.doc-owner .doc-four .doc-field{gap:3px;padding-left:4px;padding-right:3px}
+.doc-owner .doc-four .doc-field input{font-size:12px!important}
+.doc-notes{height:124px;position:relative;overflow:hidden}
+.doc-notes-entry{padding:2px 5px;display:block}
+.doc-notes-entry textarea{display:block;width:100%;height:118px;min-height:118px!important;resize:none;font:13px/1.65 "Times New Roman",Times,serif!important;padding:0 3px;outline-offset:0;border:0!important;
+ background:repeating-linear-gradient(to bottom, transparent 0px,transparent 27px,#6b6b6b 28px,#6b6b6b 29px)!important}
+.doc-notes-entry textarea:focus{background:repeating-linear-gradient(to bottom,#fff9f1 0px,#fff9f1 27px,#6b6b6b 28px,#6b6b6b 29px)!important}
+.doc-dateline{display:flex;justify-content:flex-end;align-items:center;gap:4px;margin-top:18px}
+.doc-dateline .doc-field{border:0;min-height:25px;padding:0}
+.doc-dateline .doc-field>span{font-size:11px}
+.doc-dateline .doc-field input{border-bottom:1px solid #555!important;width:75px}
+.doc-dateline .doc-field:first-child{max-width:180px}
+.doc-dateline .doc-field:last-child{max-width:180px}
+.doc-firm{margin:18px auto 8px;width:70%;text-align:center}
+.doc-firm-name{border-top:1px solid #222;display:flex;align-items:center;justify-content:center;gap:4px;padding-top:2px}
+.doc-firm-name .doc-field{border:0!important;justify-content:center;min-height:28px;padding:0}
+.doc-firm-name .doc-field span{display:none}
+.doc-firm-name .doc-field input{width:100%;min-width:10px;font:bold 13px "Times New Roman",Times,serif!important;text-align:center}
+.doc-firm-name .doc-field:first-child{flex:2}
+.doc-firm-name .doc-field:last-child{flex:1}
+.doc-signatures{display:grid;grid-template-columns:1fr 1fr;gap:10px 17px;margin:5px 30px 0}
+.doc-signature{display:flex;align-items:center;gap:6px;font:13px/1.2 "Times New Roman",Times,serif}
+.doc-signature .doc-signline{flex:1;border-bottom:1px solid #555;min-width:55px}
+.doc-signature>span{order:-1}
+.doc-witness .doc-field{border:0;padding:0}
+.doc-witness .doc-field span{font-size:12px}
+.doc-witness .doc-field input{border-bottom:1px solid #555!important}
+.doc-extra{margin:13px 20px 0;display:flex;gap:14px;align-items:center;justify-content:center}
+.doc-extra .doc-field{border:0;min-height:24px}
+.doc-extra .doc-field>span{font-size:10px}
+.doc-extra .doc-field input{border-bottom:1px dotted #999!important}
+.doc-disclaimer{text-align:center;color:#666;font:9px/1.25 Arial,sans-serif;margin:12px 0 0}
+@media screen and (max-width:940px){.sheet-scroll{padding:9px}.doc-original{margin-left:0!important;margin-right:0!important}}
 @media screen and (max-width:610px){
- .sheet-paper{width:100%;min-width:0;min-height:0;padding:12px}
- .sheet-header{display:grid;justify-items:center;gap:8px;padding:12px 7px;min-height:0}
- .sheet-header img{width:min(270px,95%);max-width:95%;height:auto}
- .sheet-title{max-width:100%;width:100%;font-size:17px}
- .sheet-row,.sheet-row.sheet-one,.sheet-row.sheet-three,.sheet-row.sheet-four{grid-template-columns:1fr}
- .sheet-table>.sheet-row{border-bottom:0}
- .sheet-field{min-height:42px;border-right:0;border-bottom:1px solid #8c8c8c}
- .sheet-field span,.sheet-row.sheet-four .sheet-field span{font-size:13px}
- .sheet-field input,.sheet-field select,.sheet-row.sheet-four .sheet-field input{font-size:14px}
- .sheet-main-terms .sheet-row{grid-template-columns:1fr}
- .sheet-signatures{grid-template-columns:1fr}
- .sheet-paper h3{font-size:17px}
- .sheet-legal textarea{font-size:13px}
+ .auth-mode-toolbar{align-items:stretch}
+ .auth-mode-tabs{display:grid;grid-template-columns:1fr 1fr;width:100%}
+ .auth-mode{padding:10px 3px;font-size:10px}
+ .auth-mode-toolbar>.auth-btn{width:100%}
+ .auth-edit-hint{font-size:10px}
+ .sheet-scroll:before{content:'Deslize a ficha para os lados ↔ ou escolha “Campos detalhados” para preencher sem rolar.';display:block;color:#46644f;font:600 10px/1.4 Montserrat,Arial,sans-serif;margin:0 0 8px}
 }
-
 @page{size:A4;margin:9mm}
 @media print{
- html,body{background:#fff!important;margin:0!important;padding:0!important}
+ html,body{margin:0!important;padding:0!important;background:#fff!important}
  body *{visibility:hidden!important}
  .auth-visual-editor,.auth-visual-editor .sheet-scroll,.auth-visual-editor .sheet-paper,.auth-visual-editor .sheet-paper *{visibility:visible!important}
- .auth-visual-editor{position:absolute!important;top:0!important;left:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
- .auth-mode-toolbar,.auth-edit-hint{display:none!important}
- .sheet-scroll{display:block!important;overflow:visible!important;padding:0!important;margin:0!important;border:0!important;background:#fff!important;width:100%!important}
- .sheet-paper{width:100%!important;max-width:none!important;min-height:0!important;padding:0!important;border:0!important;box-shadow:none!important;font-size:10pt!important}
- .sheet-header{min-height:86px!important;padding:8px!important;margin-bottom:8px!important}
- .sheet-header img{width:44%!important}
- .sheet-title{font-size:15px!important}
- .sheet-paper h3{font-size:13px!important;margin:7px 0 4px!important}
- .sheet-legal textarea{font-size:10px!important;min-height:73px!important}
- .sheet-row,.sheet-field{min-height:25px!important}
- .sheet-field span{font-size:10px!important}
- .sheet-field input,.sheet-field select{font-size:10px!important;height:21px!important}
- .sheet-main-terms{margin:4px 0 5px!important;padding-top:3px!important}
- .sheet-note{margin:4px 0!important;font-size:10px!important}
- .sheet-observations textarea{min-height:60px!important}
- .sheet-date{margin-top:11px!important}
- .sheet-signatures{gap:7px 12px!important;padding:7px 5px!important;font-size:11px!important}
- .sheet-unsigned{margin:8px 0 0!important;font-size:8px!important}
- .sheet-header,.sheet-row,.sheet-table,.sheet-signatures{break-inside:avoid;page-break-inside:avoid}
- .sheet-scroll textarea{resize:none!important;border:0!important}
- .sheet-scroll input,.sheet-scroll select{border-color:transparent!important;outline:none!important}
+ .auth-visual-editor{position:absolute!important;left:0;top:0;width:100%!important;margin:0!important;padding:0!important}
+ .auth-mode-toolbar,.auth-edit-hint,.sheet-scroll:before{display:none!important}
+ .sheet-scroll{display:block!important;width:100%!important;overflow:visible!important;background:none!important;border:0!important;padding:0!important;margin:0!important}
+ .sheet-paper.doc-original{box-shadow:none!important;border:0!important;width:100%!important;min-height:0!important;margin:0!important;padding:0!important}
+ .doc-heading{height:94px!important;margin-bottom:7px!important}
+ .doc-heading img{max-height:74px!important}
+ .doc-title{font-size:16px!important;max-height:56px}
+ .doc-contract textarea{min-height:74px!important;height:74px!important;font-size:12px!important}
+ .doc-contract-fields{margin:3px 0!important;padding-top:1px!important}
+ .doc-contract-fields .doc-field{min-height:21px!important}
+ .doc-commission{margin:4px 0 6px!important}
+ .doc-commission .doc-field{height:28px!important;padding-top:3px!important}
+ .doc-original h3{font-size:15px!important;margin:5px 0!important}
+ .doc-table>.doc-row,.doc-original .doc-field{min-height:26px!important}
+ .doc-original .doc-field>span{font-size:12px!important}
+ .doc-original .doc-field input{font-size:11px!important;height:21px!important}
+ .doc-owner .doc-four .doc-field>span{font-size:10px!important}
+ .doc-document-types{font-size:11px!important}
+ .doc-proposal{margin:4px 0!important}
+ .doc-notes{height:109px!important}
+ .doc-notes-entry textarea{height:106px!important;min-height:106px!important}
+ .doc-dateline{margin-top:10px!important}
+ .doc-firm{margin:10px auto 5px!important}
+ .doc-signatures{gap:7px 13px!important}
+ .doc-extra{margin:7px 20px 0!important}
+ .doc-disclaimer{margin-top:5px!important}
+ .doc-original input,.doc-original textarea{outline:none!important;box-shadow:none!important}
+ .doc-original textarea{overflow:hidden!important;resize:none!important}
+ .doc-original,.doc-heading,.doc-table,.doc-row,.doc-signatures,.doc-signature{break-inside:avoid}
 }
