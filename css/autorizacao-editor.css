@@ -14,7 +14,7 @@
 .doc-original input,.doc-original textarea{background:transparent!important;color:#141414!important;-webkit-text-fill-color:#141414!important;font-family:"Times New Roman",Times,serif!important;font-weight:400;box-shadow:none!important}
 .doc-heading{border:1.8px solid #161616;border-radius:11px;display:grid;grid-template-columns:37% 1fr;align-items:center;gap:11px;min-height:154px;padding:9px 12px;margin-bottom:10px}
 .doc-brand-stack{display:flex;flex-direction:column;justify-content:center;gap:7px;min-width:0;max-width:100%}
-.doc-brand-primary{background:#12552D;border-radius:5px;padding:4px 5px;display:flex;align-items:center;justify-content:center;min-height:58px}
+.doc-brand-primary{background:#12552D;border-radius:5px;padding:4px 5px;display:flex;align-items:center;justify-content:center;min-height:58px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .doc-brand-secondary{background:#fff;border:2px solid #d6a348;border-radius:50% / 48%;padding:3px 8px;display:flex;align-items:center;justify-content:center;min-height:54px}
 .doc-brand-stack img{width:100%;height:auto;max-height:50px;display:block;object-fit:contain;object-position:center}
 .doc-title{width:100%;min-width:0;max-width:100%;min-height:61px;height:61px!important;padding:4px 0;overflow:hidden;resize:none;border:0!important;text-align:center;font:bold 19px/1.2 "Times New Roman",Times,serif!important;outline-offset:2px;white-space:pre-wrap}
