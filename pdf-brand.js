@@ -42,41 +42,42 @@ function drawAuthorizationBrand(doc,opts={}){
  const SVGtoPDF=require('svg-to-pdfkit');
  const x=Number(opts.x??44),y=Number(opts.y??30);
  const outerWidth=Number(opts.outerWidth??(doc.page.width-88));
- const outerHeight=Number(opts.outerHeight??95);
+ const outerHeight=Number(opts.outerHeight??140);
  const leftWidth=Number(opts.leftWidth??229);
- // Imprime a logo oficial enviada pelo usuário em suas cores originais,
- // sobre o papel branco. Não usar a variante branca ou tarja verde.
- const logoPath=path.join(__dirname,'assets','bonanza-mini.svg');
- const svg=fs.readFileSync(logoPath,'utf8');
+ const topSvg=fs.readFileSync(path.join(__dirname,'assets','lilian-douglas-logo-escura.svg'),'utf8');
+ const bottomSvg=fs.readFileSync(path.join(__dirname,'assets','bonanza-mini.svg'),'utf8');
+ const lx=x+8,bw=leftWidth-8;
+ const topY=y+9,topH=56,bottomY=topY+topH+7,bottomH=52;
  doc.save();
  doc.roundedRect(x,y,outerWidth,outerHeight,9)
    .lineWidth(1.05).strokeColor('#202020').stroke();
- const logoWidth=leftWidth-9;
- const logoHeight=logoWidth*82/335;
- const lx=x+7,ly=y+(outerHeight-logoHeight)/2;
- SVGtoPDF(doc,svg,lx,ly,{
-   width:logoWidth,height:logoHeight,
-   preserveAspectRatio:'xMinYMid meet',
-   assumePt:false,
-   fontCallback:()=> 'Helvetica'
+ // Marca oficial Lilian e Douglas, com fundo verde para as letras brancas.
+ doc.roundedRect(lx,topY,bw,topH,5).fillColor('#12552D').fill();
+ const topImageW=bw-10,topImageH=topImageW*190/800;
+ SVGtoPDF(doc,topSvg,lx+5,topY+(topH-topImageH)/2,{
+  width:topImageW,height:topImageH,
+  preserveAspectRatio:'xMidYMid meet',assumePt:false,fontCallback:()=> 'Helvetica'
  });
- // CRECI da imobiliária na posição indicada, logo abaixo da marca.
- doc.font('Helvetica-Bold').fontSize(8.5).fillColor('#155B32')
-   .text('CRECI PJ 3010',lx+3,ly+logoHeight+5,{width:logoWidth-6,align:'left',lineBreak:false});
- const headingX=x+leftWidth+8;
- const headingWidth=outerWidth-leftWidth-16;
+ // Logo Bonanza sempre abaixo da marca Lilian e Douglas.
+ doc.roundedRect(lx,bottomY,bw,bottomH,24)
+   .lineWidth(1.2).strokeColor('#C9963B').stroke();
+ const bottomImageW=bw-20,bottomImageH=bottomImageW*82/335;
+ SVGtoPDF(doc,bottomSvg,lx+10,bottomY+(bottomH-bottomImageH)/2,{
+  width:bottomImageW,height:bottomImageH,
+  preserveAspectRatio:'xMidYMid meet',assumePt:false,fontCallback:()=> 'Helvetica'
+ });
+ const headingX=x+leftWidth+8,headingWidth=outerWidth-leftWidth-16;
  const heading=String(opts.title||['AUTORIZAÇÃO PARA VENDA DE IMÓVEIS','URBANOS E RURAIS'].join(String.fromCharCode(10)))
    .replaceAll(String.fromCharCode(13),'').slice(0,130).split(String.fromCharCode(10));
  const first=heading[0]||'AUTORIZAÇÃO PARA VENDA DE IMÓVEIS';
  const second=heading.slice(1).join(' ').trim();
- const headingSize=first.length>38?10:12.1;
- doc.font('Times-Bold').fillColor('#191919').fontSize(headingSize)
-   .text(first,headingX,y+28,{width:headingWidth,height:26,ellipsis:true,align:'center'});
+ const headingY=y+(outerHeight-57)/2;
+ doc.font('Times-Bold').fillColor('#191919').fontSize(first.length>38?10:12.1)
+   .text(first,headingX,headingY,{width:headingWidth,height:28,ellipsis:true,align:'center'});
  if(second)doc.font('Times-Bold').fillColor('#191919').fontSize(second.length>36?10:12.1)
-   .text(second,headingX,y+52,{width:headingWidth,height:25,ellipsis:true,align:'center'});
+   .text(second,headingX,headingY+29,{width:headingWidth,height:25,ellipsis:true,align:'center'});
  doc.restore();
- doc.x=x;
- doc.y=y+outerHeight+18;
+ doc.x=x;doc.y=y+outerHeight+18;
  return doc.y;
 }
 
