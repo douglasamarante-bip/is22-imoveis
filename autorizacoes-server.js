@@ -122,8 +122,8 @@ async function outputPdf(res,row){
  pdf.font('Helvetica');
  pdf.initForm();
  pdf.pipe(res);
- // Cabeçalho: logo branca idêntica à do rodapé em faixa verde e título ao lado.
- drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:95,leftWidth:229,title:d.titulo_documento||DEFAULTS.titulo_documento});
+ // Cabeçalho: Lilian e Douglas acima, Bonanza abaixo e título ao lado.
+ drawAuthorizationBrand(pdf,{x:44,y:30,outerWidth:pdf.page.width-88,outerHeight:140,leftWidth:229,title:d.titulo_documento||DEFAULTS.titulo_documento});
  pdf.font('Helvetica').fontSize(8.7).fillColor('#314136')
   .text('Identificação do documento: '+row.id+'  |  Emitido em '+new Date().toLocaleDateString('pt-BR'),{align:'center'});
  section(pdf,'1. CONDIÇÕES DA AUTORIZAÇÃO');
