@@ -12,10 +12,11 @@
 .sheet-paper.doc-original{background:white;color:#101010;margin:0 auto;width:735px;min-height:1036px;box-shadow:0 12px 34px rgba(0,0,0,.15);padding:14px 20px 15px;font-family:"Times New Roman",Times,serif;font-size:14px;line-height:1.3;box-sizing:border-box}
 .doc-original *, .doc-original *::before,.doc-original *::after{box-sizing:border-box}
 .doc-original input,.doc-original textarea{background:transparent!important;color:#141414!important;-webkit-text-fill-color:#141414!important;font-family:"Times New Roman",Times,serif!important;font-weight:400;box-shadow:none!important}
-.doc-heading{border:1.8px solid #161616;border-radius:11px;display:grid;grid-template-columns:34% 1fr;align-items:center;gap:8px;height:111px;padding:10px 12px;margin-bottom:10px}
-.doc-brand-block{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-width:0}
-.doc-heading img{width:100%;height:auto;max-height:69px;object-fit:contain;object-position:left center}
-.doc-brand-creci{display:block;font:700 11px/1.15 Montserrat,Arial,sans-serif;letter-spacing:.02em;color:#155B32;white-space:nowrap;padding-left:3px}
+.doc-heading{border:1.8px solid #161616;border-radius:11px;display:grid;grid-template-columns:37% 1fr;align-items:center;gap:11px;min-height:154px;padding:9px 12px;margin-bottom:10px}
+.doc-brand-stack{display:flex;flex-direction:column;justify-content:center;gap:7px;min-width:0;max-width:100%}
+.doc-brand-primary{background:#12552D;border-radius:5px;padding:4px 5px;display:flex;align-items:center;justify-content:center;min-height:58px}
+.doc-brand-secondary{background:#fff;border:2px solid #d6a348;border-radius:50% / 48%;padding:3px 8px;display:flex;align-items:center;justify-content:center;min-height:54px}
+.doc-brand-stack img{width:100%;height:auto;max-height:50px;display:block;object-fit:contain;object-position:center}
 .doc-title{width:100%;min-width:0;max-width:100%;min-height:61px;height:61px!important;padding:4px 0;overflow:hidden;resize:none;border:0!important;text-align:center;font:bold 19px/1.2 "Times New Roman",Times,serif!important;outline-offset:2px;white-space:pre-wrap}
 .doc-contract{margin:0 0 9px}
 .doc-textarea{display:block;min-width:0}
@@ -105,9 +106,11 @@
  .auth-mode-toolbar,.auth-edit-hint,.sheet-scroll:before{display:none!important}
  .sheet-scroll{display:block!important;width:100%!important;overflow:visible!important;background:none!important;border:0!important;padding:0!important;margin:0!important}
  .sheet-paper.doc-original{box-shadow:none!important;border:0!important;width:100%!important;min-height:0!important;margin:0!important;padding:0!important}
- .doc-heading{height:94px!important;margin-bottom:7px!important}
- .doc-heading img{max-height:61px!important}
- .doc-brand-creci{font-size:9px!important}
+ .doc-heading{min-height:137px!important;margin-bottom:7px!important;padding:7px 10px!important}
+ .doc-brand-stack{gap:5px!important}
+ .doc-brand-primary{min-height:51px!important;padding:3px 4px!important}
+ .doc-brand-secondary{min-height:46px!important;padding:2px 6px!important}
+ .doc-brand-stack img{max-height:43px!important}
  .doc-title{font-size:16px!important;max-height:56px}
  .doc-contract textarea{min-height:74px!important;height:74px!important;font-size:12px!important}
  .doc-contract-fields{margin:3px 0!important;padding-top:1px!important}
