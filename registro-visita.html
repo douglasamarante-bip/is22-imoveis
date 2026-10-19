@@ -88,17 +88,20 @@ th{padding:6px;font-size:9px}
 .payment-options{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;min-height:35px;padding:6px;border:1px solid #ccd5df;border-radius:5px}
 .payment-options label{display:inline-flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
 .payment-options input[type=checkbox]{width:14px;height:14px;min-height:0;margin:0;padding:0;accent-color:var(--navy)}
-@page{size:A4 portrait;margin:9mm 10mm}
+/* Margem zero retira data, título, URL e numeração automáticos do Chrome,
+   mesmo se "Cabeçalhos e rodapés" estiver marcado. As margens reais ficam
+   internas nas folhas e não são cortadas pela impressora. */
+@page{size:A4 portrait;margin:0}
 @media print{
  html,body{min-width:0!important;width:auto!important}
  body{font-size:10px!important;line-height:1.26!important;background:#fff!important}
  main{max-width:none!important;width:100%!important;margin:0!important;padding:0!important}
- .paper{width:100%!important;min-height:0!important;height:auto!important;overflow:visible!important;margin:0!important;padding:0!important;box-shadow:none!important;break-after:page;page-break-after:always}
+ .paper{width:100%!important;min-height:0!important;height:auto!important;overflow:visible!important;margin:0!important;padding:9mm 10mm!important;box-shadow:none!important;break-after:page;page-break-after:always}
  .paper:last-child{break-after:auto;page-break-after:auto}
  .brand-row{padding-bottom:6px!important}
  .brand-row img{width:150px!important;max-height:43px!important}
  .brand-row .brand-stack img.bonanza-mini{width:65px!important;height:18px!important}
- .brand-row aside{font-size:8px!important}
+ .brand-row aside{display:none!important} /* Remove anotações de modelo no canto do impresso */
  h1{font-size:16px!important;margin:7px 0 2px!important}
  .lead{font-size:10px!important;margin:0 0 7px!important}
  .heading{font-size:10px!important;margin:9px 0 5px!important;letter-spacing:.5px!important}
@@ -148,8 +151,8 @@ th{padding:6px;font-size:9px}
 <label class="field c4"><span>Celular / WhatsApp</span><input name="celular" type="tel"></label>
 <label class="field c4"><span>Outro telefone</span><input name="telefone" type="tel"></label>
 <label class="field c4"><span>Data da visita</span><input name="data_visita" placeholder="__/__/____"></label>
-<label class="field c8"><span>Corretor(a) responsável</span><input name="corretor"></label>
-<label class="field c4"><span>CRECI do(a) corretor(a)</span><input name="creci"></label>
+<label class="field c12"><span>Corretor(a) responsável</span><input name="corretor"></label>
+<input type="hidden" name="creci"><!-- Compatibilidade: valor já salvo permanece no registro, sem campo impresso -->
 <label class="field c12"><span>Imóvel procurado / preferência do cliente</span><input name="imovel_procurado"></label>
 </div>
 <div class="heading">2. Imóveis visitados</div>
