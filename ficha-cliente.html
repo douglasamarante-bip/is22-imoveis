@@ -90,6 +90,44 @@ mark{background:#fff1d9;padding:1px 5px;border-radius:3px}
  .checkbox input{width:12px!important;height:12px!important;min-height:0!important}
  .notice{font-size:9px!important;line-height:1.35!important;padding:6px 8px!important;margin-top:6px!important;break-inside:avoid!important}
 }
+
+/* casal-ficha-print-readable-v2: readable two-sheet print form (validated in A4 Chromium layout).
+   Avoid tiny one-sheet text; keep the sections flowing with adequate writing space. */
+@media print {
+ body{font:11.4px/1.38 Arial,Helvetica,sans-serif!important}
+ main{width:100%!important;max-width:none!important;margin:0!important;
+   padding:0 11mm 11mm!important;box-decoration-break:clone!important;-webkit-box-decoration-break:clone!important}
+ .heading,.section{break-inside:auto!important;page-break-inside:auto!important;
+   margin:0!important;padding:4mm 0!important}
+ .heading{padding:11mm 0 5mm!important}
+ .heading h1{font-size:23px!important;line-height:1.25!important;margin:6px 0!important}
+ .document-brand{margin-bottom:2px!important}
+ .document-brand .document-main-logo{width:180px!important;max-height:55px!important}
+ .document-brand img.document-bonanza{width:86px!important;max-height:25px!important}
+ .document-brand strong{font-size:10px!important}
+ .section h2{font-size:18px!important;line-height:1.35!important;margin:0 0 10px!important;
+   break-after:avoid!important;page-break-after:avoid!important}
+ .form-grid{display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;
+   gap:15px 11px!important}
+ .form-grid>.c12{grid-column:span 12!important}
+ .form-grid>.c8{grid-column:span 8!important}
+ .form-grid>.c6{grid-column:span 6!important}
+ .form-grid>.c4{grid-column:span 4!important}
+ .form-grid>.c3{grid-column:span 3!important}
+ label.field{font-size:13px!important;font-weight:600!important;gap:4px!important}
+ label.field input,label.field select,label.field textarea{
+   width:100%!important;min-height:45px!important;padding:7px!important;
+   border:1px solid #cdd7e0!important;border-radius:2px!important;
+   font:12.5px/1.3 Arial,Helvetica,sans-serif!important;background:#fff!important}
+ label.field textarea{min-height:175px!important;resize:none!important;overflow:hidden!important}
+ label.field select{appearance:none!important;-webkit-appearance:none!important;background-image:none!important}
+ label.field select:has(option:checked[value=""]){color:transparent!important}
+ .section:nth-of-type(3){padding-top:12mm!important}
+ .checkbox{font-size:11px!important;gap:6px!important}
+ .checkbox input{width:14px!important;height:14px!important;min-height:0!important}
+ .notice{font-size:11px!important;line-height:1.45!important;padding:8px 11px!important;margin-top:10px!important}
+ .heading h1,.document-brand,.section h2,.form-grid>label,.notice{page-break-inside:avoid!important}
+}
 </style>
 </head><body>
 <header class="topbar"><a href="index.html"><img src="assets/lilian-douglas-logo-escura.svg" alt="Casal Corretores"></a><nav><a href="admin.html">Painel</a><a href="clientes.html">Fichas cadastradas</a><a href="registros.html">Visitas e propostas</a></nav></header>
