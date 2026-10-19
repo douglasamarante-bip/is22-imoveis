@@ -259,7 +259,7 @@ function populate(d){
  }
 }
 function collect(){
- updatePaymentChoices();
+ // As marcações são sincronizadas quando alteradas; preserve textos de registros antigos.
  const o={};fields.forEach(el=>o[el.name]=el.type==='checkbox'?el.checked:el.value);
  const rows=[...document.querySelectorAll('table[aria-label="Imóveis visitados"] tbody tr')].map(tr=>[...tr.querySelectorAll('input')].map(el=>el.value.trim()));
  o.visitas_imoveis=JSON.stringify(rows.filter(row=>row.some(Boolean)));
