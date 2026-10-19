@@ -153,41 +153,6 @@ th{padding:6px;font-size:9px}
  .paper .heading{break-after:avoid!important;page-break-after:avoid!important}
 }
 
-/* casal-repeat-a4-header-v1: repeat brand, CRECI and Bonanza in the actual
-   A4 page margin on every print sheet (including mid-document page breaks).
-   Unlike a normal fixed element, print margin boxes reserve space automatically. */
-@page {
- size:A4 portrait;
- margin:23mm 0 8mm;
- @top-left {
-  content:url("assets/logo-print-registro.svg");
-  margin-left:10mm;
-  vertical-align:middle;
- }
- @top-center {
-  content:"CRECI MG 61414";
-  color:#16642F;
-  font:700 9px Arial,Helvetica,sans-serif;
-  vertical-align:middle;
- }
- @top-right {
-  content:url("assets/bonanza-print-registro.svg");
-  margin-right:10mm;
-  vertical-align:middle;
- }
-}
-@media print {
- .paper>.brand-row{display:none!important}
- .paper,.paper:last-child{
-   margin:0!important;
-   padding:0 10mm 3mm!important;
-   break-after:auto!important;
-   page-break-after:auto!important;
- }
- .paper:not(:last-child){padding-bottom:0!important}
- .paper:last-child{padding-top:2mm!important}
- main{padding:0!important}
-}
 </style>
 </head><body>
 <header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
