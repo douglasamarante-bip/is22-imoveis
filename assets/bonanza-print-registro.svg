@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 335 82" width="95" height="23" role="img" aria-labelledby="t d">
+<title id="t">Bonanza Imóveis Ltda</title><desc id="d">Marca Bonanza Imóveis Ltda, CRECI PJ 3010.</desc>
+<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F7D184"/><stop offset=".54" stop-color="#D5A34B"/><stop offset="1" stop-color="#A97825"/></linearGradient></defs>
+<circle cx="17" cy="25" r="8.8" fill="url(#gold)"/>
+<path d="M3 63 Q18 33 36 48 Q49 55 70 62 L70 67 L3 67 Z" fill="#0A5632"/>
+<path d="M3 66 Q20 46 37 55 Q47 62 70 65" fill="none" stroke="#D5A34B" stroke-width="2.4"/>
+<path d="M38 48 L38 27 L57 10 L74 27 L74 63" fill="none" stroke="url(#gold)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M56 57 V24 M52 34 Q46 29 46 39 M59 43 Q67 39 66 34 M54 48 Q47 45 47 50" stroke="#0A5632" stroke-width="4" stroke-linecap="round" fill="none"/>
+<text x="82" y="53" font-family="Georgia,'Times New Roman',serif" font-size="38" font-weight="600" letter-spacing="-1.6" fill="#0A5632">BONANZA</text>
+<path d="M85 59H103 M290 59H311" stroke="#C9963B" stroke-width="2.2"/>
+<text x="111" y="68" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="600" letter-spacing="3.0" fill="#0A5632">IMÓVEIS LTDA</text>
+<text x="83" y="81" font-family="Arial,Helvetica,sans-serif" font-size="8" letter-spacing="1.1" fill="#0A5632">CRECI PJ 3010</text>
+</svg>
