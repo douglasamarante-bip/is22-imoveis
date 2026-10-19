@@ -176,6 +176,19 @@ th{padding:6px;font-size:9px}
  .paper:last-child{padding-top:3mm!important}
  main{padding:0!important}
 }
+
+/* casal-print-proposal-space-v1: make better use of the second A4 sheet
+   by giving the handwritten negotiation boxes more room; no forced page breaks. */
+@media print{
+ .paper:last-child textarea[name="contra_detalhes"]{
+   min-height:210px!important;
+ }
+ .paper:last-child textarea[name="observacoes_finais"]{
+   min-height:130px!important;
+ }
+ .paper:last-child .sign-grid{margin-top:37px!important}
+ .paper:last-child .footer-qr{margin-top:14px!important}
+}
 </style>
 </head><body>
 <header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
