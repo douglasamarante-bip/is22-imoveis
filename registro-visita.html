@@ -84,6 +84,54 @@ th{padding:6px;font-size:9px}
 .brand-stack>b{font-size:9px;letter-spacing:.3px;color:#16642F;margin-left:2px}
 .brand-row .brand-stack img.bonanza-mini{width:95px!important;height:25px!important;max-height:25px!important;object-fit:contain!important;object-position:left}
 @media print{.brand-row .brand-stack img.bonanza-mini{width:78px!important;height:22px!important}.brand-stack>b{font-size:7.5px!important}}
+
+.payment-options{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;min-height:35px;padding:6px;border:1px solid #ccd5df;border-radius:5px}
+.payment-options label{display:inline-flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
+.payment-options input[type=checkbox]{width:14px;height:14px;min-height:0;margin:0;padding:0;accent-color:var(--navy)}
+@page{size:A4 portrait;margin:9mm 10mm}
+@media print{
+ html,body{min-width:0!important;width:auto!important}
+ body{font-size:10px!important;line-height:1.26!important;background:#fff!important}
+ main{max-width:none!important;width:100%!important;margin:0!important;padding:0!important}
+ .paper{width:100%!important;min-height:0!important;height:auto!important;overflow:visible!important;margin:0!important;padding:0!important;box-shadow:none!important;break-after:page;page-break-after:always}
+ .paper:last-child{break-after:auto;page-break-after:auto}
+ .brand-row{padding-bottom:6px!important}
+ .brand-row img{width:150px!important;max-height:43px!important}
+ .brand-row .brand-stack img.bonanza-mini{width:65px!important;height:18px!important}
+ .brand-row aside{font-size:8px!important}
+ h1{font-size:16px!important;margin:7px 0 2px!important}
+ .lead{font-size:10px!important;margin:0 0 7px!important}
+ .heading{font-size:10px!important;margin:9px 0 5px!important;letter-spacing:.5px!important}
+ .grid{display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;gap:5px 8px!important}
+ .grid>.c12{grid-column:span 12!important}.grid>.c8{grid-column:span 8!important}
+ .grid>.c7{grid-column:span 7!important}.grid>.c6{grid-column:span 6!important}
+ .grid>.c5{grid-column:span 5!important}.grid>.c4{grid-column:span 4!important}.grid>.c3{grid-column:span 3!important}
+ .field{min-width:0!important;gap:2px!important}
+ .field span{font-size:9px!important}
+ .field input:not([type=checkbox]):not([type=hidden]),.field select,.field textarea{min-height:24px!important;padding:4px!important;font-size:10px!important}
+ .field textarea{resize:none!important;overflow:hidden!important}
+ .large textarea{min-height:78px!important}.terms textarea{min-height:49px!important}
+ .field input::placeholder,.field textarea::placeholder{color:transparent!important;opacity:0!important}
+ .payment-options{min-height:24px!important;padding:4px 5px!important;gap:3px 9px!important}
+ .payment-options label{font-size:9px!important;gap:3px!important}
+ .payment-options input[type=checkbox]{width:11px!important;height:11px!important;min-height:0!important}
+ table{font-size:9px!important;table-layout:fixed}
+ th{padding:5px 4px!important;font-size:9px!important}
+ td input{height:23px!important;font-size:9px!important;padding:4px!important}
+ .clause{padding:6px 8px!important;font-size:9px!important;line-height:1.35!important}
+ .clause p{margin:0 0 5px!important}.clause p:last-child{margin:0!important}
+ .sign-grid{margin-top:19px!important;gap:18px!important}
+ .signature{font-size:9px!important;padding-top:4px!important}
+ .check-row{gap:8px!important;flex-wrap:wrap!important;margin-top:6px!important;font-size:10px!important}
+ .check-row label{gap:4px!important}.check-row input{width:12px!important;height:12px!important}
+ .notice{font-size:9px!important;margin:6px 0!important}
+ .footer-qr{margin-top:7px!important;padding:6px 8px!important;gap:12px!important;break-inside:avoid!important}
+ .footer-qr p{font-size:9px!important;margin:3px 0!important}
+ .footer-qr strong{font-size:11px!important}.footer-qr code{font-size:9px!important}
+ .footer-qr #qr img{width:72px!important;height:72px!important}
+ .page-end{margin-top:6px!important;padding-top:5px!important;font-size:8px!important}
+ .brand-row,.heading,.sign-grid,.footer-qr,thead,tr,.check-row{break-inside:avoid;page-break-inside:avoid}
+}
 </style>
 </head><body>
 <header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
@@ -127,7 +175,12 @@ th{padding:6px;font-size:9px}
 <div class="grid">
 <label class="field c6"><span>Código / identificação do imóvel</span><input name="proposta_codigo"></label>
 <label class="field c6"><span>Valor ofertado (R$)</span><input name="proposta_valor" inputmode="decimal"></label>
-<label class="field c6"><span>Forma de pagamento</span><input name="proposta_pagamento" placeholder="À vista / financiamento / permuta"></label>
+<div class="field c6 payment-field"><span>Forma de pagamento</span><div class="payment-options" role="group" aria-label="Marque a forma de pagamento">
+<label><input type="checkbox" data-payment="À vista"> À vista</label>
+<label><input type="checkbox" data-payment="Financiamento"> Financiamento</label>
+<label><input type="checkbox" data-payment="Permuta"> Permuta</label>
+<label><input type="checkbox" data-payment="Outro"> Outro</label>
+</div><input type="hidden" name="proposta_pagamento"></div>
 <label class="field c6"><span>Validade da proposta até</span><input name="proposta_validade" placeholder="__/__/____ às __:__"></label>
 <label class="field c12 large"><span>Detalhamento da proposta do cliente - entrada, parcelas, prazos, condições, inclusões e observações</span><textarea name="proposta_detalhes" rows="6" placeholder="Descreva as condições e observações da proposta..."></textarea></label>
 </div>
@@ -151,9 +204,16 @@ th{padding:6px;font-size:9px}
 </main>
 <script>
 function printForm(){
- const fields=[...document.querySelectorAll('textarea')];fields.forEach(el=>{el.dataset.oldheight=el.style.height;el.style.height=Math.max(el.scrollHeight,el.offsetHeight)+'px'});
+ const areas=[...document.querySelectorAll('textarea')];
+ areas.forEach(el=>{
+   el.dataset.oldheight=el.style.height;
+   el.style.height='';
+   if(el.value.trim())el.style.height=Math.max(el.scrollHeight,el.offsetHeight)+'px';
+ });
+ const restore=()=>areas.forEach(el=>el.style.height=el.dataset.oldheight||'');
+ window.addEventListener('afterprint',restore,{once:true});
  window.print();
- window.setTimeout(()=>fields.forEach(el=>{el.style.height=el.dataset.oldheight||''}),600);
+ window.setTimeout(restore,2000);
 }
 function clearForm(){if(!confirm('Limpar os dados preenchidos nesta página?'))return;document.querySelectorAll('input,textarea').forEach(el=>{if(el.type==='checkbox')el.checked=false;else el.value=''});}
 </script>
@@ -166,6 +226,18 @@ const message=document.getElementById('feedback');
 let currentId=new URLSearchParams(location.search).get('id')||'';
 if(!/^[A-Za-z0-9_-]+$/.test(currentId))currentId='';
 const fields=[...document.querySelectorAll('#form-container input[name],#form-container textarea[name]')];
+
+function updatePaymentChoices(){
+ const field=document.querySelector('input[name="proposta_pagamento"]');
+ if(field)field.value=[...document.querySelectorAll('.payment-options [data-payment]')].filter(x=>x.checked).map(x=>x.value).join(' / ');
+}
+function restorePaymentChoices(){
+ const field=document.querySelector('input[name="proposta_pagamento"]');
+ const saved=(field?.value||'').toLocaleLowerCase('pt-BR');
+ document.querySelectorAll('.payment-options [data-payment]').forEach(x=>x.checked=saved.includes(x.value.toLocaleLowerCase('pt-BR')));
+}
+document.querySelectorAll('.payment-options [data-payment]').forEach(x=>x.addEventListener('change',updatePaymentChoices));
+
 function alertMessage(text){
  message.hidden=false;message.replaceChildren();
  const title=document.createElement('h2');title.textContent=text;message.append(title);
@@ -179,6 +251,7 @@ async function request(url,opts){
 }
 function populate(d){
  fields.forEach(el=>{const v=d[el.name];if(v===undefined)return;if(el.type==='checkbox')el.checked=!!v;else el.value=String(v)});
+ restorePaymentChoices();
  if(d.visitas_imoveis){
   try{const rowData=JSON.parse(d.visitas_imoveis);const rows=document.querySelectorAll('table[aria-label="Imóveis visitados"] tbody tr');
    rows.forEach((tr,i)=>[...tr.querySelectorAll('input')].forEach((input,j)=>input.value=String(rowData?.[i]?.[j]||'')))}
@@ -186,6 +259,7 @@ function populate(d){
  }
 }
 function collect(){
+ updatePaymentChoices();
  const o={};fields.forEach(el=>o[el.name]=el.type==='checkbox'?el.checked:el.value);
  const rows=[...document.querySelectorAll('table[aria-label="Imóveis visitados"] tbody tr')].map(tr=>[...tr.querySelectorAll('input')].map(el=>el.value.trim()));
  o.visitas_imoveis=JSON.stringify(rows.filter(row=>row.some(Boolean)));
