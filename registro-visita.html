@@ -145,11 +145,11 @@ th{padding:6px;font-size:9px}
    box-decoration-break:clone!important;
    -webkit-box-decoration-break:clone!important;
  }
- .paper:first-of-type{padding-bottom:0!important}
- .paper:nth-of-type(2){padding-top:3mm!important}
- .paper:nth-of-type(2)>.brand-row{display:none!important}
+ .paper:not(:last-child){padding-bottom:0!important}
+ .paper:last-child{padding-top:3mm!important}
+ .paper:last-child>.brand-row{display:none!important}
  .paper>.page-end{display:none!important}
- .paper:nth-of-type(2)>h1{margin-top:3mm!important;break-after:avoid!important;page-break-after:avoid!important}
+ .paper:last-child>h1{margin-top:3mm!important;break-after:avoid!important;page-break-after:avoid!important}
  .paper .heading{break-after:avoid!important;page-break-after:avoid!important}
 }
 </style>
