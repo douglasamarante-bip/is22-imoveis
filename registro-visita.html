@@ -135,6 +135,23 @@ th{padding:6px;font-size:9px}
  .page-end{margin-top:6px!important;padding-top:5px!important;font-size:8px!important}
  .brand-row,.heading,.sign-grid,.footer-qr,thead,tr,.check-row{break-inside:avoid;page-break-inside:avoid}
 }
+
+/* casal-continuous-print-flow-v1: continue the proposal in unused space on the
+   visit sheet; only paginate when physical A4 space is exhausted. */
+@media print{
+ .paper,.paper:last-child{
+   break-after:auto!important;
+   page-break-after:auto!important;
+   box-decoration-break:clone!important;
+   -webkit-box-decoration-break:clone!important;
+ }
+ .paper:first-of-type{padding-bottom:0!important}
+ .paper:nth-of-type(2){padding-top:3mm!important}
+ .paper:nth-of-type(2)>.brand-row{display:none!important}
+ .paper>.page-end{display:none!important}
+ .paper:nth-of-type(2)>h1{margin-top:3mm!important;break-after:avoid!important;page-break-after:avoid!important}
+ .paper .heading{break-after:avoid!important;page-break-after:avoid!important}
+}
 </style>
 </head><body>
 <header class="tool-bar"><div><strong>CASAL CORRETORES · Registro de visita e propostas</strong><small>Modelo digital para preencher e imprimir; os dados não são enviados ao servidor.</small></div><div class="actions"><button class="primary" type="button" id="saveRecordBtn">Salvar no banco</button> <button type="button" onclick="printForm()">Imprimir / Salvar PDF</button> <a class="toolbar-link" href="registros.html">Ver registros</a><button type="button" onclick="clearForm()">Limpar campos</button></div></header>
