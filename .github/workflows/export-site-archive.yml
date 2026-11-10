@@ -1,0 +1,24 @@
+name: Exportar backup completo do site Casal Corretores
+
+on:
+  push:
+    branches:
+      - export-site-archive-20261110
+
+permissions:
+  contents: read
+
+jobs:
+  exportar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+      - name: Montar arquivo ZIP completo
+        run: git archive --format=zip --prefix=casal-corretores-site/ HEAD -o Casal_Corretores_Site_Completo.zip
+      - name: Disponibilizar ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Casal_Corretores_Site_Completo
+          path: Casal_Corretores_Site_Completo.zip
+          retention-days: 1
